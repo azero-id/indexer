@@ -1,0 +1,6 @@
+type Reservation @entity {
+  id: ID!
+  name: String!
+  tld: String!
+  address: String
+}

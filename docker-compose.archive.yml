@@ -1,0 +1,60 @@
+services:
+  archive_db:
+    image: postgres:12 # CockroachDB cluster might be a better fit for production deployment
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${ARCHIVE_DB_NAME}
+      POSTGRES_USER: ${ARCHIVE_DB_USER}
+      POSTGRES_PASSWORD: ${ARCHIVE_DB_PASS}
+
+  ingest:
+    depends_on:
+      - archive_db
+    restart: on-failure
+    image: subsquid/substrate-ingest:firesquid
+    command: [
+        '-c',
+        '10', # allow up to 10 pending requests for the above endpoint (default is 5)
+        '-e',
+        'ws://host.docker.internal:9944', # local node
+        '--prom-port',
+        '9090',
+        '--out',
+        'postgres://postgres:postgres@archive_db:5432/squid-archive',
+      ]
+    ports:
+      - '9090:9090' # prometheus port
+
+  gateway:
+    depends_on:
+      - archive_db
+    image: subsquid/substrate-gateway:firesquid
+    environment:
+      RUST_LOG: 'substrate_gateway=info,actix_server=info'
+    command:
+      [
+        '--database-url',
+        'postgres://postgres:postgres@archive_db:5432/squid-archive',
+        '--database-max-connections',
+        '3',
+        '--contracts-support',
+      ]
+    ports:
+      - '${ARCHIVE_GATEWAY_PORT}:8000'
+
+  # Explorer service is optional.
+  # It provides rich GraphQL API for querying archived data.
+  # Many developers find it very useful for exploration and debugging.
+  # explorer:
+  #   image: subsquid/substrate-explorer:firesquid
+  #   environment:
+  #     DB_TYPE: postgres # set to `cockroach` for Cockroach DB
+  #     DB_HOST: db
+  #     DB_PORT: "5432"
+  #     DB_NAME: "squid-archive"
+  #     DB_USER: "postgres"
+  #     DB_PASS: "postgres"
+  #   ports:
+  #     - "4444:3000"

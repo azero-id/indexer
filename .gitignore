@@ -1,0 +1,19 @@
+/node_modules
+/lib
+
+/**Versions.json
+
+.DS_Store
+
+# IDE files
+/.idea
+
+# Environment files
+*.env*
+!.env*.example
+
+# Local deployments
+src/deployments/**/development.json
+src/deployments/**/development.ts
+src/deployments/**/*.wasm
+src/deployments/**/*.contract
