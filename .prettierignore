@@ -2,3 +2,5 @@ abi
 assets
 db
 lib
+src/deployments
+**/generated

@@ -5,34 +5,35 @@ import {
   SubstrateBatchProcessor,
 } from '@subsquid/substrate-processor'
 import { Store, TypeormDatabase } from '@subsquid/typeorm-store'
-import * as dotenv from 'dotenv'
 import { ContractIds, getContractAddress } from './deployments'
 import * as aznsRegistry from './deployments/azns_registry/generated/azns_registry'
 import { processReservations } from './processors/processReservations'
-dotenv.config()
-
-const CONTRACT_EMITTED_OPTIONS = {
-  data: {
-    event: { args: true },
-  },
-}
 
 const main = async () => {
   // Determine contract addresses
   const registryAddress = await getContractAddress(ContractIds.Registry, true)
 
-  // Create processor
+  // Determine Subquid Archive URL
+  if (process.env.CHAIN !== 'development' && !process.env.ARCHIVE) {
+    throw new Error('`ARCHIVE` environment variable is not set.')
+  }
   const archive =
     process.env.CHAIN === 'development'
       ? `http://localhost:${process.env.ARCHIVE_GATEWAY_PORT}/graphql`
       : lookupArchive(process.env.ARCHIVE as KnownArchives)
+
+  // Create processor
   const processor = new SubstrateBatchProcessor()
     .setBlockRange({ from: 0 })
     .setDataSource({
       chain: process.env.RPC,
       archive: archive,
     })
-    .addContractsContractEmitted(registryAddress, CONTRACT_EMITTED_OPTIONS as any)
+    .addContractsContractEmitted(registryAddress, {
+      data: {
+        event: { args: true },
+      },
+    } as const)
 
   // Helper types
   type Item = BatchProcessorItem<typeof processor>

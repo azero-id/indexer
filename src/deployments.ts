@@ -17,7 +17,15 @@ export const getContractAddress = async (
   asHex: boolean,
 ): Promise<string> => {
   const chain = process.env.CHAIN
-  let address = (await import(`./deployments/${contract}/${chain}.js`)).address
+  if (!chain) throw new Error('`CHAIN` environment variable is not set.')
+
+  let address
+  try {
+    address = (await import(`./deployments/${contract}/${chain}`)).address
+  } catch (e) {
+    throw new Error(`Contract address of '${contract}' not found for chain '${chain}'.`)
+  }
+
   if (asHex) {
     address = toHex(ss58.decode(address).bytes)
   }
