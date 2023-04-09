@@ -47,7 +47,6 @@ const main = async () => {
     const events: T[] = []
     for (const block of ctx.blocks) {
       for (const item of block.items) {
-        console.log(item as any)
         if (
           item.name === 'Contracts.ContractEmitted' &&
           item.event.args.contract === contractAddress
