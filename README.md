@@ -2,7 +2,9 @@
 
 This repository contains a [Subsquid](https://docs.subsquid.io/), indexing the smart contracts of AZERO Domains.
 
-## Getting Started
+## Development
+
+### Prerequisites
 
 ```bash
 # Install Node.js & Docker
@@ -18,11 +20,7 @@ npm install
 cp .env.example .env
 ```
 
-## Development Quickstart
-
-If needed, clear all existing docker images via `docker rm -f $(docker ps -a -q)`.
-
-### Local Node
+### Index Local Node
 
 **Important:** Use [`aleph-node`](https://github.com/aleph-zero-foundation/aleph-node), `substrate-contracts-node` is not working currently due to its instant finality.
 
@@ -51,7 +49,7 @@ npm run start:processor
 npm run serve
 ```
 
-### Live Node
+### Index Live Node
 
 To index a live network, no matter if it's a test or production network, no local archive must be started. Instead, the identifier for the matching remote archive has to be determined by running: `npx squid-archive-registry`. Then the `.env` file needs to be updated accordingly.
 
@@ -69,22 +67,29 @@ npm run start:processor
 npm run serve
 ```
 
-## Deploy Squid
+If needed, clear all existing docker images via `docker rm -f $(docker ps -a -q)`.
 
-This Squid is deployed to [Aquarium](https://app.subsquid.io/) (hosted service by Subsquid).
+## Deployment
+
+The Squid is deployed to [Aquarium](https://app.subsquid.io/) (hosted service by Subsquid) for each live network.
+
+| Network            | Endpoint                                       |
+| ------------------ | ---------------------------------------------- |
+| Aleph Zero Testnet | https://squid.subsquid.io/azns-testnet/graphql |
+| Aleph Zero Mainnet | https://squid.subsquid.io/azns-mainnet/graphql |
 
 ```bash
 # Prerequisite: Install & authenticate Squid CLI
 sqd auth -k <DEPLOYMENT_KEY>
 
-# Deploy Squid for Aleph Zero Testnet (`azns-testnet`)
-sqd deploy . -m squid.testnet.yaml
+# Deploy Squid for Aleph Zero Testnet
+sqd deploy . -m squid.azns-testnet.yaml
 
 # TODO: Deploy Squid for Aleph Zero Mainnet
-# sqd deploy . -m squid.mainnet.yaml
+# sqd deploy . -m squid.azns-mainnet.yaml
 ```
 
-## Resources
+## Other Resources
 
 - [Subsquid Documentation](https://docs.subsquid.io/)
 - [Squid ink! Template](https://github.com/subsquid-labs/squid-ink-template#dev-flow)

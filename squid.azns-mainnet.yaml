@@ -1,0 +1,30 @@
+manifestVersion: subsquid.io/v0.1
+name: azns-mainnet
+version: 1
+description: 'AZERO Domains Subsquid Indexer (Aleph Zero Mainnet)'
+
+build:
+
+deploy:
+  addons:
+    postgres:
+  processor:
+    cmd: ['node', 'lib/processor']
+    env:
+      CHAIN: alephzero
+      RPC: wss://ws.azero.dev
+      ARCHIVE: aleph-zero
+  api:
+    cmd:
+      [
+        'npx',
+        'squid-graphql-server',
+        '--dumb-cache',
+        'in-memory',
+        '--dumb-cache-ttl',
+        '1000',
+        '--dumb-cache-size',
+        '100',
+        '--dumb-cache-max-age',
+        '1000',
+      ]
