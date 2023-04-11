@@ -19,7 +19,7 @@
     "lint": "prettier . --check && eslint",
     "lint:fix": "prettier . --write && eslint --fix"
   },
-  "devDependencies": {
+  "dependencies": {
     "@subsquid/archive-registry": "^2.1.11",
     "@subsquid/graphql-server": "3.3.2",
     "@subsquid/ink-abi": "^1.1.0",
