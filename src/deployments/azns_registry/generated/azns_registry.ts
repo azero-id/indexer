@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0xa1dd89fc435c50fab36a680c36f52ddca6edadc746f30d3a116f6333332b149a",
+    "hash": "0xf0d49779de9b7ee9d8848105442c2d32098c56624ecee2a9b2894b325c4d6218",
     "language": "ink! 4.0.1",
     "compiler": "rustc 1.68.0",
     "build_info": {
@@ -41,7 +41,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 9
+              "type": 11
             }
           },
           {
@@ -50,7 +50,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 9
+              "type": 11
             }
           },
           {
@@ -59,7 +59,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 9
+              "type": 11
             }
           },
           {
@@ -68,7 +68,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 10
+              "type": 12
             }
           },
           {
@@ -77,7 +77,16 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
+            }
+          },
+          {
+            "label": "base_uri",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 7
             }
           },
           {
@@ -86,7 +95,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 13
+              "type": 15
             }
           }
         ],
@@ -100,7 +109,7 @@ export const metadata = {
             "ink_primitives",
             "ConstructorResult"
           ],
-          "type": 14
+          "type": 16
         },
         "selector": "0x9bae9d5e"
       }
@@ -117,7 +126,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -147,7 +156,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -177,7 +186,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -199,7 +208,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 9
+              "type": 11
             }
           },
           {
@@ -224,52 +233,93 @@ export const metadata = {
           {
             "docs": [],
             "indexed": true,
-            "label": "name",
+            "label": "from",
             "type": {
               "displayName": [
-                "String"
+                "Option"
               ],
-              "type": 6
+              "type": 11
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "to",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 11
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "id",
+            "type": {
+              "displayName": [
+                "Id"
+              ],
+              "type": 59
+            }
+          }
+        ],
+        "docs": [
+          " Event emitted when a token transfer occurs."
+        ],
+        "label": "Transfer"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "id",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 63
             }
           },
           {
             "docs": [],
             "indexed": false,
-            "label": "from",
+            "label": "approved",
             "type": {
               "displayName": [
-                "AccountId"
+                "bool"
               ],
-              "type": 0
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "old_owner",
-            "type": {
-              "displayName": [
-                "Option"
-              ],
-              "type": 9
-            }
-          },
-          {
-            "docs": [],
-            "indexed": true,
-            "label": "new_owner",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 0
+              "type": 25
             }
           }
         ],
         "docs": [
-          " Emitted whenever a name is transferred."
+          " Event emitted when a token approve occurs."
         ],
-        "label": "Transfer"
+        "label": "Approval"
       },
       {
         "args": [],
@@ -288,7 +338,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -299,7 +349,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 9
+              "type": 11
             }
           },
           {
@@ -310,7 +360,7 @@ export const metadata = {
               "displayName": [
                 "bool"
               ],
-              "type": 24
+              "type": 25
             }
           }
         ],
@@ -325,7 +375,7 @@ export const metadata = {
         "ink",
         "LangError"
       ],
-      "type": 16
+      "type": 17
     },
     "messages": [
       {
@@ -336,7 +386,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -363,7 +413,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 17
+              "type": 18
             }
           },
           {
@@ -372,7 +422,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 18
+              "type": 19
             }
           }
         ],
@@ -390,7 +440,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x7aa26a96"
       },
@@ -402,7 +452,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -420,7 +470,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 17
+              "type": 18
             }
           },
           {
@@ -429,7 +479,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 18
+              "type": 19
             }
           },
           {
@@ -438,7 +488,7 @@ export const metadata = {
               "displayName": [
                 "bool"
               ],
-              "type": 24
+              "type": 25
             }
           }
         ],
@@ -455,7 +505,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x229b553f"
       },
@@ -467,7 +517,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -482,7 +532,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x2251f2bc"
       },
@@ -494,7 +544,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -509,21 +559,12 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x3f2be152"
       },
       {
         "args": [
-          {
-            "label": "name",
-            "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 6
-            }
-          },
           {
             "label": "to",
             "type": {
@@ -531,6 +572,51 @@ export const metadata = {
                 "AccountId"
               ],
               "type": 0
+            }
+          },
+          {
+            "label": "name",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "label": "keep_metadata",
+            "type": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 25
+            }
+          },
+          {
+            "label": "keep_controller",
+            "type": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 25
+            }
+          },
+          {
+            "label": "keep_resolving",
+            "type": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 25
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
             }
           }
         ],
@@ -545,7 +631,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 27
         },
         "selector": "0x84a15da1"
       },
@@ -557,7 +643,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 8
+              "type": 9
             }
           }
         ],
@@ -572,7 +658,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 25
+          "type": 30
         },
         "selector": "0xd00a53e5"
       },
@@ -584,7 +670,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -599,7 +685,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0xad11843c"
       },
@@ -611,7 +697,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -635,7 +721,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0xb8a4d3d9"
       },
@@ -647,7 +733,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -669,7 +755,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0xc5e161ea"
       },
@@ -681,7 +767,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -690,7 +776,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 28
+              "type": 32
             }
           },
           {
@@ -699,7 +785,7 @@ export const metadata = {
               "displayName": [
                 "bool"
               ],
-              "type": 24
+              "type": 25
             }
           }
         ],
@@ -712,7 +798,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0xde84a1ba"
       },
@@ -724,7 +810,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 8
+              "type": 9
             }
           }
         ],
@@ -739,7 +825,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 30
+          "type": 34
         },
         "selector": "0x964d7612"
       },
@@ -751,7 +837,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -766,7 +852,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 34
+          "type": 38
         },
         "selector": "0xf069dff3"
       },
@@ -778,7 +864,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -793,7 +879,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 36
+          "type": 40
         },
         "selector": "0x07fcd0b1"
       },
@@ -805,7 +891,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -820,7 +906,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 36
+          "type": 40
         },
         "selector": "0x0abf0e97"
       },
@@ -832,7 +918,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -847,7 +933,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 36
+          "type": 40
         },
         "selector": "0xd259f7ba"
       },
@@ -859,7 +945,32 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
+            }
+          }
+        ],
+        "docs": [],
+        "label": "get_registration_date",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 42
+        },
+        "selector": "0x7458cdac"
+      },
+      {
+        "args": [
+          {
+            "label": "name",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 7
             }
           }
         ],
@@ -872,7 +983,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 38
+          "type": 42
         },
         "selector": "0xf56d0deb"
       },
@@ -884,7 +995,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -899,7 +1010,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 40
+          "type": 44
         },
         "selector": "0x528be9f1"
       },
@@ -911,7 +1022,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -920,7 +1031,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -935,7 +1046,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 41
+          "type": 45
         },
         "selector": "0x7e6cb4ce"
       },
@@ -962,7 +1073,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 43
+          "type": 47
         },
         "selector": "0xe413b13a"
       },
@@ -987,7 +1098,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 43
+          "type": 47
         },
         "selector": "0x9f25301e"
       },
@@ -1012,7 +1123,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 43
+          "type": 47
         },
         "selector": "0xadd2f457"
       },
@@ -1037,7 +1148,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 41
+          "type": 45
         },
         "selector": "0x404f1d73"
       },
@@ -1062,7 +1173,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 45
+          "type": 49
         },
         "selector": "0xf82caf60"
       },
@@ -1077,7 +1188,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 46
+          "type": 50
         },
         "selector": "0x41b0a92e"
       },
@@ -1092,7 +1203,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 47
+          "type": 51
         },
         "selector": "0x57b8a8a7"
       },
@@ -1107,9 +1218,24 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 48
+          "type": 52
         },
         "selector": "0xd61daed4"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "get_base_uri",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 52
+        },
+        "selector": "0x6e06617c"
       },
       {
         "args": [],
@@ -1125,7 +1251,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 49
+          "type": 53
         },
         "selector": "0x59d8255b"
       },
@@ -1146,7 +1272,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 18
+              "type": 19
             }
           }
         ],
@@ -1159,19 +1285,28 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 49
+          "type": 53
         },
         "selector": "0x71c9d9ba"
       },
       {
         "args": [
           {
+            "label": "beneficiary",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 11
+            }
+          },
+          {
             "label": "value",
             "type": {
               "displayName": [
-                "Balance"
+                "Option"
               ],
-              "type": 27
+              "type": 54
             }
           }
         ],
@@ -1187,7 +1322,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x410fcc9d"
       },
@@ -1205,7 +1340,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x17257477"
       },
@@ -1217,7 +1352,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 11
+              "type": 13
             }
           }
         ],
@@ -1233,7 +1368,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x6e0d3fa8"
       },
@@ -1245,7 +1380,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 8
+              "type": 9
             }
           }
         ],
@@ -1261,7 +1396,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x9ccff6c5"
       },
@@ -1273,7 +1408,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 13
+              "type": 15
             }
           }
         ],
@@ -1289,7 +1424,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x787dbdec"
       },
@@ -1315,7 +1450,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x1345543d"
       },
@@ -1340,7 +1475,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 21
         },
         "selector": "0x798dcad5"
       },
@@ -1352,7 +1487,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           },
           {
@@ -1379,7 +1514,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 17
+              "type": 18
             }
           }
         ],
@@ -1392,7 +1527,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 50
+          "type": 55
         },
         "selector": "0xb565be46"
       },
@@ -1413,7 +1548,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 6
+              "type": 7
             }
           }
         ],
@@ -1426,9 +1561,484 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 49
+          "type": 53
         },
         "selector": "0x30fc989d"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "PSP34::collection_id",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 58
+        },
+        "selector": "0xffa27a5f"
+      },
+      {
+        "args": [
+          {
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34::balance_of",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 61
+        },
+        "selector": "0xcde7e55f"
+      },
+      {
+        "args": [
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "Id"
+              ],
+              "type": 59
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34::owner_of",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 62
+        },
+        "selector": "0x1168624d"
+      },
+      {
+        "args": [
+          {
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 63
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34::allowance",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 53
+        },
+        "selector": "0x4790f55a"
+      },
+      {
+        "args": [
+          {
+            "label": "operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 63
+            }
+          },
+          {
+            "label": "approved",
+            "type": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 25
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34::approve",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 27
+        },
+        "selector": "0x1932a8b0"
+      },
+      {
+        "args": [
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "Id"
+              ],
+              "type": 59
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34::transfer",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 27
+        },
+        "selector": "0x3128d61b"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "PSP34::total_supply",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 64
+        },
+        "selector": "0x628413fe"
+      },
+      {
+        "args": [
+          {
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "index",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 10
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34Enumerable::owners_token_by_index",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 65
+        },
+        "selector": "0x3bcfb511"
+      },
+      {
+        "args": [
+          {
+            "label": "_index",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 10
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34Enumerable::token_by_index",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 65
+        },
+        "selector": "0xcd0340d0"
+      },
+      {
+        "args": [
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "Id"
+              ],
+              "type": 59
+            }
+          },
+          {
+            "label": "key",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
+            }
+          }
+        ],
+        "docs": [],
+        "label": "PSP34Metadata::get_attribute",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 67
+        },
+        "selector": "0xf19d48d1"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "Psp34Traits::get_owner",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 51
+        },
+        "selector": "0x8e1d8d71"
+      },
+      {
+        "args": [
+          {
+            "label": "token_id",
+            "type": {
+              "displayName": [
+                "Id"
+              ],
+              "type": 59
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Psp34Traits::token_uri",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 52
+        },
+        "selector": "0x249dfd4f"
+      },
+      {
+        "args": [
+          {
+            "label": "uri",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Psp34Traits::set_base_uri",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 69
+        },
+        "selector": "0x4de6850b"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "Psp34Traits::get_attribute_count",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 61
+        },
+        "selector": "0x61c50d69"
+      },
+      {
+        "args": [
+          {
+            "label": "index",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 8
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Psp34Traits::get_attribute_name",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 52
+        },
+        "selector": "0xfcfe34de"
+      },
+      {
+        "args": [
+          {
+            "label": "token_id",
+            "type": {
+              "displayName": [
+                "Id"
+              ],
+              "type": 59
+            }
+          },
+          {
+            "label": "attributes",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 9
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Psp34Traits::get_attributes",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 49
+        },
+        "selector": "0x18209102"
+      },
+      {
+        "args": [
+          {
+            "label": "_token_id",
+            "type": {
+              "displayName": [
+                "Id"
+              ],
+              "type": 59
+            }
+          },
+          {
+            "label": "_metadata",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Psp34Traits::set_multiple_attributes",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 69
+        },
+        "selector": "0x5bf8416b"
       }
     ]
   },
@@ -1582,6 +2192,20 @@ export const metadata = {
               "layout": {
                 "root": {
                   "layout": {
+                    "leaf": {
+                      "key": "0x00000065",
+                      "ty": 3
+                    }
+                  },
+                  "root_key": "0x00000065"
+                }
+              },
+              "name": "operator_approvals"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
                     "struct": {
                       "fields": [
                         {
@@ -1624,15 +2248,34 @@ export const metadata = {
               "layout": {
                 "root": {
                   "layout": {
-                    "leaf": {
-                      "key": "0x1a86cd21",
-                      "ty": 3
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xf9694d8a",
+                              "ty": 4
+                            }
+                          },
+                          "name": "0"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xf9694d8a",
+                              "ty": 4
+                            }
+                          },
+                          "name": "1"
+                        }
+                      ],
+                      "name": "(A, B)"
                     }
                   },
-                  "root_key": "0x1a86cd21"
+                  "root_key": "0xf9694d8a"
                 }
               },
-              "name": "name_to_expiry"
+              "name": "name_to_period"
             },
             {
               "layout": {
@@ -1640,7 +2283,7 @@ export const metadata = {
                   "layout": {
                     "leaf": {
                       "key": "0x000000c9",
-                      "ty": 4
+                      "ty": 5
                     }
                   },
                   "root_key": "0x000000c9"
@@ -1664,7 +2307,7 @@ export const metadata = {
                           "layout": {
                             "leaf": {
                               "key": "0x00000000",
-                              "ty": 7
+                              "ty": 8
                             }
                           },
                           "name": "0"
@@ -1683,7 +2326,7 @@ export const metadata = {
                   "layout": {
                     "leaf": {
                       "key": "0x0000012c",
-                      "ty": 8
+                      "ty": 9
                     }
                   },
                   "root_key": "0x0000012c"
@@ -1697,7 +2340,7 @@ export const metadata = {
                   "layout": {
                     "leaf": {
                       "key": "0x0000012d",
-                      "ty": 8
+                      "ty": 9
                     }
                   },
                   "root_key": "0x0000012d"
@@ -1711,7 +2354,7 @@ export const metadata = {
                   "layout": {
                     "leaf": {
                       "key": "0x0000012e",
-                      "ty": 8
+                      "ty": 9
                     }
                   },
                   "root_key": "0x0000012e"
@@ -1725,7 +2368,7 @@ export const metadata = {
                   "layout": {
                     "leaf": {
                       "key": "0x0000012f",
-                      "ty": 6
+                      "ty": 7
                     }
                   },
                   "root_key": "0x0000012f"
@@ -1791,10 +2434,28 @@ export const metadata = {
               "layout": {
                 "leaf": {
                   "key": "0x00000000",
-                  "ty": 6
+                  "ty": 7
                 }
               },
               "name": "tld"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 7
+                }
+              },
+              "name": "base_uri"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 10
+                }
+              },
+              "name": "total_supply"
             }
           ],
           "name": "DomainNameService"
@@ -1847,7 +2508,7 @@ export const metadata = {
       "id": 3,
       "type": {
         "def": {
-          "primitive": "u64"
+          "tuple": []
         }
       }
     },
@@ -1855,41 +2516,12 @@ export const metadata = {
       "id": 4,
       "type": {
         "def": {
-          "sequence": {
-            "type": 5
-          }
+          "primitive": "u64"
         }
       }
     },
     {
       "id": 5,
-      "type": {
-        "def": {
-          "tuple": [
-            6,
-            6
-          ]
-        }
-      }
-    },
-    {
-      "id": 6,
-      "type": {
-        "def": {
-          "primitive": "str"
-        }
-      }
-    },
-    {
-      "id": 7,
-      "type": {
-        "def": {
-          "primitive": "u32"
-        }
-      }
-    },
-    {
-      "id": 8,
       "type": {
         "def": {
           "sequence": {
@@ -1899,7 +2531,52 @@ export const metadata = {
       }
     },
     {
+      "id": 6,
+      "type": {
+        "def": {
+          "tuple": [
+            7,
+            7
+          ]
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "primitive": "str"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
       "id": 9,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 7
+          }
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 11,
       "type": {
         "def": {
           "variant": {
@@ -1932,7 +2609,7 @@ export const metadata = {
       }
     },
     {
-      "id": 10,
+      "id": 12,
       "type": {
         "def": {
           "variant": {
@@ -1944,7 +2621,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 11
+                    "type": 13
                   }
                 ],
                 "index": 1,
@@ -1956,7 +2633,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 11
+            "type": 13
           }
         ],
         "path": [
@@ -1965,28 +2642,122 @@ export const metadata = {
       }
     },
     {
-      "id": 11,
+      "id": 13,
       "type": {
         "def": {
           "sequence": {
-            "type": 12
+            "type": 14
           }
         }
       }
     },
     {
-      "id": 12,
+      "id": 14,
       "type": {
         "def": {
           "tuple": [
-            6,
-            9
+            7,
+            11
           ]
         }
       }
     },
     {
-      "id": 13,
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 8
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 8
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 18,
       "type": {
         "def": {
           "variant": {
@@ -2019,190 +2790,46 @@ export const metadata = {
       }
     },
     {
-      "id": 14,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 15
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 16
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 15
-          },
-          {
-            "name": "E",
-            "type": 16
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 15,
-      "type": {
-        "def": {
-          "tuple": []
-        }
-      }
-    },
-    {
-      "id": 16,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 1,
-                "name": "CouldNotReadInput"
-              }
-            ]
-          }
-        },
-        "path": [
-          "ink_primitives",
-          "LangError"
-        ]
-      }
-    },
-    {
-      "id": 17,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "None"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 6
-                  }
-                ],
-                "index": 1,
-                "name": "Some"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 6
-          }
-        ],
-        "path": [
-          "Option"
-        ]
-      }
-    },
-    {
-      "id": 18,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "None"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 19
-                  }
-                ],
-                "index": 1,
-                "name": "Some"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 19
-          }
-        ],
-        "path": [
-          "Option"
-        ]
-      }
-    },
-    {
       "id": 19,
       "type": {
         "def": {
-          "sequence": {
-            "type": 1
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 20
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
           }
-        }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 20
+          }
+        ],
+        "path": [
+          "Option"
+        ]
       }
     },
     {
       "id": 20,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 21
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 16
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
+          "sequence": {
+            "type": 1
           }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 21
-          },
-          {
-            "name": "E",
-            "type": 16
-          }
-        ],
-        "path": [
-          "Result"
-        ]
+        }
       }
     },
     {
@@ -2214,7 +2841,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 15
+                    "type": 22
                   }
                 ],
                 "index": 0,
@@ -2223,7 +2850,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 22
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -2235,11 +2862,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 15
+            "type": 22
           },
           {
             "name": "E",
-            "type": 22
+            "type": 17
           }
         ],
         "path": [
@@ -2249,6 +2876,48 @@ export const metadata = {
     },
     {
       "id": 22,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 23
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 23
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 23,
       "type": {
         "def": {
           "variant": {
@@ -2295,48 +2964,52 @@ export const metadata = {
               },
               {
                 "index": 10,
-                "name": "NoResolvedAddress"
+                "name": "InsufficientBalance"
               },
               {
                 "index": 11,
-                "name": "AlreadyClaimed"
+                "name": "NoResolvedAddress"
               },
               {
                 "index": 12,
-                "name": "InvalidMerkleProof"
+                "name": "AlreadyClaimed"
               },
               {
                 "index": 13,
-                "name": "OnlyDuringWhitelistPhase"
+                "name": "InvalidMerkleProof"
               },
               {
                 "index": 14,
-                "name": "RestrictedDuringWhitelistPhase"
+                "name": "OnlyDuringWhitelistPhase"
               },
               {
                 "index": 15,
-                "name": "CannotBuyReservedName"
+                "name": "RestrictedDuringWhitelistPhase"
               },
               {
                 "index": 16,
-                "name": "NotReservedName"
+                "name": "CannotBuyReservedName"
               },
               {
                 "index": 17,
-                "name": "NotAuthorised"
+                "name": "NotReservedName"
               },
               {
                 "index": 18,
+                "name": "NotAuthorised"
+              },
+              {
+                "index": 19,
                 "name": "MetadataOverflow"
               },
               {
                 "fields": [
                   {
-                    "type": 23,
+                    "type": 24,
                     "typeName": "azns_fee_calculator::Error"
                   }
                 ],
-                "index": 19,
+                "index": 20,
                 "name": "FeeError"
               }
             ]
@@ -2350,7 +3023,7 @@ export const metadata = {
       }
     },
     {
-      "id": 23,
+      "id": 24,
       "type": {
         "def": {
           "variant": {
@@ -2377,7 +3050,7 @@ export const metadata = {
       }
     },
     {
-      "id": 24,
+      "id": 25,
       "type": {
         "def": {
           "primitive": "bool"
@@ -2385,116 +3058,149 @@ export const metadata = {
       }
     },
     {
-      "id": 25,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 26
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 16
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 26
-          },
-          {
-            "name": "E",
-            "type": 16
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
       "id": 26,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 27
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 22
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
+          "sequence": {
+            "type": 2
           }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 27
-          },
-          {
-            "name": "E",
-            "type": 22
-          }
-        ],
-        "path": [
-          "Result"
-        ]
+        }
       }
     },
     {
       "id": 27,
       "type": {
         "def": {
-          "primitive": "u128"
-        }
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 28
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 28
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
       }
     },
     {
       "id": 28,
       "type": {
         "def": {
-          "sequence": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 29
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
             "type": 29
           }
-        }
+        ],
+        "path": [
+          "Result"
+        ]
       }
     },
     {
       "id": 29,
       "type": {
         "def": {
-          "tuple": [
-            6,
-            17
-          ]
-        }
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 7,
+                    "typeName": "String"
+                  }
+                ],
+                "index": 0,
+                "name": "Custom"
+              },
+              {
+                "index": 1,
+                "name": "SelfApprove"
+              },
+              {
+                "index": 2,
+                "name": "NotApproved"
+              },
+              {
+                "index": 3,
+                "name": "TokenExists"
+              },
+              {
+                "index": 4,
+                "name": "TokenNotExists"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7,
+                    "typeName": "String"
+                  }
+                ],
+                "index": 5,
+                "name": "SafeTransferCheckFailed"
+              }
+            ]
+          }
+        },
+        "path": [
+          "azns_registry",
+          "psp34_standard",
+          "PSP34Error"
+        ]
       }
     },
     {
@@ -2515,7 +3221,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -2531,7 +3237,7 @@ export const metadata = {
           },
           {
             "name": "E",
-            "type": 16
+            "type": 17
           }
         ],
         "path": [
@@ -2543,14 +3249,67 @@ export const metadata = {
       "id": 31,
       "type": {
         "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 10
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 23
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 10
+          },
+          {
+            "name": "E",
+            "type": 23
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "type": {
+        "def": {
           "sequence": {
-            "type": 32
+            "type": 33
           }
         }
       }
     },
     {
-      "id": 32,
+      "id": 33,
+      "type": {
+        "def": {
+          "tuple": [
+            7,
+            18
+          ]
+        }
+      }
+    },
+    {
+      "id": 34,
       "type": {
         "def": {
           "variant": {
@@ -2558,7 +3317,59 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 33,
+                    "type": 35
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 35
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 36
+          }
+        }
+      }
+    },
+    {
+      "id": 36,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 37,
                     "typeName": "AddressDict"
                   }
                 ],
@@ -2568,7 +3379,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 9,
+                    "type": 11,
                     "typeName": "Option<AccountId>"
                   }
                 ],
@@ -2594,7 +3405,7 @@ export const metadata = {
       }
     },
     {
-      "id": 33,
+      "id": 37,
       "type": {
         "def": {
           "composite": {
@@ -2625,174 +3436,6 @@ export const metadata = {
       }
     },
     {
-      "id": 34,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 35
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 16
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 35
-          },
-          {
-            "name": "E",
-            "type": 16
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 35,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 33
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 22
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 33
-          },
-          {
-            "name": "E",
-            "type": 22
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 36,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 37
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 16
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 37
-          },
-          {
-            "name": "E",
-            "type": 16
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 37,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 22
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 0
-          },
-          {
-            "name": "E",
-            "type": 22
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
       "id": 38,
       "type": {
         "def": {
@@ -2810,7 +3453,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -2826,7 +3469,7 @@ export const metadata = {
           },
           {
             "name": "E",
-            "type": 16
+            "type": 17
           }
         ],
         "path": [
@@ -2843,7 +3486,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 3
+                    "type": 37
                   }
                 ],
                 "index": 0,
@@ -2852,7 +3495,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 22
+                    "type": 23
                   }
                 ],
                 "index": 1,
@@ -2864,11 +3507,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 3
+            "type": 37
           },
           {
             "name": "E",
-            "type": 22
+            "type": 23
           }
         ],
         "path": [
@@ -2885,7 +3528,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 4
+                    "type": 41
                   }
                 ],
                 "index": 0,
@@ -2894,7 +3537,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -2906,11 +3549,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 4
+            "type": 41
           },
           {
             "name": "E",
-            "type": 16
+            "type": 17
           }
         ],
         "path": [
@@ -2927,7 +3570,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 42
+                    "type": 0
                   }
                 ],
                 "index": 0,
@@ -2936,7 +3579,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 23
                   }
                 ],
                 "index": 1,
@@ -2948,11 +3591,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 42
+            "type": 0
           },
           {
             "name": "E",
-            "type": 16
+            "type": 23
           }
         ],
         "path": [
@@ -2969,7 +3612,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 43
                   }
                 ],
                 "index": 0,
@@ -2978,7 +3621,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 22
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -2990,11 +3633,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 6
+            "type": 43
           },
           {
             "name": "E",
-            "type": 22
+            "type": 17
           }
         ],
         "path": [
@@ -3011,7 +3654,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 44
+                    "type": 4
                   }
                 ],
                 "index": 0,
@@ -3020,7 +3663,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 23
                   }
                 ],
                 "index": 1,
@@ -3032,11 +3675,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 44
+            "type": 4
           },
           {
             "name": "E",
-            "type": 16
+            "type": 23
           }
         ],
         "path": [
@@ -3051,17 +3694,22 @@ export const metadata = {
           "variant": {
             "variants": [
               {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
                 "index": 0,
-                "name": "None"
+                "name": "Ok"
               },
               {
                 "fields": [
                   {
-                    "type": 8
+                    "type": 17
                   }
                 ],
                 "index": 1,
-                "name": "Some"
+                "name": "Err"
               }
             ]
           }
@@ -3069,11 +3717,15 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 8
+            "type": 5
+          },
+          {
+            "name": "E",
+            "type": 17
           }
         ],
         "path": [
-          "Option"
+          "Result"
         ]
       }
     },
@@ -3086,7 +3738,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 8
+                    "type": 46
                   }
                 ],
                 "index": 0,
@@ -3095,7 +3747,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -3107,11 +3759,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 8
+            "type": 46
           },
           {
             "name": "E",
-            "type": 16
+            "type": 17
           }
         ],
         "path": [
@@ -3128,7 +3780,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 13
+                    "type": 7
                   }
                 ],
                 "index": 0,
@@ -3137,7 +3789,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 23
                   }
                 ],
                 "index": 1,
@@ -3149,11 +3801,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 13
+            "type": 7
           },
           {
             "name": "E",
-            "type": 16
+            "type": 23
           }
         ],
         "path": [
@@ -3170,7 +3822,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 0
+                    "type": 48
                   }
                 ],
                 "index": 0,
@@ -3179,7 +3831,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -3191,11 +3843,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 0
+            "type": 48
           },
           {
             "name": "E",
-            "type": 16
+            "type": 17
           }
         ],
         "path": [
@@ -3210,22 +3862,17 @@ export const metadata = {
           "variant": {
             "variants": [
               {
-                "fields": [
-                  {
-                    "type": 6
-                  }
-                ],
                 "index": 0,
-                "name": "Ok"
+                "name": "None"
               },
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 9
                   }
                 ],
                 "index": 1,
-                "name": "Err"
+                "name": "Some"
               }
             ]
           }
@@ -3233,15 +3880,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 6
-          },
-          {
-            "name": "E",
-            "type": 16
+            "type": 9
           }
         ],
         "path": [
-          "Result"
+          "Option"
         ]
       }
     },
@@ -3254,7 +3897,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 24
+                    "type": 9
                   }
                 ],
                 "index": 0,
@@ -3263,7 +3906,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -3275,11 +3918,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 24
+            "type": 9
           },
           {
             "name": "E",
-            "type": 16
+            "type": 17
           }
         ],
         "path": [
@@ -3296,7 +3939,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 51
+                    "type": 15
                   }
                 ],
                 "index": 0,
@@ -3305,7 +3948,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -3317,11 +3960,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 51
+            "type": 15
           },
           {
             "name": "E",
-            "type": 16
+            "type": 17
           }
         ],
         "path": [
@@ -3338,7 +3981,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 52
+                    "type": 0
                   }
                 ],
                 "index": 0,
@@ -3347,7 +3990,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 22
+                    "type": 17
                   }
                 ],
                 "index": 1,
@@ -3359,11 +4002,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 52
+            "type": 0
           },
           {
             "name": "E",
-            "type": 22
+            "type": 17
           }
         ],
         "path": [
@@ -3375,13 +4018,768 @@ export const metadata = {
       "id": 52,
       "type": {
         "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 7
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 25
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 25
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 54,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 10
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 10
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 56
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 56
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 56,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 57
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 23
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 57
+          },
+          {
+            "name": "E",
+            "type": 23
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "type": {
+        "def": {
           "tuple": [
-            27,
-            27,
-            27,
-            9
+            10,
+            10,
+            10,
+            11
           ]
         }
+      }
+    },
+    {
+      "id": 58,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 59
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 59
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 2,
+                    "typeName": "u8"
+                  }
+                ],
+                "index": 0,
+                "name": "U8"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 60,
+                    "typeName": "u16"
+                  }
+                ],
+                "index": 1,
+                "name": "U16"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 8,
+                    "typeName": "u32"
+                  }
+                ],
+                "index": 2,
+                "name": "U32"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4,
+                    "typeName": "u64"
+                  }
+                ],
+                "index": 3,
+                "name": "U64"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 10,
+                    "typeName": "u128"
+                  }
+                ],
+                "index": 4,
+                "name": "U128"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 26,
+                    "typeName": "Vec<u8>"
+                  }
+                ],
+                "index": 5,
+                "name": "Bytes"
+              }
+            ]
+          }
+        },
+        "path": [
+          "azns_registry",
+          "psp34_standard",
+          "Id"
+        ]
+      }
+    },
+    {
+      "id": 60,
+      "type": {
+        "def": {
+          "primitive": "u16"
+        }
+      }
+    },
+    {
+      "id": 61,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 8
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 8
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 62,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 11
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 63,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 59
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 59
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 64,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 10
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 10
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 65,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 66
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 66
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 66,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 59
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 29
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 59
+          },
+          {
+            "name": "E",
+            "type": 29
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 67,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 68
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 68
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 68,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 26
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 26
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 69,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 70
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 70
+          },
+          {
+            "name": "E",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 70,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 71
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 71
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 71,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 7,
+                    "typeName": "String"
+                  }
+                ],
+                "index": 0,
+                "name": "Custom"
+              }
+            ]
+          }
+        },
+        "path": [
+          "azns_registry",
+          "art_zero_traits",
+          "ArtZeroError"
+        ]
       }
     }
   ],
@@ -3415,7 +4813,7 @@ export interface ChainContext {
 export class Contract {
     constructor(private ctx: ChainContext, private address: string, private blockHash?: string) { }
 
-    get_name_status(names: Vec): Promise<Result<NameStatus[], LangError>> {
+    get_name_status(names: String[]): Promise<Result<NameStatus[], LangError>> {
         return this.stateCall('0x964d7612', [names])
     }
 
@@ -3435,11 +4833,15 @@ export class Contract {
         return this.stateCall('0xd259f7ba', [name])
     }
 
+    get_registration_date(name: String): Promise<Result<Result<bigint, Error>, LangError>> {
+        return this.stateCall('0x7458cdac', [name])
+    }
+
     get_expiry_date(name: String): Promise<Result<Result<bigint, Error>, LangError>> {
         return this.stateCall('0xf56d0deb', [name])
     }
 
-    get_all_records(name: String): Promise<Result<[String, String][], LangError>> {
+    get_all_records(name: String): Promise<Result<Vec, LangError>> {
         return this.stateCall('0x528be9f1', [name])
     }
 
@@ -3447,15 +4849,15 @@ export class Contract {
         return this.stateCall('0x7e6cb4ce', [name, key])
     }
 
-    get_owned_names_of_address(owner: AccountId): Promise<Result<(Vec | undefined), LangError>> {
+    get_owned_names_of_address(owner: AccountId): Promise<Result<(String[] | undefined), LangError>> {
         return this.stateCall('0xe413b13a', [owner])
     }
 
-    get_controlled_names_of_address(controller: AccountId): Promise<Result<(Vec | undefined), LangError>> {
+    get_controlled_names_of_address(controller: AccountId): Promise<Result<(String[] | undefined), LangError>> {
         return this.stateCall('0x9f25301e', [controller])
     }
 
-    get_resolving_names_of_address(address: AccountId): Promise<Result<(Vec | undefined), LangError>> {
+    get_resolving_names_of_address(address: AccountId): Promise<Result<(String[] | undefined), LangError>> {
         return this.stateCall('0xadd2f457', [address])
     }
 
@@ -3463,11 +4865,11 @@ export class Contract {
         return this.stateCall('0x404f1d73', [address])
     }
 
-    get_names_of_address(address: AccountId): Promise<Result<Vec, LangError>> {
+    get_names_of_address(address: AccountId): Promise<Result<String[], LangError>> {
         return this.stateCall('0xf82caf60', [address])
     }
 
-    get_metadata_size_limit(): Promise<Result<(number | undefined), LangError>> {
+    get_metadata_size_limit(): Promise<Result<(u32 | undefined), LangError>> {
         return this.stateCall('0x41b0a92e', [])
     }
 
@@ -3479,6 +4881,10 @@ export class Contract {
         return this.stateCall('0xd61daed4', [])
     }
 
+    get_base_uri(): Promise<Result<String, LangError>> {
+        return this.stateCall('0x6e06617c', [])
+    }
+
     is_whitelist_phase(): Promise<Result<bool, LangError>> {
         return this.stateCall('0x59d8255b', [])
     }
@@ -3487,12 +4893,64 @@ export class Contract {
         return this.stateCall('0x71c9d9ba', [account, merkle_proof])
     }
 
-    get_name_price(name: String, recipient: AccountId, years_to_register: u8, referrer: (String | undefined)): Promise<Result<Result<[Balance, Balance, Balance, (AccountId | undefined)], Error>, LangError>> {
+    get_name_price(name: String, recipient: AccountId, years_to_register: u8, referrer: (String | undefined)): Promise<Result<Result<[u128, u128, u128, (AccountId | undefined)], Error>, LangError>> {
         return this.stateCall('0xb565be46', [name, recipient, years_to_register, referrer])
     }
 
     validate_referrer(recipient: AccountId, referrer_name: String): Promise<Result<bool, LangError>> {
         return this.stateCall('0x30fc989d', [recipient, referrer_name])
+    }
+
+    PSP34_collection_id(): Promise<Result<Id, LangError>> {
+        return this.stateCall('0xffa27a5f', [])
+    }
+
+    PSP34_balance_of(owner: AccountId): Promise<Result<u32, LangError>> {
+        return this.stateCall('0xcde7e55f', [owner])
+    }
+
+    PSP34_owner_of(id: Id): Promise<Result<(AccountId | undefined), LangError>> {
+        return this.stateCall('0x1168624d', [id])
+    }
+
+    PSP34_allowance(owner: AccountId, operator: AccountId, id: (Id | undefined)): Promise<Result<bool, LangError>> {
+        return this.stateCall('0x4790f55a', [owner, operator, id])
+    }
+
+    PSP34_total_supply(): Promise<Result<u128, LangError>> {
+        return this.stateCall('0x628413fe', [])
+    }
+
+    PSP34Enumerable_owners_token_by_index(owner: AccountId, index: u128): Promise<Result<Result<Id, PSP34Error>, LangError>> {
+        return this.stateCall('0x3bcfb511', [owner, index])
+    }
+
+    PSP34Enumerable_token_by_index(_index: u128): Promise<Result<Result<Id, PSP34Error>, LangError>> {
+        return this.stateCall('0xcd0340d0', [_index])
+    }
+
+    PSP34Metadata_get_attribute(id: Id, key: Uint8Array): Promise<Result<(Uint8Array | undefined), LangError>> {
+        return this.stateCall('0xf19d48d1', [id, key])
+    }
+
+    Psp34Traits_get_owner(): Promise<Result<AccountId, LangError>> {
+        return this.stateCall('0x8e1d8d71', [])
+    }
+
+    Psp34Traits_token_uri(token_id: Id): Promise<Result<String, LangError>> {
+        return this.stateCall('0x249dfd4f', [token_id])
+    }
+
+    Psp34Traits_get_attribute_count(): Promise<Result<u32, LangError>> {
+        return this.stateCall('0x61c50d69', [])
+    }
+
+    Psp34Traits_get_attribute_name(index: u32): Promise<Result<String, LangError>> {
+        return this.stateCall('0xfcfe34de', [index])
+    }
+
+    Psp34Traits_get_attributes(token_id: Id, attributes: String[]): Promise<Result<String[], LangError>> {
+        return this.stateCall('0x18209102', [token_id, attributes])
     }
 
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
@@ -3504,7 +4962,7 @@ export class Contract {
     }
 }
 
-export type Event = Event_Register | Event_Release | Event_SetAddress | Event_Transfer | Event_PublicPhaseActivated | Event_Reserve
+export type Event = Event_Register | Event_Release | Event_SetAddress | Event_Transfer | Event_Approval | Event_PublicPhaseActivated | Event_Reserve
 
 export interface Event_Register {
     __kind: 'Register'
@@ -3528,10 +4986,17 @@ export interface Event_SetAddress {
 
 export interface Event_Transfer {
     __kind: 'Transfer'
-    name: String
-    from: AccountId
-    oldOwner: (AccountId | undefined)
-    newOwner: AccountId
+    from: (AccountId | undefined)
+    to: (AccountId | undefined)
+    id: Id
+}
+
+export interface Event_Approval {
+    __kind: 'Approval'
+    owner: AccountId
+    operator: AccountId
+    id: (Id | undefined)
+    approved: bool
 }
 
 export interface Event_PublicPhaseActivated {
@@ -3545,7 +5010,7 @@ export interface Event_Reserve {
     action: bool
 }
 
-export type Message = Message_register_on_behalf_of | Message_register | Message_claim_reserved_name | Message_release | Message_transfer | Message_clear_expired_names | Message_set_primary_name | Message_set_address | Message_set_controller | Message_update_records | Message_get_name_status | Message_get_address_dict | Message_get_owner | Message_get_controller | Message_get_address | Message_get_expiry_date | Message_get_all_records | Message_get_record | Message_get_owned_names_of_address | Message_get_controlled_names_of_address | Message_get_resolving_names_of_address | Message_get_primary_name | Message_get_names_of_address | Message_get_metadata_size_limit | Message_get_admin | Message_get_tld | Message_is_whitelist_phase | Message_verify_proof | Message_withdraw | Message_switch_to_public_phase | Message_add_reserved_names | Message_remove_reserved_name | Message_set_metadata_size_limit | Message_upgrade_contract | Message_set_admin | Message_get_name_price | Message_validate_referrer
+export type Message = Message_register_on_behalf_of | Message_register | Message_claim_reserved_name | Message_release | Message_transfer | Message_clear_expired_names | Message_set_primary_name | Message_set_address | Message_set_controller | Message_update_records | Message_get_name_status | Message_get_address_dict | Message_get_owner | Message_get_controller | Message_get_address | Message_get_registration_date | Message_get_expiry_date | Message_get_all_records | Message_get_record | Message_get_owned_names_of_address | Message_get_controlled_names_of_address | Message_get_resolving_names_of_address | Message_get_primary_name | Message_get_names_of_address | Message_get_metadata_size_limit | Message_get_admin | Message_get_tld | Message_get_base_uri | Message_is_whitelist_phase | Message_verify_proof | Message_withdraw | Message_switch_to_public_phase | Message_add_reserved_names | Message_remove_reserved_name | Message_set_metadata_size_limit | Message_upgrade_contract | Message_set_admin | Message_get_name_price | Message_validate_referrer | Message_PSP34_collection_id | Message_PSP34_balance_of | Message_PSP34_owner_of | Message_PSP34_allowance | Message_PSP34_approve | Message_PSP34_transfer | Message_PSP34_total_supply | Message_PSP34Enumerable_owners_token_by_index | Message_PSP34Enumerable_token_by_index | Message_PSP34Metadata_get_attribute | Message_Psp34Traits_get_owner | Message_Psp34Traits_token_uri | Message_Psp34Traits_set_base_uri | Message_Psp34Traits_get_attribute_count | Message_Psp34Traits_get_attribute_name | Message_Psp34Traits_get_attributes | Message_Psp34Traits_set_multiple_attributes
 
 /**
  *  Register specific name on behalf of some other address.
@@ -3597,8 +5062,12 @@ export interface Message_release {
  */
 export interface Message_transfer {
     __kind: 'transfer'
-    name: String
     to: AccountId
+    name: String
+    keepMetadata: bool
+    keepController: bool
+    keepResolving: bool
+    data: Uint8Array
 }
 
 /**
@@ -3606,7 +5075,7 @@ export interface Message_transfer {
  */
 export interface Message_clear_expired_names {
     __kind: 'clear_expired_names'
-    names: Vec
+    names: String[]
 }
 
 /**
@@ -3644,7 +5113,7 @@ export interface Message_update_records {
  */
 export interface Message_get_name_status {
     __kind: 'get_name_status'
-    names: Vec
+    names: String[]
 }
 
 /**
@@ -3676,6 +5145,11 @@ export interface Message_get_controller {
  */
 export interface Message_get_address {
     __kind: 'get_address'
+    name: String
+}
+
+export interface Message_get_registration_date {
+    __kind: 'get_registration_date'
     name: String
 }
 
@@ -3741,6 +5215,10 @@ export interface Message_get_tld {
     __kind: 'get_tld'
 }
 
+export interface Message_get_base_uri {
+    __kind: 'get_base_uri'
+}
+
 /**
  *  Returns `true` when contract is in whitelist-phase
  *  and `false` when it is in public-phase
@@ -3761,7 +5239,8 @@ export interface Message_verify_proof {
  */
 export interface Message_withdraw {
     __kind: 'withdraw'
-    value: Balance
+    beneficiary: (AccountId | undefined)
+    value: (u128 | undefined)
 }
 
 /**
@@ -3787,7 +5266,7 @@ export interface Message_add_reserved_names {
  */
 export interface Message_remove_reserved_name {
     __kind: 'remove_reserved_name'
-    set: Vec
+    set: String[]
 }
 
 /**
@@ -3796,7 +5275,7 @@ export interface Message_remove_reserved_name {
  */
 export interface Message_set_metadata_size_limit {
     __kind: 'set_metadata_size_limit'
-    limit: (number | undefined)
+    limit: (u32 | undefined)
 }
 
 /**
@@ -3827,6 +5306,97 @@ export interface Message_validate_referrer {
     referrerName: String
 }
 
+export interface Message_PSP34_collection_id {
+    __kind: 'PSP34_collection_id'
+}
+
+export interface Message_PSP34_balance_of {
+    __kind: 'PSP34_balance_of'
+    owner: AccountId
+}
+
+export interface Message_PSP34_owner_of {
+    __kind: 'PSP34_owner_of'
+    id: Id
+}
+
+export interface Message_PSP34_allowance {
+    __kind: 'PSP34_allowance'
+    owner: AccountId
+    operator: AccountId
+    id: (Id | undefined)
+}
+
+export interface Message_PSP34_approve {
+    __kind: 'PSP34_approve'
+    operator: AccountId
+    id: (Id | undefined)
+    approved: bool
+}
+
+export interface Message_PSP34_transfer {
+    __kind: 'PSP34_transfer'
+    to: AccountId
+    id: Id
+    data: Uint8Array
+}
+
+export interface Message_PSP34_total_supply {
+    __kind: 'PSP34_total_supply'
+}
+
+export interface Message_PSP34Enumerable_owners_token_by_index {
+    __kind: 'PSP34Enumerable_owners_token_by_index'
+    owner: AccountId
+    index: u128
+}
+
+export interface Message_PSP34Enumerable_token_by_index {
+    __kind: 'PSP34Enumerable_token_by_index'
+    index: u128
+}
+
+export interface Message_PSP34Metadata_get_attribute {
+    __kind: 'PSP34Metadata_get_attribute'
+    id: Id
+    key: Uint8Array
+}
+
+export interface Message_Psp34Traits_get_owner {
+    __kind: 'Psp34Traits_get_owner'
+}
+
+export interface Message_Psp34Traits_token_uri {
+    __kind: 'Psp34Traits_token_uri'
+    tokenId: Id
+}
+
+export interface Message_Psp34Traits_set_base_uri {
+    __kind: 'Psp34Traits_set_base_uri'
+    uri: String
+}
+
+export interface Message_Psp34Traits_get_attribute_count {
+    __kind: 'Psp34Traits_get_attribute_count'
+}
+
+export interface Message_Psp34Traits_get_attribute_name {
+    __kind: 'Psp34Traits_get_attribute_name'
+    index: u32
+}
+
+export interface Message_Psp34Traits_get_attributes {
+    __kind: 'Psp34Traits_get_attributes'
+    tokenId: Id
+    attributes: String[]
+}
+
+export interface Message_Psp34Traits_set_multiple_attributes {
+    __kind: 'Psp34Traits_set_multiple_attributes'
+    tokenId: Id
+    metadata: Vec
+}
+
 export type Constructor = Constructor_new
 
 /**
@@ -3840,12 +5410,11 @@ export interface Constructor_new {
     merkleVerifierAddr: (AccountId | undefined)
     reservedNames: ([String, (AccountId | undefined)][] | undefined)
     tld: String
-    metadataSizeLimit: (number | undefined)
+    baseUri: String
+    metadataSizeLimit: (u32 | undefined)
 }
 
 export type String = string
-
-export type Vec = String[]
 
 export type NameStatus = NameStatus_Registered | NameStatus_Reserved | NameStatus_Available | NameStatus_Unavailable
 
@@ -3879,7 +5448,7 @@ export interface AddressDict {
     resolved: AccountId
 }
 
-export type Error = Error_NotAdmin | Error_NameAlreadyExists | Error_NameDoesntExist | Error_NameNotAllowed | Error_CallerIsNotOwner | Error_CallerIsNotController | Error_FeeNotPaid | Error_NameEmpty | Error_RecordNotFound | Error_WithdrawFailed | Error_NoResolvedAddress | Error_AlreadyClaimed | Error_InvalidMerkleProof | Error_OnlyDuringWhitelistPhase | Error_RestrictedDuringWhitelistPhase | Error_CannotBuyReservedName | Error_NotReservedName | Error_NotAuthorised | Error_MetadataOverflow | Error_FeeError
+export type Error = Error_NotAdmin | Error_NameAlreadyExists | Error_NameDoesntExist | Error_NameNotAllowed | Error_CallerIsNotOwner | Error_CallerIsNotController | Error_FeeNotPaid | Error_NameEmpty | Error_RecordNotFound | Error_WithdrawFailed | Error_InsufficientBalance | Error_NoResolvedAddress | Error_AlreadyClaimed | Error_InvalidMerkleProof | Error_OnlyDuringWhitelistPhase | Error_RestrictedDuringWhitelistPhase | Error_CannotBuyReservedName | Error_NotReservedName | Error_NotAuthorised | Error_MetadataOverflow | Error_FeeError
 
 export interface Error_NotAdmin {
     __kind: 'NotAdmin'
@@ -3921,6 +5490,10 @@ export interface Error_WithdrawFailed {
     __kind: 'WithdrawFailed'
 }
 
+export interface Error_InsufficientBalance {
+    __kind: 'InsufficientBalance'
+}
+
 export interface Error_NoResolvedAddress {
     __kind: 'NoResolvedAddress'
 }
@@ -3959,28 +5532,92 @@ export interface Error_MetadataOverflow {
 
 export interface Error_FeeError {
     __kind: 'FeeError'
-    value: Type_23
+    value: Type_24
 }
 
 export type AccountId = Uint8Array
+
+export type Vec = [String, String][]
+
+export type u32 = number
 
 export type bool = boolean
 
 export type u8 = number
 
-export type Balance = bigint
+export type u128 = bigint
 
-export type Type_23 = Type_23_NotAdmin | Type_23_InvalidDuration | Type_23_ZeroLength
+export type Id = Id_U8 | Id_U16 | Id_U32 | Id_U64 | Id_U128 | Id_Bytes
 
-export interface Type_23_NotAdmin {
+export interface Id_U8 {
+    __kind: 'U8'
+    value: u8
+}
+
+export interface Id_U16 {
+    __kind: 'U16'
+    value: number
+}
+
+export interface Id_U32 {
+    __kind: 'U32'
+    value: u32
+}
+
+export interface Id_U64 {
+    __kind: 'U64'
+    value: bigint
+}
+
+export interface Id_U128 {
+    __kind: 'U128'
+    value: u128
+}
+
+export interface Id_Bytes {
+    __kind: 'Bytes'
+    value: Uint8Array
+}
+
+export type PSP34Error = PSP34Error_Custom | PSP34Error_SelfApprove | PSP34Error_NotApproved | PSP34Error_TokenExists | PSP34Error_TokenNotExists | PSP34Error_SafeTransferCheckFailed
+
+export interface PSP34Error_Custom {
+    __kind: 'Custom'
+    value: String
+}
+
+export interface PSP34Error_SelfApprove {
+    __kind: 'SelfApprove'
+}
+
+export interface PSP34Error_NotApproved {
+    __kind: 'NotApproved'
+}
+
+export interface PSP34Error_TokenExists {
+    __kind: 'TokenExists'
+}
+
+export interface PSP34Error_TokenNotExists {
+    __kind: 'TokenNotExists'
+}
+
+export interface PSP34Error_SafeTransferCheckFailed {
+    __kind: 'SafeTransferCheckFailed'
+    value: String
+}
+
+export type Type_24 = Type_24_NotAdmin | Type_24_InvalidDuration | Type_24_ZeroLength
+
+export interface Type_24_NotAdmin {
     __kind: 'NotAdmin'
 }
 
-export interface Type_23_InvalidDuration {
+export interface Type_24_InvalidDuration {
     __kind: 'InvalidDuration'
 }
 
-export interface Type_23_ZeroLength {
+export interface Type_24_ZeroLength {
     __kind: 'ZeroLength'
 }
 
