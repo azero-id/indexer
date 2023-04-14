@@ -1,9 +1,10 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, ManyToOne as ManyToOne_} from "typeorm"
+import {Owner} from "./owner.model"
 
 @Index_(["name", "tld"], {unique: true})
 @Entity_()
-export class Reservation {
-    constructor(props?: Partial<Reservation>) {
+export class Domain {
+    constructor(props?: Partial<Domain>) {
         Object.assign(this, props)
     }
 
@@ -18,10 +19,10 @@ export class Reservation {
     tld!: string
 
     @Index_()
-    @Column_("text", {nullable: true})
-    address!: string | undefined | null
+    @ManyToOne_(() => Owner, {nullable: true})
+    owner!: Owner
 
     @Index_()
     @Column_("timestamp with time zone", {nullable: false})
-    reservedAt!: Date
+    registeredAt!: Date
 }

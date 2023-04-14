@@ -7,11 +7,14 @@ import {
 import { Store, TypeormDatabase } from '@subsquid/typeorm-store'
 import { ContractIds, getContractAddress } from './deployments'
 import * as aznsRegistry from './deployments/azns_registry/generated/azns_registry'
+import { processDomains } from './processors/processDomains'
 import { processReservations } from './processors/processReservations'
+
+export type EventWithTimestamp<T> = { event: T; timestamp: Date }
 
 const main = async () => {
   // Determine contract addresses
-  const registryAddress = await getContractAddress(ContractIds.Registry, true)
+  const aznsRegistryDeployment = await getContractAddress(ContractIds.Registry, true)
 
   // Determine Subquid Archive URL
   if (process.env.CHAIN !== 'development' && !process.env.ARCHIVE) {
@@ -24,12 +27,12 @@ const main = async () => {
 
   // Create processor
   const processor = new SubstrateBatchProcessor()
-    .setBlockRange({ from: 0 })
+    .setBlockRange({ from: aznsRegistryDeployment.blockNumber })
     .setDataSource({
       chain: process.env.RPC,
       archive: archive,
     })
-    .addContractsContractEmitted(registryAddress, {
+    .addContractsContractEmitted(aznsRegistryDeployment.addressHex, {
       data: {
         event: { args: true },
       },
@@ -45,7 +48,7 @@ const main = async () => {
     contractAddress: string,
     decodeEvent: (hex: string) => T,
   ) => {
-    const events: T[] = []
+    const events: EventWithTimestamp<T>[] = []
     for (const block of ctx.blocks) {
       for (const item of block.items) {
         if (
@@ -53,7 +56,10 @@ const main = async () => {
           item.event.args.contract === contractAddress
         ) {
           const event = decodeEvent(item.event.args.data)
-          events.push(event)
+          events.push({
+            event,
+            timestamp: new Date(block.header.timestamp),
+          })
         }
       }
     }
@@ -64,9 +70,12 @@ const main = async () => {
   processor.run(new TypeormDatabase(), async (ctx) => {
     const registryEvents = extractContractEvents<aznsRegistry.Event>(
       ctx,
-      registryAddress,
+      aznsRegistryDeployment.addressHex,
       aznsRegistry.decodeEvent,
     )
+
+    // Process domains
+    await processDomains(ctx.store, registryEvents)
 
     // Process domain reservations
     await processReservations(ctx.store, registryEvents)

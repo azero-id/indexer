@@ -1,6 +1,20 @@
-type Reservation @entity {
-  id: ID!
-  name: String!
-  tld: String!
-  address: String
+type Domain @entity @index(fields: ["name", "tld"], unique: true) {
+  id: ID! @index @unique
+  name: String! @index
+  tld: String! @index
+  owner: Owner! @index
+  registeredAt: DateTime! @index
+}
+
+type Owner @entity {
+  id: ID! @index @unique
+  domains: [Domain!] @derivedFrom(field: "owner")
+}
+
+type Reservation @entity @index(fields: ["name", "tld"], unique: true) {
+  id: ID! @index @unique
+  name: String! @index
+  tld: String! @index
+  address: String @index
+  reservedAt: DateTime! @index
 }
