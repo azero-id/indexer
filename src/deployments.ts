@@ -15,19 +15,24 @@ export enum ContractIds {
 export const getContractAddress = async (
   contract: ContractIds,
   asHex: boolean,
-): Promise<string> => {
+): Promise<{ address: string; addressHex: string; blockNumber: number }> => {
   const chain = process.env.CHAIN
   if (!chain) throw new Error('`CHAIN` environment variable is not set.')
 
-  let address
+  let deployment
   try {
-    address = (await import(`./deployments/${contract}/${chain}`)).address
+    deployment = await import(`./deployments/${contract}/${chain}`)
   } catch (e) {
     throw new Error(`Contract address of '${contract}' not found for chain '${chain}'.`)
   }
 
-  if (asHex) {
-    address = toHex(ss58.decode(address).bytes)
+  const address = deployment.address
+  const addressHex = toHex(ss58.decode(address).bytes)
+  const blockNumber = deployment.blockNumber
+
+  return {
+    address,
+    addressHex,
+    blockNumber,
   }
-  return address
 }
