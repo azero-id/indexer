@@ -1,8 +1,8 @@
 {
   "source": {
-    "hash": "0xebc1c0535a481b93242a300fd90da17a1d9ee0cc73a1ae222b5322b6e803ba53",
-    "language": "ink! 4.0.1",
-    "compiler": "rustc 1.68.0",
+    "hash": "0x175c695fb84c4b6f63c5fb95040d269d1cc3eee90df74598b17be097726c4d57",
+    "language": "ink! 4.2.0",
+    "compiler": "rustc 1.69.0",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "2.1.0",
@@ -41,6 +41,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "new",
         "payable": false,
@@ -55,6 +56,45 @@
       }
     ],
     "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 0
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 14
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 17
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 18
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 15
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 16
+      }
+    },
     "events": [],
     "lang_error": {
       "displayName": [
@@ -74,6 +114,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "update_root",
         "mutates": true,
@@ -89,6 +130,7 @@
       },
       {
         "args": [],
+        "default": false,
         "docs": [
           " Returns the merkle root"
         ],
@@ -123,6 +165,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [
           " Verifies inclusion of leaf in the merkle tree"
         ],
@@ -140,6 +183,7 @@
       },
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_admin",
         "mutates": false,
@@ -165,6 +209,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "set_admin",
         "mutates": true,
@@ -570,6 +615,63 @@
         ],
         "path": [
           "Result"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 1,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
         ]
       }
     }

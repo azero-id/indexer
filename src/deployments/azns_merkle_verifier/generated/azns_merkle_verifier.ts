@@ -2,9 +2,9 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0xebc1c0535a481b93242a300fd90da17a1d9ee0cc73a1ae222b5322b6e803ba53",
-    "language": "ink! 4.0.1",
-    "compiler": "rustc 1.68.0",
+    "hash": "0x175c695fb84c4b6f63c5fb95040d269d1cc3eee90df74598b17be097726c4d57",
+    "language": "ink! 4.2.0",
+    "compiler": "rustc 1.69.0",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "2.1.0",
@@ -43,6 +43,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "new",
         "payable": false,
@@ -57,6 +58,45 @@ export const metadata = {
       }
     ],
     "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 0
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 14
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 17
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 18
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 15
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 16
+      }
+    },
     "events": [],
     "lang_error": {
       "displayName": [
@@ -76,6 +116,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "update_root",
         "mutates": true,
@@ -91,6 +132,7 @@ export const metadata = {
       },
       {
         "args": [],
+        "default": false,
         "docs": [
           " Returns the merkle root"
         ],
@@ -125,6 +167,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [
           " Verifies inclusion of leaf in the merkle tree"
         ],
@@ -142,6 +185,7 @@ export const metadata = {
       },
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_admin",
         "mutates": false,
@@ -167,6 +211,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "set_admin",
         "mutates": true,
@@ -572,6 +617,63 @@ export const metadata = {
         ],
         "path": [
           "Result"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 1,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
         ]
       }
     }

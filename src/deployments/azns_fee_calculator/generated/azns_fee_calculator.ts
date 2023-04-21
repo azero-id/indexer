@@ -2,9 +2,9 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x037435e832466d9411128e16b63d56fd1242af0bc70498ae771e86f18a3917ba",
-    "language": "ink! 4.0.1",
-    "compiler": "rustc 1.68.0",
+    "hash": "0xfde1a3a138f80962dadce409352446d8d2c19116e8e6a03ee21a5456aa22a00b",
+    "language": "ink! 4.2.0",
+    "compiler": "rustc 1.69.0",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "2.1.0",
@@ -63,6 +63,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [
           "Constructor that initializes the `bool` value to the given `init_value`."
         ],
@@ -79,6 +80,45 @@ export const metadata = {
       }
     ],
     "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 0
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 3
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 25
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 26
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 23
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 24
+      }
+    },
     "events": [],
     "lang_error": {
       "displayName": [
@@ -90,6 +130,7 @@ export const metadata = {
     "messages": [
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_max_registration_duration",
         "mutates": false,
@@ -124,6 +165,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "get_name_price",
         "mutates": false,
@@ -139,6 +181,7 @@ export const metadata = {
       },
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_common_price",
         "mutates": false,
@@ -164,6 +207,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "get_price_by_length",
         "mutates": false,
@@ -179,6 +223,7 @@ export const metadata = {
       },
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_admin",
         "mutates": false,
@@ -204,6 +249,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "set_max_registration_duration",
         "mutates": true,
@@ -229,6 +275,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "set_common_price",
         "mutates": true,
@@ -254,6 +301,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "set_prices_by_length",
         "mutates": true,
@@ -279,6 +327,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "set_admin",
         "mutates": true,
@@ -302,6 +351,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "upgrade_contract",
         "mutates": true,
@@ -942,6 +992,55 @@ export const metadata = {
             17
           ]
         }
+      }
+    },
+    {
+      "id": 23,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 1,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 26,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
+        ]
       }
     }
   ],

@@ -2,9 +2,9 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x1633d7e160548caa699f80054fb0124672b6db4b470087ca826b480d02af81a2",
-    "language": "ink! 4.0.1",
-    "compiler": "rustc 1.68.0",
+    "hash": "0xd26742c117c7be936c14be24cd87c9680d5f2eee8fd80df8ad348e7320486ddf",
+    "language": "ink! 4.2.0",
+    "compiler": "rustc 1.69.0",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "2.1.0",
@@ -36,6 +36,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "new",
         "payable": false,
@@ -50,6 +51,45 @@ export const metadata = {
       }
     ],
     "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 0
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 16
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 19
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 20
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 17
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 18
+      }
+    },
     "events": [],
     "lang_error": {
       "displayName": [
@@ -80,6 +120,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "add_registry",
         "mutates": true,
@@ -114,6 +155,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "update_registry",
         "mutates": true,
@@ -139,6 +181,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "get_registry",
         "mutates": false,
@@ -164,6 +207,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "get_address",
         "mutates": false,
@@ -179,6 +223,7 @@ export const metadata = {
       },
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_admin",
         "mutates": false,
@@ -204,6 +249,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "set_admin",
         "mutates": true,
@@ -227,6 +273,7 @@ export const metadata = {
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "upgrade_contract",
         "mutates": true,
@@ -738,6 +785,63 @@ export const metadata = {
         ],
         "path": [
           "Result"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 1,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
         ]
       }
     }
