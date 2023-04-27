@@ -8,9 +8,10 @@ import { Store, TypeormDatabase } from '@subsquid/typeorm-store'
 import { ContractIds, getContractAddress } from './deployments'
 import * as aznsRegistry from './deployments/azns_registry/generated/azns_registry'
 import { processDomains } from './processors/processDomains'
+import { processPublicPhaseActivation } from './processors/processPublicPhaseActivation'
 import { processReservations } from './processors/processReservations'
 
-export type EventWithTimestamp<T> = { event: T; timestamp: Date }
+export type EventWithMeta<T> = { event: T; id: string; timestamp: Date; fee: bigint }
 
 const main = async () => {
   // Determine contract addresses
@@ -34,7 +35,12 @@ const main = async () => {
     })
     .addContractsContractEmitted(aznsRegistryDeployment.addressHex, {
       data: {
-        event: { args: true },
+        event: {
+          args: true,
+          extrinsic: {
+            fee: true,
+          },
+        },
       },
     } as const)
 
@@ -48,17 +54,20 @@ const main = async () => {
     contractAddress: string,
     decodeEvent: (hex: string) => T,
   ) => {
-    const events: EventWithTimestamp<T>[] = []
+    const events: EventWithMeta<T>[] = []
     for (const block of ctx.blocks) {
       for (const item of block.items) {
         if (
+          item.kind === 'event' &&
           item.name === 'Contracts.ContractEmitted' &&
           item.event.args.contract === contractAddress
         ) {
           const event = decodeEvent(item.event.args.data)
           events.push({
             event,
+            id: item.event.id,
             timestamp: new Date(block.header.timestamp),
+            fee: item.event.extrinsic?.fee || 0n,
           })
         }
       }
@@ -73,6 +82,9 @@ const main = async () => {
       aznsRegistryDeployment.addressHex,
       aznsRegistry.decodeEvent,
     )
+
+    // Process active phase (whitelist → public)
+    await processPublicPhaseActivation(ctx.store, registryEvents)
 
     // Process domains
     await processDomains(ctx.store, registryEvents)

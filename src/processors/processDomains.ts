@@ -1,15 +1,15 @@
-import * as ss58 from '@subsquid/ss58'
 import { Store } from '@subsquid/typeorm-store'
-import { EventWithTimestamp } from 'src/processor'
+import { EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Domain, Owner } from '../model'
+import { ss58Encode } from '../utils/ss58Encode'
 
 /**
  * Process domain events.
  */
 export const processDomains = async (
   store: Store,
-  registryEvents: EventWithTimestamp<aznsRegistry.Event>[],
+  registryEvents: EventWithMeta<aznsRegistry.Event>[],
 ) => {
   await processDomainTransfers(store, registryEvents)
 }
@@ -19,11 +19,11 @@ export const processDomains = async (
  */
 export const processDomainTransfers = async <I>(
   store: Store,
-  registryEvents: EventWithTimestamp<aznsRegistry.Event>[],
+  registryEvents: EventWithMeta<aznsRegistry.Event>[],
 ) => {
   const transferEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Transfer',
-  ) as EventWithTimestamp<aznsRegistry.Event_Transfer>[]
+  ) as EventWithMeta<aznsRegistry.Event_Transfer>[]
 
   for (const { event, timestamp } of transferEvents) {
     console.log(event)
@@ -31,8 +31,8 @@ export const processDomainTransfers = async <I>(
     const nameBuffer = (event.id as aznsRegistry.Id_Bytes).value
     const name = Buffer.from(nameBuffer).toString('utf-8')
     const id = `${name}.${tld}`
-    const from = event.from && ss58.codec(42).encode(event.from)
-    const to = event.to && ss58.codec(42).encode(event.to)
+    const from = ss58Encode(event.from)
+    const to = ss58Encode(event.to)
 
     // Determine event type
     const isRegister = !from && to

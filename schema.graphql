@@ -1,3 +1,8 @@
+type PublicPhaseActivated @entity {
+  id: ID! @index @unique
+  activatedAt: DateTime! @index
+}
+
 type Domain @entity @index(fields: ["name", "tld"], unique: true) {
   id: ID! @index @unique
   name: String! @index
