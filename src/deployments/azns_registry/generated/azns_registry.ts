@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x516f2cdde68c6aa5dcae73070e33654edaf5950eb3af1df9bb867ab4a9868b41",
+    "hash": "0x7372bbd58b0763316ecea502ee9e0f124d60909d865c7480c76103db14d75ed7",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -121,13 +121,13 @@ export const metadata = {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 71
+        "type": 72
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 70
+        "type": 71
       },
       "maxEventTopics": 4,
       "timestamp": {
@@ -484,7 +484,7 @@ export const metadata = {
               "displayName": [
                 "Id"
               ],
-              "type": 58
+              "type": 59
             }
           }
         ],
@@ -525,7 +525,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 62
+              "type": 63
             }
           },
           {
@@ -1388,6 +1388,32 @@ export const metadata = {
         ],
         "default": false,
         "docs": [],
+        "label": "get_primary_domain",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 45
+        },
+        "selector": "0xbf5b5677"
+      },
+      {
+        "args": [
+          {
+            "label": "address",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
         "label": "get_names_of_address",
         "mutates": false,
         "payable": false,
@@ -1422,7 +1448,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 45
+          "type": 46
         },
         "selector": "0xb779edfe"
       },
@@ -1448,7 +1474,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 45
+          "type": 46
         },
         "selector": "0xf5e0d676"
       },
@@ -1474,7 +1500,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 45
+          "type": 46
         },
         "selector": "0x28610555"
       },
@@ -1490,7 +1516,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 46
+          "type": 47
         },
         "selector": "0x8405efa0"
       },
@@ -1506,7 +1532,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 48
+          "type": 49
         },
         "selector": "0x57b8a8a7"
       },
@@ -1522,7 +1548,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 49
+          "type": 50
         },
         "selector": "0xd61daed4"
       },
@@ -1538,7 +1564,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 49
+          "type": 50
         },
         "selector": "0x6e06617c"
       },
@@ -1557,7 +1583,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 50
+          "type": 51
         },
         "selector": "0x59d8255b"
       },
@@ -1592,7 +1618,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 50
+          "type": 51
         },
         "selector": "0x71c9d9ba"
       },
@@ -1613,7 +1639,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 51
+              "type": 52
             }
           }
         ],
@@ -1661,7 +1687,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 52
+              "type": 53
             }
           }
         ],
@@ -1719,7 +1745,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 47
+              "type": 48
             }
           }
         ],
@@ -1842,7 +1868,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 54
+          "type": 55
         },
         "selector": "0xb565be46"
       },
@@ -1877,7 +1903,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 50
+          "type": 51
         },
         "selector": "0x30fc989d"
       },
@@ -1893,7 +1919,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 57
+          "type": 58
         },
         "selector": "0xffa27a5f"
       },
@@ -1919,7 +1945,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 60
+          "type": 61
         },
         "selector": "0xcde7e55f"
       },
@@ -1931,7 +1957,7 @@ export const metadata = {
               "displayName": [
                 "Id"
               ],
-              "type": 58
+              "type": 59
             }
           }
         ],
@@ -1945,7 +1971,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 61
+          "type": 62
         },
         "selector": "0x1168624d"
       },
@@ -1975,7 +2001,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 62
+              "type": 63
             }
           }
         ],
@@ -1989,7 +2015,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 50
+          "type": 51
         },
         "selector": "0x4790f55a"
       },
@@ -2010,7 +2036,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 62
+              "type": 63
             }
           },
           {
@@ -2054,7 +2080,7 @@ export const metadata = {
               "displayName": [
                 "Id"
               ],
-              "type": 58
+              "type": 59
             }
           },
           {
@@ -2093,7 +2119,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 45
+          "type": 46
         },
         "selector": "0x628413fe"
       },
@@ -2128,7 +2154,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 63
+          "type": 64
         },
         "selector": "0x3bcfb511"
       },
@@ -2154,7 +2180,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 63
+          "type": 64
         },
         "selector": "0xcd0340d0"
       },
@@ -2166,7 +2192,7 @@ export const metadata = {
               "displayName": [
                 "Id"
               ],
-              "type": 58
+              "type": 59
             }
           },
           {
@@ -2189,7 +2215,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 65
+          "type": 66
         },
         "selector": "0xf19d48d1"
       },
@@ -2205,7 +2231,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 48
+          "type": 49
         },
         "selector": "0x8e1d8d71"
       },
@@ -2217,7 +2243,7 @@ export const metadata = {
               "displayName": [
                 "Id"
               ],
-              "type": 58
+              "type": 59
             }
           }
         ],
@@ -2231,7 +2257,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 49
+          "type": 50
         },
         "selector": "0x249dfd4f"
       },
@@ -2257,7 +2283,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 67
+          "type": 68
         },
         "selector": "0x4de6850b"
       },
@@ -2273,7 +2299,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 60
+          "type": 61
         },
         "selector": "0x61c50d69"
       },
@@ -2299,7 +2325,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 49
+          "type": 50
         },
         "selector": "0xfcfe34de"
       },
@@ -2311,7 +2337,7 @@ export const metadata = {
               "displayName": [
                 "Id"
               ],
-              "type": 58
+              "type": 59
             }
           },
           {
@@ -2346,7 +2372,7 @@ export const metadata = {
               "displayName": [
                 "Id"
               ],
-              "type": 58
+              "type": 59
             }
           },
           {
@@ -2369,7 +2395,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 67
+          "type": 68
         },
         "selector": "0x5bf8416b"
       }
@@ -4205,6 +4231,48 @@ export const metadata = {
               {
                 "fields": [
                   {
+                    "type": 13
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 13
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
                     "type": 9
                   }
                 ],
@@ -4239,7 +4307,7 @@ export const metadata = {
       }
     },
     {
-      "id": 46,
+      "id": 47,
       "type": {
         "def": {
           "variant": {
@@ -4247,7 +4315,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 47
+                    "type": 48
                   }
                 ],
                 "index": 0,
@@ -4268,7 +4336,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 47
+            "type": 48
           },
           {
             "name": "E",
@@ -4281,7 +4349,7 @@ export const metadata = {
       }
     },
     {
-      "id": 47,
+      "id": 48,
       "type": {
         "def": {
           "variant": {
@@ -4314,7 +4382,7 @@ export const metadata = {
       }
     },
     {
-      "id": 48,
+      "id": 49,
       "type": {
         "def": {
           "variant": {
@@ -4356,7 +4424,7 @@ export const metadata = {
       }
     },
     {
-      "id": 49,
+      "id": 50,
       "type": {
         "def": {
           "variant": {
@@ -4398,7 +4466,7 @@ export const metadata = {
       }
     },
     {
-      "id": 50,
+      "id": 51,
       "type": {
         "def": {
           "variant": {
@@ -4440,7 +4508,7 @@ export const metadata = {
       }
     },
     {
-      "id": 51,
+      "id": 52,
       "type": {
         "def": {
           "variant": {
@@ -4473,23 +4541,12 @@ export const metadata = {
       }
     },
     {
-      "id": 52,
-      "type": {
-        "def": {
-          "sequence": {
-            "type": 53
-          }
-        }
-      }
-    },
-    {
       "id": 53,
       "type": {
         "def": {
-          "tuple": [
-            7,
-            10
-          ]
+          "sequence": {
+            "type": 54
+          }
         }
       }
     },
@@ -4497,42 +4554,11 @@ export const metadata = {
       "id": 54,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 55
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 12
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 55
-          },
-          {
-            "name": "E",
-            "type": 12
-          }
-        ],
-        "path": [
-          "Result"
-        ]
+          "tuple": [
+            7,
+            10
+          ]
+        }
       }
     },
     {
@@ -4553,7 +4579,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 18
+                    "type": 12
                   }
                 ],
                 "index": 1,
@@ -4569,7 +4595,7 @@ export const metadata = {
           },
           {
             "name": "E",
-            "type": 18
+            "type": 12
           }
         ],
         "path": [
@@ -4579,6 +4605,48 @@ export const metadata = {
     },
     {
       "id": 56,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 57
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 18
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 57
+          },
+          {
+            "name": "E",
+            "type": 18
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 57,
       "type": {
         "def": {
           "tuple": [
@@ -4591,7 +4659,7 @@ export const metadata = {
       }
     },
     {
-      "id": 57,
+      "id": 58,
       "type": {
         "def": {
           "variant": {
@@ -4599,7 +4667,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 58
+                    "type": 59
                   }
                 ],
                 "index": 0,
@@ -4620,7 +4688,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 58
+            "type": 59
           },
           {
             "name": "E",
@@ -4633,7 +4701,7 @@ export const metadata = {
       }
     },
     {
-      "id": 58,
+      "id": 59,
       "type": {
         "def": {
           "variant": {
@@ -4651,7 +4719,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 59,
+                    "type": 60,
                     "typeName": "u16"
                   }
                 ],
@@ -4709,7 +4777,7 @@ export const metadata = {
       }
     },
     {
-      "id": 59,
+      "id": 60,
       "type": {
         "def": {
           "primitive": "u16"
@@ -4717,7 +4785,7 @@ export const metadata = {
       }
     },
     {
-      "id": 60,
+      "id": 61,
       "type": {
         "def": {
           "variant": {
@@ -4759,7 +4827,7 @@ export const metadata = {
       }
     },
     {
-      "id": 61,
+      "id": 62,
       "type": {
         "def": {
           "variant": {
@@ -4801,7 +4869,7 @@ export const metadata = {
       }
     },
     {
-      "id": 62,
+      "id": 63,
       "type": {
         "def": {
           "variant": {
@@ -4813,7 +4881,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 58
+                    "type": 59
                   }
                 ],
                 "index": 1,
@@ -4825,7 +4893,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 58
+            "type": 59
           }
         ],
         "path": [
@@ -4834,7 +4902,7 @@ export const metadata = {
       }
     },
     {
-      "id": 63,
+      "id": 64,
       "type": {
         "def": {
           "variant": {
@@ -4842,7 +4910,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 64
+                    "type": 65
                   }
                 ],
                 "index": 0,
@@ -4863,7 +4931,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 64
+            "type": 65
           },
           {
             "name": "E",
@@ -4876,7 +4944,7 @@ export const metadata = {
       }
     },
     {
-      "id": 64,
+      "id": 65,
       "type": {
         "def": {
           "variant": {
@@ -4884,7 +4952,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 58
+                    "type": 59
                   }
                 ],
                 "index": 0,
@@ -4905,7 +4973,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 58
+            "type": 59
           },
           {
             "name": "E",
@@ -4918,7 +4986,7 @@ export const metadata = {
       }
     },
     {
-      "id": 65,
+      "id": 66,
       "type": {
         "def": {
           "variant": {
@@ -4926,7 +4994,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 66
+                    "type": 67
                   }
                 ],
                 "index": 0,
@@ -4947,7 +5015,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 66
+            "type": 67
           },
           {
             "name": "E",
@@ -4960,7 +5028,7 @@ export const metadata = {
       }
     },
     {
-      "id": 66,
+      "id": 67,
       "type": {
         "def": {
           "variant": {
@@ -4993,7 +5061,7 @@ export const metadata = {
       }
     },
     {
-      "id": 67,
+      "id": 68,
       "type": {
         "def": {
           "variant": {
@@ -5001,7 +5069,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 68
+                    "type": 69
                   }
                 ],
                 "index": 0,
@@ -5022,7 +5090,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 68
+            "type": 69
           },
           {
             "name": "E",
@@ -5035,7 +5103,7 @@ export const metadata = {
       }
     },
     {
-      "id": 68,
+      "id": 69,
       "type": {
         "def": {
           "variant": {
@@ -5052,7 +5120,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 69
+                    "type": 70
                   }
                 ],
                 "index": 1,
@@ -5068,7 +5136,7 @@ export const metadata = {
           },
           {
             "name": "E",
-            "type": 69
+            "type": 70
           }
         ],
         "path": [
@@ -5077,7 +5145,7 @@ export const metadata = {
       }
     },
     {
-      "id": 69,
+      "id": 70,
       "type": {
         "def": {
           "variant": {
@@ -5103,7 +5171,7 @@ export const metadata = {
       }
     },
     {
-      "id": 70,
+      "id": 71,
       "type": {
         "def": {
           "composite": {
@@ -5123,7 +5191,7 @@ export const metadata = {
       }
     },
     {
-      "id": 71,
+      "id": 72,
       "type": {
         "def": {
           "variant": {}
@@ -5212,6 +5280,10 @@ export class Contract {
 
     get_primary_name(address: AccountId): Promise<Result<Result<String, Error>, LangError>> {
         return this.stateCall('0x404f1d73', [address])
+    }
+
+    get_primary_domain(address: AccountId): Promise<Result<(String | undefined), LangError>> {
+        return this.stateCall('0xbf5b5677', [address])
     }
 
     get_names_of_address(address: AccountId): Promise<Result<String[], LangError>> {
@@ -5403,7 +5475,7 @@ export interface Event_Reserve {
     action: bool
 }
 
-export type Message = Message_register_on_behalf_of | Message_register | Message_claim_reserved_name | Message_release | Message_transfer | Message_clear_expired_names | Message_set_primary_name | Message_set_address | Message_set_controller | Message_update_records | Message_get_name_status | Message_get_address_dict | Message_get_owner | Message_get_controller | Message_get_address | Message_get_registration_period | Message_get_all_records | Message_get_record | Message_get_owned_names_of_address | Message_get_controlled_names_of_address | Message_get_resolving_names_of_address | Message_get_primary_name | Message_get_names_of_address | Message_get_owner_to_name_count | Message_get_controller_to_name_count | Message_get_resolving_to_name_count | Message_get_records_size_limit | Message_get_admin | Message_get_tld | Message_get_base_uri | Message_is_whitelist_phase | Message_verify_proof | Message_withdraw | Message_switch_to_public_phase | Message_add_reserved_names | Message_remove_reserved_name | Message_set_records_size_limit | Message_upgrade_contract | Message_set_admin | Message_get_name_price | Message_validate_referrer | Message_PSP34_collection_id | Message_PSP34_balance_of | Message_PSP34_owner_of | Message_PSP34_allowance | Message_PSP34_approve | Message_PSP34_transfer | Message_PSP34_total_supply | Message_PSP34Enumerable_owners_token_by_index | Message_PSP34Enumerable_token_by_index | Message_PSP34Metadata_get_attribute | Message_Psp34Traits_get_owner | Message_Psp34Traits_token_uri | Message_Psp34Traits_set_base_uri | Message_Psp34Traits_get_attribute_count | Message_Psp34Traits_get_attribute_name | Message_Psp34Traits_get_attributes | Message_Psp34Traits_set_multiple_attributes
+export type Message = Message_register_on_behalf_of | Message_register | Message_claim_reserved_name | Message_release | Message_transfer | Message_clear_expired_names | Message_set_primary_name | Message_set_address | Message_set_controller | Message_update_records | Message_get_name_status | Message_get_address_dict | Message_get_owner | Message_get_controller | Message_get_address | Message_get_registration_period | Message_get_all_records | Message_get_record | Message_get_owned_names_of_address | Message_get_controlled_names_of_address | Message_get_resolving_names_of_address | Message_get_primary_name | Message_get_primary_domain | Message_get_names_of_address | Message_get_owner_to_name_count | Message_get_controller_to_name_count | Message_get_resolving_to_name_count | Message_get_records_size_limit | Message_get_admin | Message_get_tld | Message_get_base_uri | Message_is_whitelist_phase | Message_verify_proof | Message_withdraw | Message_switch_to_public_phase | Message_add_reserved_names | Message_remove_reserved_name | Message_set_records_size_limit | Message_upgrade_contract | Message_set_admin | Message_get_name_price | Message_validate_referrer | Message_PSP34_collection_id | Message_PSP34_balance_of | Message_PSP34_owner_of | Message_PSP34_allowance | Message_PSP34_approve | Message_PSP34_transfer | Message_PSP34_total_supply | Message_PSP34Enumerable_owners_token_by_index | Message_PSP34Enumerable_token_by_index | Message_PSP34Metadata_get_attribute | Message_Psp34Traits_get_owner | Message_Psp34Traits_token_uri | Message_Psp34Traits_set_base_uri | Message_Psp34Traits_get_attribute_count | Message_Psp34Traits_get_attribute_name | Message_Psp34Traits_get_attributes | Message_Psp34Traits_set_multiple_attributes
 
 /**
  *  Register specific name on behalf of some other address.
@@ -5584,6 +5656,11 @@ export interface Message_get_resolving_names_of_address {
 
 export interface Message_get_primary_name {
     __kind: 'get_primary_name'
+    address: AccountId
+}
+
+export interface Message_get_primary_domain {
+    __kind: 'get_primary_domain'
     address: AccountId
 }
 
