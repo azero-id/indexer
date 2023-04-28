@@ -82,11 +82,17 @@ The Squid is deployed to [Aquarium](https://app.subsquid.io/) (hosted service by
 # Prerequisite: Install & authenticate Squid CLI
 sqd auth -k <DEPLOYMENT_KEY>
 
-# Deploy Squid for Aleph Zero Testnet
+# Bump version in manifest-file
+
+# A: Deploy Squid for Aleph Zero Testnet
 sqd deploy . -m squid.azns-testnet.yaml
 
-# TODO: Deploy Squid for Aleph Zero Mainnet
-# sqd deploy . -m squid.azns-mainnet.yaml
+# B: Deploy Squid for Aleph Zero Mainnet
+# TODO: sqd deploy . -m squid.azns-mainnet.yaml
+
+# After successful initialization, assign newly
+# deployed squid to the production endpoint
+sqd prod azns-testnet@v2
 ```
 
 ## Other Resources
