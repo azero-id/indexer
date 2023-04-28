@@ -12,6 +12,7 @@ deploy:
     cmd: ['node', 'lib/processor']
     env:
       CHAIN: alephzero
+      CHAIN_PREFIX: 42
       RPC: wss://ws.azero.dev
       ARCHIVE: aleph-zero
   api:
