@@ -1,7 +1,7 @@
 {
   "name": "@azns/indexer",
-  "author": "AZERO Domains <hello@azero.domains> (https://azero.domains)",
-  "homepage": "https://azero.domains",
+  "author": "AZERO.ID <hello@azero.id> (https://azero.id)",
+  "homepage": "https://azero.id",
   "engines": {
     "node": "16"
   },

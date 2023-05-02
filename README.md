@@ -1,6 +1,6 @@
-# AZERO Domains – Indexer (Subsquid)
+# AZERO.ID – Indexer (Subsquid)
 
-This repository contains a [Subsquid](https://docs.subsquid.io/), indexing the smart contracts of AZERO Domains.
+This repository contains a [Subsquid](https://docs.subsquid.io/), indexing the smart contracts of [AZERO.ID](https://azero.id).
 
 ## Development
 
