@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x00b7d70a31733a59e729ff3eee4558f5459c1b937a82e5fd7313b88469f5f459",
+    "hash": "0xeec6332d76e6e97dda0033d806715327b9ef8127f3f25869fce5b0945750f567",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -17,9 +17,9 @@ export const metadata = {
   },
   "contract": {
     "name": "azns_name_checker",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "authors": [
-      "AZERO Domains <hello@azero.domains>"
+      "AZERO.ID <hello@azero.id>"
     ]
   },
   "spec": {
@@ -87,7 +87,7 @@ export const metadata = {
         "displayName": [
           "Balance"
         ],
-        "type": 17
+        "type": 19
       },
       "blockNumber": {
         "displayName": [
@@ -99,20 +99,20 @@ export const metadata = {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 20
+        "type": 22
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 18
+        "type": 20
       },
       "maxEventTopics": 4,
       "timestamp": {
         "displayName": [
           "Timestamp"
         ],
-        "type": 19
+        "type": 21
       }
     },
     "events": [],
@@ -154,22 +154,6 @@ export const metadata = {
         "args": [],
         "default": false,
         "docs": [],
-        "label": "get_admin",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 14
-        },
-        "selector": "0x57b8a8a7"
-      },
-      {
-        "args": [],
-        "default": false,
-        "docs": [],
         "label": "get_allowed_unicode_ranges",
         "mutates": false,
         "payable": false,
@@ -178,7 +162,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 15
+          "type": 14
         },
         "selector": "0x760d33f9"
       },
@@ -194,7 +178,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 15
+          "type": 14
         },
         "selector": "0x5db54a26"
       },
@@ -210,7 +194,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 16
+          "type": 15
         },
         "selector": "0x2e96f458"
       },
@@ -291,20 +275,52 @@ export const metadata = {
         "selector": "0x98178dbc"
       },
       {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 16
+        },
+        "selector": "0x57b8a8a7"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_pending_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 17
+        },
+        "selector": "0xbcd31d76"
+      },
+      {
         "args": [
           {
             "label": "account",
             "type": {
               "displayName": [
-                "AccountId"
+                "Option"
               ],
-              "type": 0
+              "type": 18
             }
           }
         ],
         "default": false,
         "docs": [],
-        "label": "set_admin",
+        "label": "transfer_ownership",
         "mutates": true,
         "payable": false,
         "returnType": {
@@ -314,7 +330,23 @@ export const metadata = {
           ],
           "type": 11
         },
-        "selector": "0x798dcad5"
+        "selector": "0x107e33ea"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "accept_ownership",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 11
+        },
+        "selector": "0xb55be9f0"
       },
       {
         "args": [
@@ -336,7 +368,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 11
+          "type": 7
         },
         "selector": "0x1345543d"
       }
@@ -358,21 +390,32 @@ export const metadata = {
             },
             {
               "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 3
+                "enum": {
+                  "dispatchKey": "0x00000000",
+                  "name": "Option",
+                  "variants": {
+                    "0": {
+                      "fields": [],
+                      "name": "None"
+                    },
+                    "1": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x00000000",
+                              "ty": 0
+                            }
+                          },
+                          "name": "0"
+                        }
+                      ],
+                      "name": "Some"
+                    }
+                  }
                 }
               },
-              "name": "allowed_unicode_ranges"
-            },
-            {
-              "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 3
-                }
-              },
-              "name": "disallowed_unicode_ranges_for_edges"
+              "name": "pending_admin"
             },
             {
               "layout": {
@@ -401,6 +444,24 @@ export const metadata = {
                 }
               },
               "name": "allowed_length"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "allowed_unicode_ranges"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "disallowed_unicode_ranges_for_edges"
             }
           ],
           "name": "NameChecker"
@@ -685,6 +746,10 @@ export const metadata = {
               {
                 "index": 3,
                 "name": "ContainsDisallowedCharacters"
+              },
+              {
+                "index": 4,
+                "name": "InvalidRange"
               }
             ]
           }
@@ -698,48 +763,6 @@ export const metadata = {
     },
     {
       "id": 14,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 9
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 0
-          },
-          {
-            "name": "E",
-            "type": 9
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 15,
       "type": {
         "def": {
           "variant": {
@@ -781,7 +804,7 @@ export const metadata = {
       }
     },
     {
-      "id": 16,
+      "id": 15,
       "type": {
         "def": {
           "variant": {
@@ -823,7 +846,124 @@ export const metadata = {
       }
     },
     {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
       "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 18
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 18
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 19,
       "type": {
         "def": {
           "primitive": "u128"
@@ -831,7 +971,7 @@ export const metadata = {
       }
     },
     {
-      "id": 18,
+      "id": 20,
       "type": {
         "def": {
           "composite": {
@@ -851,7 +991,7 @@ export const metadata = {
       }
     },
     {
-      "id": 19,
+      "id": 21,
       "type": {
         "def": {
           "primitive": "u64"
@@ -859,7 +999,7 @@ export const metadata = {
       }
     },
     {
-      "id": 20,
+      "id": 22,
       "type": {
         "def": {
           "variant": {}
@@ -906,10 +1046,6 @@ export class Contract {
         return this.stateCall('0x1341a7ea', [name])
     }
 
-    get_admin(): Promise<Result<AccountId, LangError>> {
-        return this.stateCall('0x57b8a8a7', [])
-    }
-
     get_allowed_unicode_ranges(): Promise<Result<Vec, LangError>> {
         return this.stateCall('0x760d33f9', [])
     }
@@ -920,6 +1056,14 @@ export class Contract {
 
     get_allowed_length(): Promise<Result<[number, number], LangError>> {
         return this.stateCall('0x2e96f458', [])
+    }
+
+    get_admin(): Promise<Result<AccountId, LangError>> {
+        return this.stateCall('0x57b8a8a7', [])
+    }
+
+    get_pending_admin(): Promise<Result<(AccountId | undefined), LangError>> {
+        return this.stateCall('0xbcd31d76', [])
     }
 
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
@@ -933,15 +1077,11 @@ export class Contract {
 
 export type Event = never
 
-export type Message = Message_is_name_allowed | Message_get_admin | Message_get_allowed_unicode_ranges | Message_get_disallowed_unicode_ranges_for_edges | Message_get_allowed_length | Message_set_allowed_unicode_ranges | Message_set_disallowed_unicode_ranges_for_edges | Message_set_allowed_length | Message_set_admin | Message_upgrade_contract
+export type Message = Message_is_name_allowed | Message_get_allowed_unicode_ranges | Message_get_disallowed_unicode_ranges_for_edges | Message_get_allowed_length | Message_set_allowed_unicode_ranges | Message_set_disallowed_unicode_ranges_for_edges | Message_set_allowed_length | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
 
 export interface Message_is_name_allowed {
     __kind: 'is_name_allowed'
     name: String
-}
-
-export interface Message_get_admin {
-    __kind: 'get_admin'
 }
 
 export interface Message_get_allowed_unicode_ranges {
@@ -971,9 +1111,21 @@ export interface Message_set_allowed_length {
     newLength: [number, number]
 }
 
-export interface Message_set_admin {
-    __kind: 'set_admin'
-    account: AccountId
+export interface Message_get_admin {
+    __kind: 'get_admin'
+}
+
+export interface Message_get_pending_admin {
+    __kind: 'get_pending_admin'
+}
+
+export interface Message_transfer_ownership {
+    __kind: 'transfer_ownership'
+    account: (AccountId | undefined)
+}
+
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
 }
 
 export interface Message_upgrade_contract {
@@ -1010,8 +1162,6 @@ export interface LangError_CouldNotReadInput {
     __kind: 'CouldNotReadInput'
 }
 
-export type AccountId = Uint8Array
-
 export interface UnicodeRange {
     lower: number
     upper: number
@@ -1019,7 +1169,9 @@ export interface UnicodeRange {
 
 export type Vec = UnicodeRange[]
 
-export type Error = Error_NotAdmin | Error_TooShort | Error_TooLong | Error_ContainsDisallowedCharacters
+export type AccountId = Uint8Array
+
+export type Error = Error_NotAdmin | Error_TooShort | Error_TooLong | Error_ContainsDisallowedCharacters | Error_InvalidRange
 
 export interface Error_NotAdmin {
     __kind: 'NotAdmin'
@@ -1035,6 +1187,10 @@ export interface Error_TooLong {
 
 export interface Error_ContainsDisallowedCharacters {
     __kind: 'ContainsDisallowedCharacters'
+}
+
+export interface Error_InvalidRange {
+    __kind: 'InvalidRange'
 }
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x175c695fb84c4b6f63c5fb95040d269d1cc3eee90df74598b17be097726c4d57",
+    "hash": "0x3b1d208f4fef2a1b413df1dd3b901c4216a60cc492a3d4c30f551c6117bc16ee",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -15,10 +15,8 @@
   },
   "contract": {
     "name": "azns_merkle_verifier",
-    "version": "0.1.0",
-    "authors": [
-      "AZERO Domains <hello@azero.domains>"
-    ]
+    "version": "1.0.0",
+    "authors": ["AZERO.ID <hello@azero.id>"]
   },
   "spec": {
     "constructors": [
@@ -27,9 +25,7 @@
           {
             "label": "admin",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -46,10 +42,7 @@
         "label": "new",
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
+          "displayName": ["ink_primitives", "ConstructorResult"],
           "type": 3
         },
         "selector": "0x9bae9d5e"
@@ -58,49 +51,34 @@
     "docs": [],
     "environment": {
       "accountId": {
-        "displayName": [
-          "AccountId"
-        ],
+        "displayName": ["AccountId"],
         "type": 0
       },
       "balance": {
-        "displayName": [
-          "Balance"
-        ],
-        "type": 14
+        "displayName": ["Balance"],
+        "type": 16
       },
       "blockNumber": {
-        "displayName": [
-          "BlockNumber"
-        ],
-        "type": 17
+        "displayName": ["BlockNumber"],
+        "type": 19
       },
       "chainExtension": {
-        "displayName": [
-          "ChainExtension"
-        ],
-        "type": 18
+        "displayName": ["ChainExtension"],
+        "type": 20
       },
       "hash": {
-        "displayName": [
-          "Hash"
-        ],
-        "type": 15
+        "displayName": ["Hash"],
+        "type": 17
       },
       "maxEventTopics": 4,
       "timestamp": {
-        "displayName": [
-          "Timestamp"
-        ],
-        "type": 16
+        "displayName": ["Timestamp"],
+        "type": 18
       }
     },
     "events": [],
     "lang_error": {
-      "displayName": [
-        "ink",
-        "LangError"
-      ],
+      "displayName": ["ink", "LangError"],
       "type": 5
     },
     "messages": [
@@ -120,10 +98,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 6
         },
         "selector": "0x8b5342e3"
@@ -131,17 +106,12 @@
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Returns the merkle root"
-        ],
+        "docs": [" Returns the merkle root"],
         "label": "root",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 9
         },
         "selector": "0x0859bfce"
@@ -158,25 +128,18 @@
           {
             "label": "proof",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 10
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Verifies inclusion of leaf in the merkle tree"
-        ],
+        "docs": [" Verifies inclusion of leaf in the merkle tree"],
         "label": "verify_proof",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 11
         },
         "selector": "0x71c9d9ba"
@@ -189,39 +152,78 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 13
         },
         "selector": "0x57b8a8a7"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_pending_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 14
+        },
+        "selector": "0xbcd31d76"
       },
       {
         "args": [
           {
             "label": "account",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 0
+              "displayName": ["Option"],
+              "type": 15
             }
           }
         ],
         "default": false,
         "docs": [],
-        "label": "set_admin",
+        "label": "transfer_ownership",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 6
         },
-        "selector": "0x798dcad5"
+        "selector": "0x107e33ea"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "accept_ownership",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 6
+        },
+        "selector": "0xb55be9f0"
+      },
+      {
+        "args": [
+          {
+            "label": "code_hash",
+            "type": {
+              "displayName": [],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "upgrade_contract",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 3
+        },
+        "selector": "0x1345543d"
       }
     ]
   },
@@ -238,6 +240,35 @@
                 }
               },
               "name": "admin"
+            },
+            {
+              "layout": {
+                "enum": {
+                  "dispatchKey": "0x00000000",
+                  "name": "Option",
+                  "variants": {
+                    "0": {
+                      "fields": [],
+                      "name": "None"
+                    },
+                    "1": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x00000000",
+                              "ty": 0
+                            }
+                          },
+                          "name": "0"
+                        }
+                      ],
+                      "name": "Some"
+                    }
+                  }
+                }
+              },
+              "name": "pending_admin"
             },
             {
               "layout": {
@@ -275,11 +306,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "AccountId"
-        ]
+        "path": ["ink_primitives", "types", "AccountId"]
       }
     },
     {
@@ -338,9 +365,7 @@
             "type": 5
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -364,10 +389,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "LangError"
-        ]
+        "path": ["ink_primitives", "LangError"]
       }
     },
     {
@@ -407,9 +429,7 @@
             "type": 5
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -449,9 +469,7 @@
             "type": 8
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -467,11 +485,7 @@
             ]
           }
         },
-        "path": [
-          "azns_merkle_verifier",
-          "merkle_verifier",
-          "Error"
-        ]
+        "path": ["azns_merkle_verifier", "merkle_verifier", "Error"]
       }
     },
     {
@@ -511,9 +525,7 @@
             "type": 5
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -563,9 +575,7 @@
             "type": 5
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -613,13 +623,82 @@
             "type": 5
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
       "id": 14,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 15
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 15
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": ["Result"]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          }
+        ],
+        "path": ["Option"]
+      }
+    },
+    {
+      "id": 16,
       "type": {
         "def": {
           "primitive": "u128"
@@ -627,7 +706,7 @@
       }
     },
     {
-      "id": 15,
+      "id": 17,
       "type": {
         "def": {
           "composite": {
@@ -639,15 +718,11 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "Hash"
-        ]
+        "path": ["ink_primitives", "types", "Hash"]
       }
     },
     {
-      "id": 16,
+      "id": 18,
       "type": {
         "def": {
           "primitive": "u64"
@@ -655,7 +730,7 @@
       }
     },
     {
-      "id": 17,
+      "id": 19,
       "type": {
         "def": {
           "primitive": "u32"
@@ -663,16 +738,12 @@
       }
     },
     {
-      "id": 18,
+      "id": 20,
       "type": {
         "def": {
           "variant": {}
         },
-        "path": [
-          "ink_env",
-          "types",
-          "NoChainExtension"
-        ]
+        "path": ["ink_env", "types", "NoChainExtension"]
       }
     }
   ],

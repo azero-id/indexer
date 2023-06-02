@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x175c695fb84c4b6f63c5fb95040d269d1cc3eee90df74598b17be097726c4d57",
+    "hash": "0x3b1d208f4fef2a1b413df1dd3b901c4216a60cc492a3d4c30f551c6117bc16ee",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -17,9 +17,9 @@ export const metadata = {
   },
   "contract": {
     "name": "azns_merkle_verifier",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "authors": [
-      "AZERO Domains <hello@azero.domains>"
+      "AZERO.ID <hello@azero.id>"
     ]
   },
   "spec": {
@@ -69,32 +69,32 @@ export const metadata = {
         "displayName": [
           "Balance"
         ],
-        "type": 14
+        "type": 16
       },
       "blockNumber": {
         "displayName": [
           "BlockNumber"
         ],
-        "type": 17
+        "type": 19
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 18
+        "type": 20
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 15
+        "type": 17
       },
       "maxEventTopics": 4,
       "timestamp": {
         "displayName": [
           "Timestamp"
         ],
-        "type": 16
+        "type": 18
       }
     },
     "events": [],
@@ -200,20 +200,36 @@ export const metadata = {
         "selector": "0x57b8a8a7"
       },
       {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_pending_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xbcd31d76"
+      },
+      {
         "args": [
           {
             "label": "account",
             "type": {
               "displayName": [
-                "AccountId"
+                "Option"
               ],
-              "type": 0
+              "type": 15
             }
           }
         ],
         "default": false,
         "docs": [],
-        "label": "set_admin",
+        "label": "transfer_ownership",
         "mutates": true,
         "payable": false,
         "returnType": {
@@ -223,7 +239,47 @@ export const metadata = {
           ],
           "type": 6
         },
-        "selector": "0x798dcad5"
+        "selector": "0x107e33ea"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "accept_ownership",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 6
+        },
+        "selector": "0xb55be9f0"
+      },
+      {
+        "args": [
+          {
+            "label": "code_hash",
+            "type": {
+              "displayName": [],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "upgrade_contract",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 3
+        },
+        "selector": "0x1345543d"
       }
     ]
   },
@@ -240,6 +296,35 @@ export const metadata = {
                 }
               },
               "name": "admin"
+            },
+            {
+              "layout": {
+                "enum": {
+                  "dispatchKey": "0x00000000",
+                  "name": "Option",
+                  "variants": {
+                    "0": {
+                      "fields": [],
+                      "name": "None"
+                    },
+                    "1": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x00000000",
+                              "ty": 0
+                            }
+                          },
+                          "name": "0"
+                        }
+                      ],
+                      "name": "Some"
+                    }
+                  }
+                }
+              },
+              "name": "pending_admin"
             },
             {
               "layout": {
@@ -624,12 +709,87 @@ export const metadata = {
       "id": 14,
       "type": {
         "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 15
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 15
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
           "primitive": "u128"
         }
       }
     },
     {
-      "id": 15,
+      "id": 17,
       "type": {
         "def": {
           "composite": {
@@ -649,7 +809,7 @@ export const metadata = {
       }
     },
     {
-      "id": 16,
+      "id": 18,
       "type": {
         "def": {
           "primitive": "u64"
@@ -657,7 +817,7 @@ export const metadata = {
       }
     },
     {
-      "id": 17,
+      "id": 19,
       "type": {
         "def": {
           "primitive": "u32"
@@ -665,7 +825,7 @@ export const metadata = {
       }
     },
     {
-      "id": 18,
+      "id": 20,
       "type": {
         "def": {
           "variant": {}
@@ -720,6 +880,10 @@ export class Contract {
         return this.stateCall('0x57b8a8a7', [])
     }
 
+    get_pending_admin(): Promise<Result<(AccountId | undefined), LangError>> {
+        return this.stateCall('0xbcd31d76', [])
+    }
+
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
         let input = _abi.encodeMessageInput(selector, args)
         let data = encodeCall(this.address, input)
@@ -731,7 +895,7 @@ export class Contract {
 
 export type Event = never
 
-export type Message = Message_update_root | Message_root | Message_verify_proof | Message_get_admin | Message_set_admin
+export type Message = Message_update_root | Message_root | Message_verify_proof | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
 
 export interface Message_update_root {
     __kind: 'update_root'
@@ -758,9 +922,22 @@ export interface Message_get_admin {
     __kind: 'get_admin'
 }
 
-export interface Message_set_admin {
-    __kind: 'set_admin'
-    account: AccountId
+export interface Message_get_pending_admin {
+    __kind: 'get_pending_admin'
+}
+
+export interface Message_transfer_ownership {
+    __kind: 'transfer_ownership'
+    account: (AccountId | undefined)
+}
+
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
+}
+
+export interface Message_upgrade_contract {
+    __kind: 'upgrade_contract'
+    codeHash: Uint8Array
 }
 
 export type Constructor = Constructor_new

@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x7372bbd58b0763316ecea502ee9e0f124d60909d865c7480c76103db14d75ed7",
+    "hash": "0x43c285fe0df681787cc3bc2f8faa3eebab44ad3648bbc183cdcbaf8b664be367",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -15,10 +15,8 @@
   },
   "contract": {
     "name": "azns_registry",
-    "version": "0.0.2",
-    "authors": [
-      "AZERO Domains <hello@azero.domains>"
-    ]
+    "version": "1.0.0",
+    "authors": ["AZERO.ID <hello@azero.id>"]
   },
   "spec": {
     "constructors": [
@@ -27,69 +25,52 @@
           {
             "label": "admin",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "name_checker_addr",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
           {
             "label": "fee_calculator_addr",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
           {
             "label": "merkle_verifier_addr",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
           {
             "label": "tld",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "base_uri",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          "Creates a new AZNS contract."
-        ],
+        "docs": ["Creates a new AZNS contract."],
         "label": "new",
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
+          "displayName": ["ink_primitives", "ConstructorResult"],
           "type": 11
         },
         "selector": "0x9bae9d5e"
@@ -98,41 +79,29 @@
     "docs": [],
     "environment": {
       "accountId": {
-        "displayName": [
-          "AccountId"
-        ],
+        "displayName": ["AccountId"],
         "type": 0
       },
       "balance": {
-        "displayName": [
-          "Balance"
-        ],
-        "type": 9
+        "displayName": ["Balance"],
+        "type": 4
       },
       "blockNumber": {
-        "displayName": [
-          "BlockNumber"
-        ],
-        "type": 8
+        "displayName": ["BlockNumber"],
+        "type": 5
       },
       "chainExtension": {
-        "displayName": [
-          "ChainExtension"
-        ],
+        "displayName": ["ChainExtension"],
         "type": 72
       },
       "hash": {
-        "displayName": [
-          "Hash"
-        ],
+        "displayName": ["Hash"],
         "type": 71
       },
       "maxEventTopics": 4,
       "timestamp": {
-        "displayName": [
-          "Timestamp"
-        ],
-        "type": 4
+        "displayName": ["Timestamp"],
+        "type": 7
       }
     },
     "events": [
@@ -143,10 +112,8 @@
             "indexed": true,
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
@@ -154,9 +121,7 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -165,10 +130,8 @@
             "indexed": false,
             "label": "registration_timestamp",
             "type": {
-              "displayName": [
-                "u64"
-              ],
-              "type": 4
+              "displayName": ["u64"],
+              "type": 7
             }
           },
           {
@@ -176,16 +139,12 @@
             "indexed": false,
             "label": "expiration_timestamp",
             "type": {
-              "displayName": [
-                "u64"
-              ],
-              "type": 4
+              "displayName": ["u64"],
+              "type": 7
             }
           }
         ],
-        "docs": [
-          "Emitted whenever a new name is registered."
-        ],
+        "docs": ["Emitted whenever a new name is registered."],
         "label": "Register"
       },
       {
@@ -195,10 +154,8 @@
             "indexed": true,
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
@@ -206,9 +163,7 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -217,9 +172,7 @@
             "indexed": true,
             "label": "referrer",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 13
             }
           },
@@ -228,9 +181,7 @@
             "indexed": false,
             "label": "referrer_addr",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -239,10 +190,8 @@
             "indexed": false,
             "label": "received_fee",
             "type": {
-              "displayName": [
-                "Balance"
-              ],
-              "type": 9
+              "displayName": ["Balance"],
+              "type": 4
             }
           },
           {
@@ -250,10 +199,8 @@
             "indexed": false,
             "label": "forwarded_referrer_fee",
             "type": {
-              "displayName": [
-                "Balance"
-              ],
-              "type": 9
+              "displayName": ["Balance"],
+              "type": 4
             }
           }
         ],
@@ -267,10 +214,8 @@
             "indexed": true,
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
@@ -278,16 +223,12 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
         ],
-        "docs": [
-          "Emitted whenever a name is released"
-        ],
+        "docs": ["Emitted whenever a name is released"],
         "label": "Release"
       },
       {
@@ -297,10 +238,8 @@
             "indexed": true,
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
@@ -308,9 +247,7 @@
             "indexed": false,
             "label": "from",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -319,9 +256,7 @@
             "indexed": true,
             "label": "old_address",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -330,16 +265,12 @@
             "indexed": true,
             "label": "new_address",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
         ],
-        "docs": [
-          "Emitted whenever an address changes."
-        ],
+        "docs": ["Emitted whenever an address changes."],
         "label": "SetAddress"
       },
       {
@@ -349,10 +280,8 @@
             "indexed": true,
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
@@ -360,9 +289,7 @@
             "indexed": false,
             "label": "from",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -371,9 +298,7 @@
             "indexed": true,
             "label": "old_controller",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -382,16 +307,12 @@
             "indexed": true,
             "label": "new_controller",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
         ],
-        "docs": [
-          "Emitted whenever controller changes."
-        ],
+        "docs": ["Emitted whenever controller changes."],
         "label": "SetController"
       },
       {
@@ -401,9 +322,7 @@
             "indexed": true,
             "label": "account",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -412,9 +331,7 @@
             "indexed": true,
             "label": "primary_name",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 13
             }
           }
@@ -429,10 +346,8 @@
             "indexed": true,
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
@@ -440,9 +355,7 @@
             "indexed": false,
             "label": "from",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -457,9 +370,7 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -468,9 +379,7 @@
             "indexed": true,
             "label": "to",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -479,16 +388,12 @@
             "indexed": true,
             "label": "id",
             "type": {
-              "displayName": [
-                "Id"
-              ],
-              "type": 59
+              "displayName": ["Id"],
+              "type": 60
             }
           }
         ],
-        "docs": [
-          "Event emitted when a token transfer occurs."
-        ],
+        "docs": ["Event emitted when a token transfer occurs."],
         "label": "Transfer"
       },
       {
@@ -498,9 +403,7 @@
             "indexed": true,
             "label": "owner",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -509,9 +412,7 @@
             "indexed": true,
             "label": "operator",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -520,9 +421,7 @@
             "indexed": true,
             "label": "id",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 63
             }
           },
@@ -531,23 +430,17 @@
             "indexed": false,
             "label": "approved",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           }
         ],
-        "docs": [
-          "Event emitted when a token approve occurs."
-        ],
+        "docs": ["Event emitted when a token approve occurs."],
         "label": "Approval"
       },
       {
         "args": [],
-        "docs": [
-          "Emitted when switching from whitelist-phase to public-phase"
-        ],
+        "docs": ["Emitted when switching from whitelist-phase to public-phase"],
         "label": "PublicPhaseActivated"
       },
       {
@@ -557,10 +450,8 @@
             "indexed": true,
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
@@ -568,9 +459,7 @@
             "indexed": true,
             "label": "account_id",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -579,24 +468,17 @@
             "indexed": false,
             "label": "action",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           }
         ],
-        "docs": [
-          "Emitted when a name is reserved or removed from the reservation list"
-        ],
+        "docs": ["Emitted when a name is reserved or removed from the reservation list"],
         "label": "Reserve"
       }
     ],
     "lang_error": {
-      "displayName": [
-        "ink",
-        "LangError"
-      ],
+      "displayName": ["ink", "LangError"],
       "type": 12
     },
     "messages": [
@@ -605,45 +487,35 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "recipient",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "years_to_register",
             "type": {
-              "displayName": [
-                "u8"
-              ],
+              "displayName": ["u8"],
               "type": 2
             }
           },
           {
             "label": "referrer",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 13
             }
           },
           {
             "label": "merkle_proof",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 14
             }
           }
@@ -659,10 +531,7 @@
         "mutates": true,
         "payable": true,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x7aa26a96"
@@ -672,45 +541,35 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "years_to_register",
             "type": {
-              "displayName": [
-                "u8"
-              ],
+              "displayName": ["u8"],
               "type": 2
             }
           },
           {
             "label": "referrer",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 13
             }
           },
           {
             "label": "merkle_proof",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 14
             }
           },
           {
             "label": "set_as_primary_name",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           }
@@ -725,10 +584,7 @@
         "mutates": true,
         "payable": true,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x229b553f"
@@ -738,25 +594,18 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Allows users to claim their reserved name at zero cost"
-        ],
+        "docs": [" Allows users to claim their reserved name at zero cost"],
         "label": "claim_reserved_name",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x2251f2bc"
@@ -766,25 +615,18 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Release name from registration."
-        ],
+        "docs": [" Release name from registration."],
         "label": "release",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x3f2be152"
@@ -794,70 +636,53 @@
           {
             "label": "to",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "keep_records",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           },
           {
             "label": "keep_controller",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           },
           {
             "label": "keep_resolving",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           },
           {
             "label": "data",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 21
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Transfer owner to another address."
-        ],
+        "docs": [" Transfer owner to another address."],
         "label": "transfer",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 22
         },
         "selector": "0x84a15da1"
@@ -867,25 +692,18 @@
           {
             "label": "names",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 25
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Removes the associated state of expired-names from storage"
-        ],
+        "docs": [" Removes the associated state of expired-names from storage"],
         "label": "clear_expired_names",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 26
         },
         "selector": "0xd00a53e5"
@@ -895,9 +713,7 @@
           {
             "label": "primary_name",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 13
             }
           }
@@ -911,10 +727,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0xad11843c"
@@ -924,34 +737,25 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "new_address",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Set resolved address for specific name."
-        ],
+        "docs": [" Set resolved address for specific name."],
         "label": "set_address",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0xb8a4d3d9"
@@ -961,18 +765,14 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "new_controller",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -983,10 +783,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0xc5e161ea"
@@ -994,29 +791,65 @@
       {
         "args": [
           {
+            "label": "names",
+            "type": {
+              "displayName": ["Vec"],
+              "type": 25
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "reset_resolved_address",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 16
+        },
+        "selector": "0x955299c9"
+      },
+      {
+        "args": [
+          {
+            "label": "names",
+            "type": {
+              "displayName": ["Vec"],
+              "type": 25
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "reset_controller",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 16
+        },
+        "selector": "0x1dffd33a"
+      },
+      {
+        "args": [
+          {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "records",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 28
             }
           },
           {
             "label": "remove_rest",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           }
@@ -1027,10 +860,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0xde84a1ba"
@@ -1040,25 +870,18 @@
           {
             "label": "names",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 25
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Returns the current status of the name"
-        ],
+        "docs": [" Returns the current status of the name"],
         "label": "get_name_status",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 30
         },
         "selector": "0x964d7612"
@@ -1068,25 +891,18 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Get the addresses related to specific name"
-        ],
+        "docs": [" Get the addresses related to specific name"],
         "label": "get_address_dict",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 34
         },
         "selector": "0xf069dff3"
@@ -1096,25 +912,18 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Get owner of specific name."
-        ],
+        "docs": [" Get owner of specific name."],
         "label": "get_owner",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 36
         },
         "selector": "0x07fcd0b1"
@@ -1124,25 +933,18 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Get controller of specific name."
-        ],
+        "docs": [" Get controller of specific name."],
         "label": "get_controller",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 36
         },
         "selector": "0x0abf0e97"
@@ -1152,25 +954,18 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Get address for specific name."
-        ],
+        "docs": [" Get address for specific name."],
         "label": "get_address",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 36
         },
         "selector": "0xd259f7ba"
@@ -1180,10 +975,8 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
@@ -1193,10 +986,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 38
         },
         "selector": "0x61437185"
@@ -1206,25 +996,18 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Gets all records"
-        ],
+        "docs": [" Gets all records"],
         "label": "get_all_records",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 41
         },
         "selector": "0x528be9f1"
@@ -1234,34 +1017,25 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           },
           {
             "label": "key",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Gets an arbitrary record by key"
-        ],
+        "docs": [" Gets an arbitrary record by key"],
         "label": "get_record",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 42
         },
         "selector": "0x7e6cb4ce"
@@ -1271,25 +1045,18 @@
           {
             "label": "owner",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Returns all names the address owns"
-        ],
+        "docs": [" Returns all names the address owns"],
         "label": "get_owned_names_of_address",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 44
         },
         "selector": "0xe413b13a"
@@ -1299,9 +1066,7 @@
           {
             "label": "controller",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1312,10 +1077,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 44
         },
         "selector": "0x9f25301e"
@@ -1325,9 +1087,7 @@
           {
             "label": "address",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1338,10 +1098,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 44
         },
         "selector": "0xadd2f457"
@@ -1351,9 +1108,7 @@
           {
             "label": "address",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1364,10 +1119,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 42
         },
         "selector": "0x404f1d73"
@@ -1377,9 +1129,7 @@
           {
             "label": "address",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1390,10 +1140,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 45
         },
         "selector": "0xbf5b5677"
@@ -1403,9 +1150,7 @@
           {
             "label": "address",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1416,10 +1161,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 44
         },
         "selector": "0xf82caf60"
@@ -1429,9 +1171,7 @@
           {
             "label": "user",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1442,10 +1182,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 46
         },
         "selector": "0xb779edfe"
@@ -1455,9 +1192,7 @@
           {
             "label": "user",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1468,10 +1203,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 46
         },
         "selector": "0xf5e0d676"
@@ -1481,9 +1213,7 @@
           {
             "label": "user",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1494,10 +1224,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 46
         },
         "selector": "0x28610555"
@@ -1510,29 +1237,10 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 47
         },
         "selector": "0x8405efa0"
-      },
-      {
-        "args": [],
-        "default": false,
-        "docs": [],
-        "label": "get_admin",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 49
-        },
-        "selector": "0x57b8a8a7"
       },
       {
         "args": [],
@@ -1542,11 +1250,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 50
+          "displayName": ["ink", "MessageResult"],
+          "type": 49
         },
         "selector": "0xd61daed4"
       },
@@ -1558,11 +1263,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 50
+          "displayName": ["ink", "MessageResult"],
+          "type": 49
         },
         "selector": "0x6e06617c"
       },
@@ -1577,11 +1279,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 51
+          "displayName": ["ink", "MessageResult"],
+          "type": 50
         },
         "selector": "0x59d8255b"
       },
@@ -1590,18 +1289,14 @@
           {
             "label": "account",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "merkle_proof",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 14
             }
           }
@@ -1612,11 +1307,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 51
+          "displayName": ["ink", "MessageResult"],
+          "type": 50
         },
         "selector": "0x71c9d9ba"
       },
@@ -1625,35 +1317,25 @@
           {
             "label": "beneficiary",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
           {
             "label": "value",
             "type": {
-              "displayName": [
-                "Option"
-              ],
-              "type": 52
+              "displayName": ["Option"],
+              "type": 51
             }
           }
         ],
         "default": false,
-        "docs": [
-          " (ADMIN-OPERATION)",
-          " Transfers `value` amount of tokens to the caller."
-        ],
+        "docs": [" (ADMIN-OPERATION)", " Transfers `value` amount of tokens to the caller."],
         "label": "withdraw",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x410fcc9d"
@@ -1661,18 +1343,12 @@
       {
         "args": [],
         "default": false,
-        "docs": [
-          " (ADMIN-OPERATION)",
-          " Switch from whitelist-phase to public-phase"
-        ],
+        "docs": [" (ADMIN-OPERATION)", " Switch from whitelist-phase to public-phase"],
         "label": "switch_to_public_phase",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x17257477"
@@ -1682,26 +1358,18 @@
           {
             "label": "set",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
-              "type": 53
+              "displayName": ["Vec"],
+              "type": 52
             }
           }
         ],
         "default": false,
-        "docs": [
-          " (ADMIN-OPERATION)",
-          " Reserve name name for specific addresses"
-        ],
+        "docs": [" (ADMIN-OPERATION)", " Reserve name name for specific addresses"],
         "label": "add_reserved_names",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x6e0d3fa8"
@@ -1711,26 +1379,18 @@
           {
             "label": "set",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 25
             }
           }
         ],
         "default": false,
-        "docs": [
-          " (ADMIN-OPERATION)",
-          " Remove given names from the list of reserved names"
-        ],
+        "docs": [" (ADMIN-OPERATION)", " Remove given names from the list of reserved names"],
         "label": "remove_reserved_name",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x9ccff6c5"
@@ -1740,29 +1400,151 @@
           {
             "label": "limit",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 48
             }
           }
         ],
         "default": false,
-        "docs": [
-          " (ADMIN-OPERATION)",
-          " Update the limit of records allowed to store per name"
-        ],
+        "docs": [" (ADMIN-OPERATION)", " Update the limit of records allowed to store per name"],
         "label": "set_records_size_limit",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 16
         },
         "selector": "0x7c9baef6"
+      },
+      {
+        "args": [
+          {
+            "label": "name",
+            "type": {
+              "displayName": ["String"],
+              "type": 3
+            }
+          },
+          {
+            "label": "recipient",
+            "type": {
+              "displayName": ["AccountId"],
+              "type": 0
+            }
+          },
+          {
+            "label": "years_to_register",
+            "type": {
+              "displayName": ["u8"],
+              "type": 2
+            }
+          },
+          {
+            "label": "referrer",
+            "type": {
+              "displayName": ["Option"],
+              "type": 13
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_name_price",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 54
+        },
+        "selector": "0xb565be46"
+      },
+      {
+        "args": [
+          {
+            "label": "recipient",
+            "type": {
+              "displayName": ["AccountId"],
+              "type": 0
+            }
+          },
+          {
+            "label": "referrer_name",
+            "type": {
+              "displayName": ["String"],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "validate_referrer",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 50
+        },
+        "selector": "0x30fc989d"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 57
+        },
+        "selector": "0x57b8a8a7"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_pending_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 58
+        },
+        "selector": "0xbcd31d76"
+      },
+      {
+        "args": [
+          {
+            "label": "account",
+            "type": {
+              "displayName": ["Option"],
+              "type": 10
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "transfer_ownership",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 16
+        },
+        "selector": "0x107e33ea"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "accept_ownership",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 16
+        },
+        "selector": "0xb55be9f0"
       },
       {
         "args": [
@@ -1775,135 +1557,15 @@
           }
         ],
         "default": false,
-        "docs": [
-          " (ADMIN-OPERATION)",
-          " Upgrade contract code"
-        ],
+        "docs": [],
         "label": "upgrade_contract",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 16
+          "displayName": ["ink", "MessageResult"],
+          "type": 11
         },
         "selector": "0x1345543d"
-      },
-      {
-        "args": [
-          {
-            "label": "account",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 0
-            }
-          }
-        ],
-        "default": false,
-        "docs": [],
-        "label": "set_admin",
-        "mutates": true,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 16
-        },
-        "selector": "0x798dcad5"
-      },
-      {
-        "args": [
-          {
-            "label": "name",
-            "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
-            }
-          },
-          {
-            "label": "recipient",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 0
-            }
-          },
-          {
-            "label": "years_to_register",
-            "type": {
-              "displayName": [
-                "u8"
-              ],
-              "type": 2
-            }
-          },
-          {
-            "label": "referrer",
-            "type": {
-              "displayName": [
-                "Option"
-              ],
-              "type": 13
-            }
-          }
-        ],
-        "default": false,
-        "docs": [],
-        "label": "get_name_price",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 55
-        },
-        "selector": "0xb565be46"
-      },
-      {
-        "args": [
-          {
-            "label": "recipient",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 0
-            }
-          },
-          {
-            "label": "referrer_name",
-            "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
-            }
-          }
-        ],
-        "default": false,
-        "docs": [],
-        "label": "validate_referrer",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 51
-        },
-        "selector": "0x30fc989d"
       },
       {
         "args": [],
@@ -1913,11 +1575,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 58
+          "displayName": ["ink", "MessageResult"],
+          "type": 59
         },
         "selector": "0xffa27a5f"
       },
@@ -1926,9 +1585,7 @@
           {
             "label": "owner",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           }
@@ -1939,11 +1596,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 61
+          "displayName": ["ink", "MessageResult"],
+          "type": 62
         },
         "selector": "0xcde7e55f"
       },
@@ -1952,10 +1606,8 @@
           {
             "label": "id",
             "type": {
-              "displayName": [
-                "Id"
-              ],
-              "type": 59
+              "displayName": ["Id"],
+              "type": 60
             }
           }
         ],
@@ -1965,11 +1617,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 62
+          "displayName": ["ink", "MessageResult"],
+          "type": 58
         },
         "selector": "0x1168624d"
       },
@@ -1978,27 +1627,21 @@
           {
             "label": "owner",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "operator",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "id",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 63
             }
           }
@@ -2009,11 +1652,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 51
+          "displayName": ["ink", "MessageResult"],
+          "type": 50
         },
         "selector": "0x4790f55a"
       },
@@ -2022,27 +1662,21 @@
           {
             "label": "operator",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "id",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 63
             }
           },
           {
             "label": "approved",
             "type": {
-              "displayName": [
-                "bool"
-              ],
+              "displayName": ["bool"],
               "type": 20
             }
           }
@@ -2053,10 +1687,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 22
         },
         "selector": "0x1932a8b0"
@@ -2066,27 +1697,21 @@
           {
             "label": "to",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "id",
             "type": {
-              "displayName": [
-                "Id"
-              ],
-              "type": 59
+              "displayName": ["Id"],
+              "type": 60
             }
           },
           {
             "label": "data",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 21
             }
           }
@@ -2097,10 +1722,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 22
         },
         "selector": "0x3128d61b"
@@ -2113,10 +1735,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 46
         },
         "selector": "0x628413fe"
@@ -2126,19 +1745,15 @@
           {
             "label": "owner",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
           {
             "label": "index",
             "type": {
-              "displayName": [
-                "u128"
-              ],
-              "type": 9
+              "displayName": ["u128"],
+              "type": 4
             }
           }
         ],
@@ -2148,10 +1763,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 64
         },
         "selector": "0x3bcfb511"
@@ -2161,10 +1773,8 @@
           {
             "label": "_index",
             "type": {
-              "displayName": [
-                "u128"
-              ],
-              "type": 9
+              "displayName": ["u128"],
+              "type": 4
             }
           }
         ],
@@ -2174,10 +1784,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 64
         },
         "selector": "0xcd0340d0"
@@ -2187,18 +1794,14 @@
           {
             "label": "id",
             "type": {
-              "displayName": [
-                "Id"
-              ],
-              "type": 59
+              "displayName": ["Id"],
+              "type": 60
             }
           },
           {
             "label": "key",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 21
             }
           }
@@ -2209,10 +1812,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 66
         },
         "selector": "0xf19d48d1"
@@ -2225,11 +1825,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 49
+          "displayName": ["ink", "MessageResult"],
+          "type": 57
         },
         "selector": "0x8e1d8d71"
       },
@@ -2238,10 +1835,8 @@
           {
             "label": "token_id",
             "type": {
-              "displayName": [
-                "Id"
-              ],
-              "type": 59
+              "displayName": ["Id"],
+              "type": 60
             }
           }
         ],
@@ -2251,11 +1846,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 50
+          "displayName": ["ink", "MessageResult"],
+          "type": 49
         },
         "selector": "0x249dfd4f"
       },
@@ -2264,10 +1856,8 @@
           {
             "label": "uri",
             "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 7
+              "displayName": ["String"],
+              "type": 3
             }
           }
         ],
@@ -2277,10 +1867,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 68
         },
         "selector": "0x4de6850b"
@@ -2293,11 +1880,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 61
+          "displayName": ["ink", "MessageResult"],
+          "type": 62
         },
         "selector": "0x61c50d69"
       },
@@ -2306,10 +1890,8 @@
           {
             "label": "index",
             "type": {
-              "displayName": [
-                "u32"
-              ],
-              "type": 8
+              "displayName": ["u32"],
+              "type": 5
             }
           }
         ],
@@ -2319,11 +1901,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 50
+          "displayName": ["ink", "MessageResult"],
+          "type": 49
         },
         "selector": "0xfcfe34de"
       },
@@ -2332,18 +1911,14 @@
           {
             "label": "token_id",
             "type": {
-              "displayName": [
-                "Id"
-              ],
-              "type": 59
+              "displayName": ["Id"],
+              "type": 60
             }
           },
           {
             "label": "attributes",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 25
             }
           }
@@ -2354,10 +1929,7 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 44
         },
         "selector": "0x18209102"
@@ -2367,19 +1939,15 @@
           {
             "label": "_token_id",
             "type": {
-              "displayName": [
-                "Id"
-              ],
-              "type": 59
+              "displayName": ["Id"],
+              "type": 60
             }
           },
           {
             "label": "_metadata",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
-              "type": 5
+              "displayName": ["Vec"],
+              "type": 8
             }
           }
         ],
@@ -2389,10 +1957,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 68
         },
         "selector": "0x5bf8416b"
@@ -2412,6 +1977,91 @@
                 }
               },
               "name": "admin"
+            },
+            {
+              "layout": {
+                "enum": {
+                  "dispatchKey": "0x00000000",
+                  "name": "Option",
+                  "variants": {
+                    "0": {
+                      "fields": [],
+                      "name": "None"
+                    },
+                    "1": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x00000000",
+                              "ty": 0
+                            }
+                          },
+                          "name": "0"
+                        }
+                      ],
+                      "name": "Some"
+                    }
+                  }
+                }
+              },
+              "name": "pending_admin"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "tld"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "base_uri"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 4
+                }
+              },
+              "name": "total_supply"
+            },
+            {
+              "layout": {
+                "enum": {
+                  "dispatchKey": "0x00000000",
+                  "name": "Option",
+                  "variants": {
+                    "0": {
+                      "fields": [],
+                      "name": "None"
+                    },
+                    "1": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x00000000",
+                              "ty": 5
+                            }
+                          },
+                          "name": "0"
+                        }
+                      ],
+                      "name": "Some"
+                    }
+                  }
+                }
+              },
+              "name": "records_size_limit"
             },
             {
               "layout": {
@@ -2551,7 +2201,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x00000065",
-                      "ty": 3
+                      "ty": 6
                     }
                   },
                   "root_key": "0x00000065"
@@ -2611,7 +2261,7 @@
                           "layout": {
                             "leaf": {
                               "key": "0x000000ca",
-                              "ty": 4
+                              "ty": 7
                             }
                           },
                           "name": "0"
@@ -2620,7 +2270,7 @@
                           "layout": {
                             "leaf": {
                               "key": "0x000000ca",
-                              "ty": 4
+                              "ty": 7
                             }
                           },
                           "name": "1"
@@ -2640,7 +2290,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x000000c9",
-                      "ty": 5
+                      "ty": 8
                     }
                   },
                   "root_key": "0x000000c9"
@@ -2650,40 +2300,11 @@
             },
             {
               "layout": {
-                "enum": {
-                  "dispatchKey": "0x00000000",
-                  "name": "Option",
-                  "variants": {
-                    "0": {
-                      "fields": [],
-                      "name": "None"
-                    },
-                    "1": {
-                      "fields": [
-                        {
-                          "layout": {
-                            "leaf": {
-                              "key": "0x00000000",
-                              "ty": 8
-                            }
-                          },
-                          "name": "0"
-                        }
-                      ],
-                      "name": "Some"
-                    }
-                  }
-                }
-              },
-              "name": "records_size_limit"
-            },
-            {
-              "layout": {
                 "root": {
                   "layout": {
                     "leaf": {
                       "key": "0x0000012c",
-                      "ty": 9
+                      "ty": 4
                     }
                   },
                   "root_key": "0x0000012c"
@@ -2697,7 +2318,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x0000012d",
-                      "ty": 7
+                      "ty": 3
                     }
                   },
                   "root_key": "0x0000012d"
@@ -2711,7 +2332,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x0000012e",
-                      "ty": 9
+                      "ty": 4
                     }
                   },
                   "root_key": "0x0000012e"
@@ -2725,7 +2346,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x00000136",
-                      "ty": 9
+                      "ty": 4
                     }
                   },
                   "root_key": "0x00000136"
@@ -2739,7 +2360,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x00000137",
-                      "ty": 7
+                      "ty": 3
                     }
                   },
                   "root_key": "0x00000137"
@@ -2753,7 +2374,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x00000138",
-                      "ty": 9
+                      "ty": 4
                     }
                   },
                   "root_key": "0x00000138"
@@ -2767,7 +2388,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x00000140",
-                      "ty": 9
+                      "ty": 4
                     }
                   },
                   "root_key": "0x00000140"
@@ -2781,7 +2402,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x00000141",
-                      "ty": 7
+                      "ty": 3
                     }
                   },
                   "root_key": "0x00000141"
@@ -2795,7 +2416,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x00000143",
-                      "ty": 9
+                      "ty": 4
                     }
                   },
                   "root_key": "0x00000143"
@@ -2809,7 +2430,7 @@
                   "layout": {
                     "leaf": {
                       "key": "0x0000018f",
-                      "ty": 7
+                      "ty": 3
                     }
                   },
                   "root_key": "0x0000018f"
@@ -2870,33 +2491,6 @@
                 }
               },
               "name": "whitelisted_address_verifier"
-            },
-            {
-              "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 7
-                }
-              },
-              "name": "tld"
-            },
-            {
-              "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 7
-                }
-              },
-              "name": "base_uri"
-            },
-            {
-              "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 9
-                }
-              },
-              "name": "total_supply"
             }
           ],
           "name": "Registry"
@@ -2919,11 +2513,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "AccountId"
-        ]
+        "path": ["ink_primitives", "types", "AccountId"]
       }
     },
     {
@@ -2949,7 +2539,7 @@
       "id": 3,
       "type": {
         "def": {
-          "tuple": []
+          "primitive": "str"
         }
       }
     },
@@ -2957,7 +2547,7 @@
       "id": 4,
       "type": {
         "def": {
-          "primitive": "u64"
+          "primitive": "u128"
         }
       }
     },
@@ -2965,9 +2555,7 @@
       "id": 5,
       "type": {
         "def": {
-          "sequence": {
-            "type": 6
-          }
+          "primitive": "u32"
         }
       }
     },
@@ -2975,10 +2563,7 @@
       "id": 6,
       "type": {
         "def": {
-          "tuple": [
-            7,
-            7
-          ]
+          "tuple": []
         }
       }
     },
@@ -2986,7 +2571,7 @@
       "id": 7,
       "type": {
         "def": {
-          "primitive": "str"
+          "primitive": "u64"
         }
       }
     },
@@ -2994,7 +2579,9 @@
       "id": 8,
       "type": {
         "def": {
-          "primitive": "u32"
+          "sequence": {
+            "type": 9
+          }
         }
       }
     },
@@ -3002,7 +2589,7 @@
       "id": 9,
       "type": {
         "def": {
-          "primitive": "u128"
+          "tuple": [3, 3]
         }
       }
     },
@@ -3034,9 +2621,7 @@
             "type": 0
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -3048,7 +2633,7 @@
               {
                 "fields": [
                   {
-                    "type": 3
+                    "type": 6
                   }
                 ],
                 "index": 0,
@@ -3069,16 +2654,14 @@
         "params": [
           {
             "name": "T",
-            "type": 3
+            "type": 6
           },
           {
             "name": "E",
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3094,10 +2677,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "LangError"
-        ]
+        "path": ["ink_primitives", "LangError"]
       }
     },
     {
@@ -3113,7 +2693,7 @@
               {
                 "fields": [
                   {
-                    "type": 7
+                    "type": 3
                   }
                 ],
                 "index": 1,
@@ -3125,12 +2705,10 @@
         "params": [
           {
             "name": "T",
-            "type": 7
+            "type": 3
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -3161,9 +2739,7 @@
             "type": 15
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -3213,9 +2789,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3227,7 +2801,7 @@
               {
                 "fields": [
                   {
-                    "type": 3
+                    "type": 6
                   }
                 ],
                 "index": 0,
@@ -3248,16 +2822,14 @@
         "params": [
           {
             "name": "T",
-            "type": 3
+            "type": 6
           },
           {
             "name": "E",
             "type": 18
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3324,26 +2896,22 @@
               },
               {
                 "index": 14,
-                "name": "OnlyDuringWhitelistPhase"
-              },
-              {
-                "index": 15,
-                "name": "RestrictedDuringWhitelistPhase"
-              },
-              {
-                "index": 16,
                 "name": "CannotBuyReservedName"
               },
               {
-                "index": 17,
+                "index": 15,
                 "name": "NotReservedName"
               },
               {
-                "index": 18,
+                "index": 16,
                 "name": "NotAuthorised"
               },
               {
-                "index": 19,
+                "index": 17,
+                "name": "ZeroAddress"
+              },
+              {
+                "index": 18,
                 "name": "RecordsOverflow"
               },
               {
@@ -3353,17 +2921,21 @@
                     "typeName": "azns_fee_calculator::Error"
                   }
                 ],
-                "index": 20,
+                "index": 19,
                 "name": "FeeError"
+              },
+              {
+                "index": 20,
+                "name": "OnlyDuringWhitelistPhase"
+              },
+              {
+                "index": 21,
+                "name": "RestrictedDuringWhitelistPhase"
               }
             ]
           }
         },
-        "path": [
-          "azns_registry",
-          "azns_registry",
-          "Error"
-        ]
+        "path": ["azns_registry", "azns_registry", "Error"]
       }
     },
     {
@@ -3383,14 +2955,15 @@
               {
                 "index": 2,
                 "name": "ZeroLength"
+              },
+              {
+                "index": 3,
+                "name": "ZeroPrice"
               }
             ]
           }
         },
-        "path": [
-          "azns_fee_calculator",
-          "Error"
-        ]
+        "path": ["azns_fee_calculator", "Error"]
       }
     },
     {
@@ -3448,9 +3021,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3462,7 +3033,7 @@
               {
                 "fields": [
                   {
-                    "type": 3
+                    "type": 6
                   }
                 ],
                 "index": 0,
@@ -3483,16 +3054,14 @@
         "params": [
           {
             "name": "T",
-            "type": 3
+            "type": 6
           },
           {
             "name": "E",
             "type": 24
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3504,7 +3073,7 @@
               {
                 "fields": [
                   {
-                    "type": 7,
+                    "type": 3,
                     "typeName": "String"
                   }
                 ],
@@ -3530,7 +3099,7 @@
               {
                 "fields": [
                   {
-                    "type": 7,
+                    "type": 3,
                     "typeName": "String"
                   }
                 ],
@@ -3540,11 +3109,7 @@
             ]
           }
         },
-        "path": [
-          "interfaces",
-          "psp34_standard",
-          "PSP34Error"
-        ]
+        "path": ["interfaces", "psp34_standard", "PSP34Error"]
       }
     },
     {
@@ -3552,7 +3117,7 @@
       "type": {
         "def": {
           "sequence": {
-            "type": 7
+            "type": 3
           }
         }
       }
@@ -3594,9 +3159,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3608,7 +3171,7 @@
               {
                 "fields": [
                   {
-                    "type": 9
+                    "type": 4
                   }
                 ],
                 "index": 0,
@@ -3629,16 +3192,14 @@
         "params": [
           {
             "name": "T",
-            "type": 9
+            "type": 4
           },
           {
             "name": "E",
             "type": 18
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3655,10 +3216,7 @@
       "id": 29,
       "type": {
         "def": {
-          "tuple": [
-            7,
-            13
-          ]
+          "tuple": [3, 13]
         }
       }
     },
@@ -3699,9 +3257,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3751,11 +3307,7 @@
             ]
           }
         },
-        "path": [
-          "azns_registry",
-          "azns_registry",
-          "NameStatus"
-        ]
+        "path": ["azns_registry", "azns_registry", "NameStatus"]
       }
     },
     {
@@ -3782,11 +3334,7 @@
             ]
           }
         },
-        "path": [
-          "azns_registry",
-          "address_dict",
-          "AddressDict"
-        ]
+        "path": ["azns_registry", "address_dict", "AddressDict"]
       }
     },
     {
@@ -3826,9 +3374,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3868,9 +3414,7 @@
             "type": 18
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3910,9 +3454,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3952,9 +3494,7 @@
             "type": 18
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -3994,9 +3534,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4036,19 +3574,14 @@
             "type": 18
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
       "id": 40,
       "type": {
         "def": {
-          "tuple": [
-            4,
-            4
-          ]
+          "tuple": [7, 7]
         }
       }
     },
@@ -4061,7 +3594,7 @@
               {
                 "fields": [
                   {
-                    "type": 5
+                    "type": 8
                   }
                 ],
                 "index": 0,
@@ -4082,16 +3615,14 @@
         "params": [
           {
             "name": "T",
-            "type": 5
+            "type": 8
           },
           {
             "name": "E",
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4131,9 +3662,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4145,7 +3674,7 @@
               {
                 "fields": [
                   {
-                    "type": 7
+                    "type": 3
                   }
                 ],
                 "index": 0,
@@ -4166,16 +3695,14 @@
         "params": [
           {
             "name": "T",
-            "type": 7
+            "type": 3
           },
           {
             "name": "E",
             "type": 18
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4215,9 +3742,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4257,9 +3782,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4271,7 +3794,7 @@
               {
                 "fields": [
                   {
-                    "type": 9
+                    "type": 4
                   }
                 ],
                 "index": 0,
@@ -4292,16 +3815,14 @@
         "params": [
           {
             "name": "T",
-            "type": 9
+            "type": 4
           },
           {
             "name": "E",
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4341,9 +3862,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4359,7 +3878,7 @@
               {
                 "fields": [
                   {
-                    "type": 8
+                    "type": 5
                   }
                 ],
                 "index": 1,
@@ -4371,12 +3890,10 @@
         "params": [
           {
             "name": "T",
-            "type": 8
+            "type": 5
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -4388,7 +3905,7 @@
               {
                 "fields": [
                   {
-                    "type": 0
+                    "type": 3
                   }
                 ],
                 "index": 0,
@@ -4409,62 +3926,18 @@
         "params": [
           {
             "name": "T",
-            "type": 0
+            "type": 3
           },
           {
             "name": "E",
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
       "id": 50,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 7
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 12
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 7
-          },
-          {
-            "name": "E",
-            "type": 12
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 51,
       "type": {
         "def": {
           "variant": {
@@ -4500,13 +3973,11 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
-      "id": 52,
+      "id": 51,
       "type": {
         "def": {
           "variant": {
@@ -4518,7 +3989,7 @@
               {
                 "fields": [
                   {
-                    "type": 9
+                    "type": 4
                   }
                 ],
                 "index": 1,
@@ -4530,21 +4001,27 @@
         "params": [
           {
             "name": "T",
-            "type": 9
+            "type": 4
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
+      }
+    },
+    {
+      "id": 52,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 53
+          }
+        }
       }
     },
     {
       "id": 53,
       "type": {
         "def": {
-          "sequence": {
-            "type": 54
-          }
+          "tuple": [3, 10]
         }
       }
     },
@@ -4552,11 +4029,40 @@
       "id": 54,
       "type": {
         "def": {
-          "tuple": [
-            7,
-            10
-          ]
-        }
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 55
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 55
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": ["Result"]
       }
     },
     {
@@ -4577,7 +4083,7 @@
               {
                 "fields": [
                   {
-                    "type": 12
+                    "type": 18
                   }
                 ],
                 "index": 1,
@@ -4593,239 +4099,62 @@
           },
           {
             "name": "E",
-            "type": 12
+            "type": 18
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
       "id": 56,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 57
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 18
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 57
-          },
-          {
-            "name": "E",
-            "type": 18
-          }
-        ],
-        "path": [
-          "Result"
-        ]
+          "tuple": [4, 4, 4, 10]
+        }
       }
     },
     {
       "id": 57,
       "type": {
         "def": {
-          "tuple": [
-            9,
-            9,
-            9,
-            10
-          ]
-        }
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": ["Result"]
       }
     },
     {
       "id": 58,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 59
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 12
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 59
-          },
-          {
-            "name": "E",
-            "type": 12
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 59,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 2,
-                    "typeName": "u8"
-                  }
-                ],
-                "index": 0,
-                "name": "U8"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 60,
-                    "typeName": "u16"
-                  }
-                ],
-                "index": 1,
-                "name": "U16"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 8,
-                    "typeName": "u32"
-                  }
-                ],
-                "index": 2,
-                "name": "U32"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 4,
-                    "typeName": "u64"
-                  }
-                ],
-                "index": 3,
-                "name": "U64"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 9,
-                    "typeName": "u128"
-                  }
-                ],
-                "index": 4,
-                "name": "U128"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 21,
-                    "typeName": "Vec<u8>"
-                  }
-                ],
-                "index": 5,
-                "name": "Bytes"
-              }
-            ]
-          }
-        },
-        "path": [
-          "interfaces",
-          "psp34_standard",
-          "Id"
-        ]
-      }
-    },
-    {
-      "id": 60,
-      "type": {
-        "def": {
-          "primitive": "u16"
-        }
-      }
-    },
-    {
-      "id": 61,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 8
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 12
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 8
-          },
-          {
-            "name": "E",
-            "type": 12
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 62,
       "type": {
         "def": {
           "variant": {
@@ -4861,9 +4190,167 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
+      }
+    },
+    {
+      "id": 59,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 60
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 60
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": ["Result"]
+      }
+    },
+    {
+      "id": 60,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 2,
+                    "typeName": "u8"
+                  }
+                ],
+                "index": 0,
+                "name": "U8"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 61,
+                    "typeName": "u16"
+                  }
+                ],
+                "index": 1,
+                "name": "U16"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5,
+                    "typeName": "u32"
+                  }
+                ],
+                "index": 2,
+                "name": "U32"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7,
+                    "typeName": "u64"
+                  }
+                ],
+                "index": 3,
+                "name": "U64"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4,
+                    "typeName": "u128"
+                  }
+                ],
+                "index": 4,
+                "name": "U128"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 21,
+                    "typeName": "Vec<u8>"
+                  }
+                ],
+                "index": 5,
+                "name": "Bytes"
+              }
+            ]
+          }
+        },
+        "path": ["interfaces", "psp34_standard", "Id"]
+      }
+    },
+    {
+      "id": 61,
+      "type": {
+        "def": {
+          "primitive": "u16"
+        }
+      }
+    },
+    {
+      "id": 62,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 5
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": ["Result"]
       }
     },
     {
@@ -4879,7 +4366,7 @@
               {
                 "fields": [
                   {
-                    "type": 59
+                    "type": 60
                   }
                 ],
                 "index": 1,
@@ -4891,12 +4378,10 @@
         "params": [
           {
             "name": "T",
-            "type": 59
+            "type": 60
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -4936,9 +4421,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -4950,7 +4433,7 @@
               {
                 "fields": [
                   {
-                    "type": 59
+                    "type": 60
                   }
                 ],
                 "index": 0,
@@ -4971,16 +4454,14 @@
         "params": [
           {
             "name": "T",
-            "type": 59
+            "type": 60
           },
           {
             "name": "E",
             "type": 24
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -5020,9 +4501,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -5053,9 +4532,7 @@
             "type": 21
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -5095,9 +4572,7 @@
             "type": 12
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -5109,7 +4584,7 @@
               {
                 "fields": [
                   {
-                    "type": 3
+                    "type": 6
                   }
                 ],
                 "index": 0,
@@ -5130,16 +4605,14 @@
         "params": [
           {
             "name": "T",
-            "type": 3
+            "type": 6
           },
           {
             "name": "E",
             "type": 70
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -5151,7 +4624,7 @@
               {
                 "fields": [
                   {
-                    "type": 7,
+                    "type": 3,
                     "typeName": "String"
                   }
                 ],
@@ -5161,11 +4634,7 @@
             ]
           }
         },
-        "path": [
-          "interfaces",
-          "art_zero_traits",
-          "ArtZeroError"
-        ]
+        "path": ["interfaces", "art_zero_traits", "ArtZeroError"]
       }
     },
     {
@@ -5181,11 +4650,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "Hash"
-        ]
+        "path": ["ink_primitives", "types", "Hash"]
       }
     },
     {
@@ -5194,11 +4659,7 @@
         "def": {
           "variant": {}
         },
-        "path": [
-          "ink_env",
-          "types",
-          "NoChainExtension"
-        ]
+        "path": ["ink_env", "types", "NoChainExtension"]
       }
     }
   ],

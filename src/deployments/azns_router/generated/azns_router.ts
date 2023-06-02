@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0xe124ddda12182ca3be958cfeff1096385dc893ad5b3c8dad04bf8b923c3ff142",
+    "hash": "0xa7b6232c72b18d4d467643d05d8e50bc13312d2cfab1f7deefe8b2529adb9f7e",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -17,9 +17,9 @@ export const metadata = {
   },
   "contract": {
     "name": "azns_router",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "authors": [
-      "AZERO Domains <hello@azero.domains>"
+      "AZERO.ID <hello@azero.id>"
     ]
   },
   "spec": {
@@ -291,20 +291,36 @@ export const metadata = {
         "selector": "0x57b8a8a7"
       },
       {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_pending_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0xbcd31d76"
+      },
+      {
         "args": [
           {
             "label": "account",
             "type": {
               "displayName": [
-                "AccountId"
+                "Option"
               ],
-              "type": 0
+              "type": 14
             }
           }
         ],
         "default": false,
         "docs": [],
-        "label": "set_admin",
+        "label": "transfer_ownership",
         "mutates": true,
         "payable": false,
         "returnType": {
@@ -314,7 +330,23 @@ export const metadata = {
           ],
           "type": 9
         },
-        "selector": "0x798dcad5"
+        "selector": "0x107e33ea"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "accept_ownership",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 9
+        },
+        "selector": "0xb55be9f0"
       },
       {
         "args": [
@@ -336,7 +368,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 9
+          "type": 4
         },
         "selector": "0x1345543d"
       }
@@ -358,6 +390,44 @@ export const metadata = {
             },
             {
               "layout": {
+                "enum": {
+                  "dispatchKey": "0x00000000",
+                  "name": "Option",
+                  "variants": {
+                    "0": {
+                      "fields": [],
+                      "name": "None"
+                    },
+                    "1": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x00000000",
+                              "ty": 0
+                            }
+                          },
+                          "name": "0"
+                        }
+                      ],
+                      "name": "Some"
+                    }
+                  }
+                }
+              },
+              "name": "pending_admin"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "registry"
+            },
+            {
+              "layout": {
                 "root": {
                   "layout": {
                     "leaf": {
@@ -369,15 +439,6 @@ export const metadata = {
                 }
               },
               "name": "routes"
-            },
-            {
-              "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 3
-                }
-              },
-              "name": "registry"
             }
           ],
           "name": "Router"
@@ -1106,6 +1167,10 @@ export class Contract {
         return this.stateCall('0x57b8a8a7', [])
     }
 
+    get_pending_admin(): Promise<Result<(AccountId | undefined), LangError>> {
+        return this.stateCall('0xbcd31d76', [])
+    }
+
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
         let input = _abi.encodeMessageInput(selector, args)
         let data = encodeCall(this.address, input)
@@ -1117,7 +1182,7 @@ export class Contract {
 
 export type Event = never
 
-export type Message = Message_add_registry | Message_update_registry | Message_get_all_registry | Message_get_registry | Message_get_address | Message_get_primary_domains | Message_get_admin | Message_set_admin | Message_upgrade_contract
+export type Message = Message_add_registry | Message_update_registry | Message_get_all_registry | Message_get_registry | Message_get_address | Message_get_primary_domains | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
 
 export interface Message_add_registry {
     __kind: 'add_registry'
@@ -1158,9 +1223,17 @@ export interface Message_get_admin {
     __kind: 'get_admin'
 }
 
-export interface Message_set_admin {
-    __kind: 'set_admin'
-    account: AccountId
+export interface Message_get_pending_admin {
+    __kind: 'get_pending_admin'
+}
+
+export interface Message_transfer_ownership {
+    __kind: 'transfer_ownership'
+    account: (AccountId | undefined)
+}
+
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
 }
 
 export interface Message_upgrade_contract {

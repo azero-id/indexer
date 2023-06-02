@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x00b7d70a31733a59e729ff3eee4558f5459c1b937a82e5fd7313b88469f5f459",
+    "hash": "0xeec6332d76e6e97dda0033d806715327b9ef8127f3f25869fce5b0945750f567",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -15,10 +15,8 @@
   },
   "contract": {
     "name": "azns_name_checker",
-    "version": "0.0.1",
-    "authors": [
-      "AZERO Domains <hello@azero.domains>"
-    ]
+    "version": "1.0.0",
+    "authors": ["AZERO.ID <hello@azero.id>"]
   },
   "spec": {
     "constructors": [
@@ -27,9 +25,7 @@
           {
             "label": "admin",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
+              "displayName": ["AccountId"],
               "type": 0
             }
           },
@@ -43,18 +39,14 @@
           {
             "label": "allowed_unicode_ranges",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 3
             }
           },
           {
             "label": "disallowed_unicode_ranges_for_edges",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 3
             }
           }
@@ -64,10 +56,7 @@
         "label": "new",
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
+          "displayName": ["ink_primitives", "ConstructorResult"],
           "type": 7
         },
         "selector": "0x9bae9d5e"
@@ -76,49 +65,34 @@
     "docs": [],
     "environment": {
       "accountId": {
-        "displayName": [
-          "AccountId"
-        ],
+        "displayName": ["AccountId"],
         "type": 0
       },
       "balance": {
-        "displayName": [
-          "Balance"
-        ],
-        "type": 17
+        "displayName": ["Balance"],
+        "type": 19
       },
       "blockNumber": {
-        "displayName": [
-          "BlockNumber"
-        ],
+        "displayName": ["BlockNumber"],
         "type": 5
       },
       "chainExtension": {
-        "displayName": [
-          "ChainExtension"
-        ],
-        "type": 20
+        "displayName": ["ChainExtension"],
+        "type": 22
       },
       "hash": {
-        "displayName": [
-          "Hash"
-        ],
-        "type": 18
+        "displayName": ["Hash"],
+        "type": 20
       },
       "maxEventTopics": 4,
       "timestamp": {
-        "displayName": [
-          "Timestamp"
-        ],
-        "type": 19
+        "displayName": ["Timestamp"],
+        "type": 21
       }
     },
     "events": [],
     "lang_error": {
-      "displayName": [
-        "ink",
-        "LangError"
-      ],
+      "displayName": ["ink", "LangError"],
       "type": 9
     },
     "messages": [
@@ -127,9 +101,7 @@
           {
             "label": "name",
             "type": {
-              "displayName": [
-                "String"
-              ],
+              "displayName": ["String"],
               "type": 10
             }
           }
@@ -140,29 +112,10 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 11
         },
         "selector": "0x1341a7ea"
-      },
-      {
-        "args": [],
-        "default": false,
-        "docs": [],
-        "label": "get_admin",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 14
-        },
-        "selector": "0x57b8a8a7"
       },
       {
         "args": [],
@@ -172,11 +125,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 15
+          "displayName": ["ink", "MessageResult"],
+          "type": 14
         },
         "selector": "0x760d33f9"
       },
@@ -188,11 +138,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 15
+          "displayName": ["ink", "MessageResult"],
+          "type": 14
         },
         "selector": "0x5db54a26"
       },
@@ -204,11 +151,8 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 16
+          "displayName": ["ink", "MessageResult"],
+          "type": 15
         },
         "selector": "0x2e96f458"
       },
@@ -217,9 +161,7 @@
           {
             "label": "new_ranges",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 3
             }
           }
@@ -230,10 +172,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 11
         },
         "selector": "0xaae9aae0"
@@ -243,9 +182,7 @@
           {
             "label": "new_ranges",
             "type": {
-              "displayName": [
-                "Vec"
-              ],
+              "displayName": ["Vec"],
               "type": 3
             }
           }
@@ -256,10 +193,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 11
         },
         "selector": "0xdc1464da"
@@ -280,39 +214,70 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 11
         },
         "selector": "0x98178dbc"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 16
+        },
+        "selector": "0x57b8a8a7"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_pending_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 17
+        },
+        "selector": "0xbcd31d76"
       },
       {
         "args": [
           {
             "label": "account",
             "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 0
+              "displayName": ["Option"],
+              "type": 18
             }
           }
         ],
         "default": false,
         "docs": [],
-        "label": "set_admin",
+        "label": "transfer_ownership",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 11
         },
-        "selector": "0x798dcad5"
+        "selector": "0x107e33ea"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "accept_ownership",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": ["ink", "MessageResult"],
+          "type": 11
+        },
+        "selector": "0xb55be9f0"
       },
       {
         "args": [
@@ -330,11 +295,8 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 11
+          "displayName": ["ink", "MessageResult"],
+          "type": 7
         },
         "selector": "0x1345543d"
       }
@@ -356,21 +318,32 @@
             },
             {
               "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 3
+                "enum": {
+                  "dispatchKey": "0x00000000",
+                  "name": "Option",
+                  "variants": {
+                    "0": {
+                      "fields": [],
+                      "name": "None"
+                    },
+                    "1": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x00000000",
+                              "ty": 0
+                            }
+                          },
+                          "name": "0"
+                        }
+                      ],
+                      "name": "Some"
+                    }
+                  }
                 }
               },
-              "name": "allowed_unicode_ranges"
-            },
-            {
-              "layout": {
-                "leaf": {
-                  "key": "0x00000000",
-                  "ty": 3
-                }
-              },
-              "name": "disallowed_unicode_ranges_for_edges"
+              "name": "pending_admin"
             },
             {
               "layout": {
@@ -399,6 +372,24 @@
                 }
               },
               "name": "allowed_length"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "allowed_unicode_ranges"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "disallowed_unicode_ranges_for_edges"
             }
           ],
           "name": "NameChecker"
@@ -421,11 +412,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "AccountId"
-        ]
+        "path": ["ink_primitives", "types", "AccountId"]
       }
     },
     {
@@ -476,10 +463,7 @@
             ]
           }
         },
-        "path": [
-          "azns_name_checker",
-          "UnicodeRange"
-        ]
+        "path": ["azns_name_checker", "UnicodeRange"]
       }
     },
     {
@@ -494,10 +478,7 @@
       "id": 6,
       "type": {
         "def": {
-          "tuple": [
-            2,
-            2
-          ]
+          "tuple": [2, 2]
         }
       }
     },
@@ -538,9 +519,7 @@
             "type": 9
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -564,10 +543,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "LangError"
-        ]
+        "path": ["ink_primitives", "LangError"]
       }
     },
     {
@@ -615,9 +591,7 @@
             "type": 9
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -657,9 +631,7 @@
             "type": 13
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -683,61 +655,19 @@
               {
                 "index": 3,
                 "name": "ContainsDisallowedCharacters"
+              },
+              {
+                "index": 4,
+                "name": "InvalidRange"
               }
             ]
           }
         },
-        "path": [
-          "azns_name_checker",
-          "azns_name_checker",
-          "Error"
-        ]
+        "path": ["azns_name_checker", "azns_name_checker", "Error"]
       }
     },
     {
       "id": 14,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 9
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 0
-          },
-          {
-            "name": "E",
-            "type": 9
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 15,
       "type": {
         "def": {
           "variant": {
@@ -773,13 +703,11 @@
             "type": 9
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
-      "id": 16,
+      "id": 15,
       "type": {
         "def": {
           "variant": {
@@ -815,13 +743,122 @@
             "type": 9
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": ["Result"]
       }
     },
     {
       "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 18
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 18
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": ["Result"]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          }
+        ],
+        "path": ["Option"]
+      }
+    },
+    {
+      "id": 19,
       "type": {
         "def": {
           "primitive": "u128"
@@ -829,7 +866,7 @@
       }
     },
     {
-      "id": 18,
+      "id": 20,
       "type": {
         "def": {
           "composite": {
@@ -841,15 +878,11 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "Hash"
-        ]
+        "path": ["ink_primitives", "types", "Hash"]
       }
     },
     {
-      "id": 19,
+      "id": 21,
       "type": {
         "def": {
           "primitive": "u64"
@@ -857,16 +890,12 @@
       }
     },
     {
-      "id": 20,
+      "id": 22,
       "type": {
         "def": {
           "variant": {}
         },
-        "path": [
-          "ink_env",
-          "types",
-          "NoChainExtension"
-        ]
+        "path": ["ink_env", "types", "NoChainExtension"]
       }
     }
   ],
