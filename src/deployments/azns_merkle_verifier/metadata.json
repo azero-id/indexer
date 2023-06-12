@@ -1,12 +1,12 @@
 {
   "source": {
-    "hash": "0x3b1d208f4fef2a1b413df1dd3b901c4216a60cc492a3d4c30f551c6117bc16ee",
+    "hash": "0xb9554ccb81a8a3611614332f93d9becac61ddac8aab48f853c942f4b75a92631",
     "language": "ink! 4.2.0",
-    "compiler": "rustc 1.69.0",
+    "compiler": "rustc 1.68.0-nightly",
     "build_info": {
       "build_mode": "Release",
       "cargo_contract_version": "2.1.0",
-      "rust_toolchain": "stable-aarch64-apple-darwin",
+      "rust_toolchain": "nightly-aarch64-apple-darwin",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
         "optimization_passes": "Z"
@@ -16,7 +16,9 @@
   "contract": {
     "name": "azns_merkle_verifier",
     "version": "1.0.0",
-    "authors": ["AZERO.ID <hello@azero.id>"]
+    "authors": [
+      "AZERO.ID <hello@azero.id>"
+    ]
   },
   "spec": {
     "constructors": [
@@ -25,7 +27,9 @@
           {
             "label": "admin",
             "type": {
-              "displayName": ["AccountId"],
+              "displayName": [
+                "AccountId"
+              ],
               "type": 0
             }
           },
@@ -42,7 +46,10 @@
         "label": "new",
         "payable": false,
         "returnType": {
-          "displayName": ["ink_primitives", "ConstructorResult"],
+          "displayName": [
+            "ink_primitives",
+            "ConstructorResult"
+          ],
           "type": 3
         },
         "selector": "0x9bae9d5e"
@@ -51,34 +58,49 @@
     "docs": [],
     "environment": {
       "accountId": {
-        "displayName": ["AccountId"],
+        "displayName": [
+          "AccountId"
+        ],
         "type": 0
       },
       "balance": {
-        "displayName": ["Balance"],
+        "displayName": [
+          "Balance"
+        ],
         "type": 16
       },
       "blockNumber": {
-        "displayName": ["BlockNumber"],
+        "displayName": [
+          "BlockNumber"
+        ],
         "type": 19
       },
       "chainExtension": {
-        "displayName": ["ChainExtension"],
+        "displayName": [
+          "ChainExtension"
+        ],
         "type": 20
       },
       "hash": {
-        "displayName": ["Hash"],
+        "displayName": [
+          "Hash"
+        ],
         "type": 17
       },
       "maxEventTopics": 4,
       "timestamp": {
-        "displayName": ["Timestamp"],
+        "displayName": [
+          "Timestamp"
+        ],
         "type": 18
       }
     },
     "events": [],
     "lang_error": {
-      "displayName": ["ink", "LangError"],
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
       "type": 5
     },
     "messages": [
@@ -98,7 +120,10 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 6
         },
         "selector": "0x8b5342e3"
@@ -106,12 +131,17 @@
       {
         "args": [],
         "default": false,
-        "docs": [" Returns the merkle root"],
+        "docs": [
+          " Returns the merkle root"
+        ],
         "label": "root",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 9
         },
         "selector": "0x0859bfce"
@@ -128,18 +158,25 @@
           {
             "label": "proof",
             "type": {
-              "displayName": ["Vec"],
+              "displayName": [
+                "Vec"
+              ],
               "type": 10
             }
           }
         ],
         "default": false,
-        "docs": [" Verifies inclusion of leaf in the merkle tree"],
+        "docs": [
+          " Verifies inclusion of leaf in the merkle tree"
+        ],
         "label": "verify_proof",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 11
         },
         "selector": "0x71c9d9ba"
@@ -152,7 +189,10 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 13
         },
         "selector": "0x57b8a8a7"
@@ -165,7 +205,10 @@
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 14
         },
         "selector": "0xbcd31d76"
@@ -175,7 +218,9 @@
           {
             "label": "account",
             "type": {
-              "displayName": ["Option"],
+              "displayName": [
+                "Option"
+              ],
               "type": 15
             }
           }
@@ -186,7 +231,10 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 6
         },
         "selector": "0x107e33ea"
@@ -199,7 +247,10 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 6
         },
         "selector": "0xb55be9f0"
@@ -220,7 +271,10 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": ["ink", "MessageResult"],
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
           "type": 3
         },
         "selector": "0x1345543d"
@@ -306,7 +360,11 @@
             ]
           }
         },
-        "path": ["ink_primitives", "types", "AccountId"]
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
       }
     },
     {
@@ -365,7 +423,9 @@
             "type": 5
           }
         ],
-        "path": ["Result"]
+        "path": [
+          "Result"
+        ]
       }
     },
     {
@@ -389,7 +449,10 @@
             ]
           }
         },
-        "path": ["ink_primitives", "LangError"]
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
       }
     },
     {
@@ -429,7 +492,9 @@
             "type": 5
           }
         ],
-        "path": ["Result"]
+        "path": [
+          "Result"
+        ]
       }
     },
     {
@@ -469,7 +534,9 @@
             "type": 8
           }
         ],
-        "path": ["Result"]
+        "path": [
+          "Result"
+        ]
       }
     },
     {
@@ -485,7 +552,11 @@
             ]
           }
         },
-        "path": ["azns_merkle_verifier", "merkle_verifier", "Error"]
+        "path": [
+          "azns_merkle_verifier",
+          "merkle_verifier",
+          "Error"
+        ]
       }
     },
     {
@@ -525,7 +596,9 @@
             "type": 5
           }
         ],
-        "path": ["Result"]
+        "path": [
+          "Result"
+        ]
       }
     },
     {
@@ -575,7 +648,9 @@
             "type": 5
           }
         ],
-        "path": ["Result"]
+        "path": [
+          "Result"
+        ]
       }
     },
     {
@@ -623,7 +698,9 @@
             "type": 5
           }
         ],
-        "path": ["Result"]
+        "path": [
+          "Result"
+        ]
       }
     },
     {
@@ -663,7 +740,9 @@
             "type": 5
           }
         ],
-        "path": ["Result"]
+        "path": [
+          "Result"
+        ]
       }
     },
     {
@@ -694,7 +773,9 @@
             "type": 0
           }
         ],
-        "path": ["Option"]
+        "path": [
+          "Option"
+        ]
       }
     },
     {
@@ -718,7 +799,11 @@
             ]
           }
         },
-        "path": ["ink_primitives", "types", "Hash"]
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
       }
     },
     {
@@ -743,7 +828,11 @@
         "def": {
           "variant": {}
         },
-        "path": ["ink_env", "types", "NoChainExtension"]
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
+        ]
       }
     }
   ],
