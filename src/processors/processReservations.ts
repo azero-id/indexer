@@ -1,5 +1,4 @@
-import { Store } from '@subsquid/typeorm-store'
-import { EventWithMeta } from 'src/processor'
+import { EventWithMeta, RegistryProcessorFn } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Reservation } from '../model'
 import { ss58Encode } from '../utils/ss58Encode'
@@ -7,9 +6,10 @@ import { ss58Encode } from '../utils/ss58Encode'
 /**
  * Process domain reservation events.
  */
-export const processReservations = async (
-  store: Store,
-  registryEvents: EventWithMeta<aznsRegistry.Event>[],
+export const processReservations: RegistryProcessorFn = async (
+  store,
+  registryEvents,
+  registryDeployment,
 ) => {
   const reserveEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Reserve',
@@ -17,7 +17,7 @@ export const processReservations = async (
 
   for (const { event, timestamp } of reserveEvents) {
     console.log(event)
-    const tld = 'azero'
+    const tld = registryDeployment.tld
     const name = event.name
     const id = `${name}.${tld}`
     const address = ss58Encode(event.accountId)

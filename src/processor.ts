@@ -5,17 +5,25 @@ import {
   SubstrateBatchProcessor,
 } from '@subsquid/substrate-processor'
 import { Store, TypeormDatabase } from '@subsquid/typeorm-store'
-import { ContractIds, getContractAddress } from './deployments'
+import { ContractDeployment, ContractIds, getContractDeployment } from './deployments'
 import * as aznsRegistry from './deployments/azns_registry/generated/azns_registry'
 import { processDomains } from './processors/processDomains'
 import { processPublicPhaseActivation } from './processors/processPublicPhaseActivation'
 import { processReservations } from './processors/processReservations'
 
 export type EventWithMeta<T> = { event: T; id: string; timestamp: Date; fee: bigint }
+export type RegistryProcessorFn = (
+  store: Store,
+  registryEvents: EventWithMeta<aznsRegistry.Event>[],
+  registryDeployment: ContractDeployment,
+) => Promise<void>
 
+/**
+ * Main entry point of the processor.
+ */
 const main = async () => {
   // Determine contract addresses
-  const aznsRegistryDeployment = await getContractAddress(ContractIds.Registry, true)
+  const registryDeployment = await getContractDeployment(ContractIds.Registry)
 
   // Determine Subquid Archive URL
   if (process.env.CHAIN !== 'development' && !process.env.ARCHIVE) {
@@ -28,12 +36,12 @@ const main = async () => {
 
   // Create processor
   const processor = new SubstrateBatchProcessor()
-    .setBlockRange({ from: aznsRegistryDeployment.blockNumber })
+    .setBlockRange({ from: registryDeployment.blockNumber })
     .setDataSource({
       chain: process.env.RPC,
       archive: archive,
     })
-    .addContractsContractEmitted(aznsRegistryDeployment.addressHex, {
+    .addContractsContractEmitted(registryDeployment.addressHex, {
       data: {
         event: {
           args: true,
@@ -79,18 +87,18 @@ const main = async () => {
   processor.run(new TypeormDatabase(), async (ctx) => {
     const registryEvents = extractContractEvents<aznsRegistry.Event>(
       ctx,
-      aznsRegistryDeployment.addressHex,
+      registryDeployment.addressHex,
       aznsRegistry.decodeEvent,
     )
 
     // Process active phase (whitelist → public)
-    await processPublicPhaseActivation(ctx.store, registryEvents)
+    await processPublicPhaseActivation(ctx.store, registryEvents, registryDeployment)
 
     // Process domains
-    await processDomains(ctx.store, registryEvents)
+    await processDomains(ctx.store, registryEvents, registryDeployment)
 
     // Process domain reservations
-    await processReservations(ctx.store, registryEvents)
+    await processReservations(ctx.store, registryEvents, registryDeployment)
   })
 }
 

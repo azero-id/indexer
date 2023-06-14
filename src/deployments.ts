@@ -9,13 +9,17 @@ export enum ContractIds {
   NameChecker = 'azns_name_checker',
 }
 
+export interface ContractDeployment {
+  address: string
+  addressHex: string
+  blockNumber: number
+  tld: string
+}
+
 /**
- * Dynamically import the address of a contract depending on the active chain.
+ * Dynamically import the contract deployment metadata depending on the active chain.
  */
-export const getContractAddress = async (
-  contract: ContractIds,
-  asHex: boolean,
-): Promise<{ address: string; addressHex: string; blockNumber: number }> => {
+export const getContractDeployment = async (contract: ContractIds): Promise<ContractDeployment> => {
   const chain = process.env.CHAIN
   if (!chain) throw new Error('`CHAIN` environment variable is not set.')
 
@@ -29,10 +33,12 @@ export const getContractAddress = async (
   const address = deployment.address
   const addressHex = toHex(ss58.decode(address).bytes)
   const blockNumber = deployment.blockNumber
+  const tld = deployment.tld
 
   return {
     address,
     addressHex,
     blockNumber,
+    tld,
   }
 }

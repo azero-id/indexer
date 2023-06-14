@@ -1,5 +1,4 @@
-import { Store } from '@subsquid/typeorm-store'
-import { EventWithMeta } from 'src/processor'
+import { EventWithMeta, RegistryProcessorFn } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Domain, Owner } from '../model'
 import { ss58Encode } from '../utils/ss58Encode'
@@ -7,19 +6,21 @@ import { ss58Encode } from '../utils/ss58Encode'
 /**
  * Process domain events.
  */
-export const processDomains = async (
-  store: Store,
-  registryEvents: EventWithMeta<aznsRegistry.Event>[],
+export const processDomains: RegistryProcessorFn = async (
+  store,
+  registryEvents,
+  registryDeployment,
 ) => {
-  await processDomainTransfers(store, registryEvents)
+  await processDomainTransfers(store, registryEvents, registryDeployment)
 }
 
 /**
  * Process domain transfer events.
  */
-export const processDomainTransfers = async <I>(
-  store: Store,
-  registryEvents: EventWithMeta<aznsRegistry.Event>[],
+export const processDomainTransfers: RegistryProcessorFn = async (
+  store,
+  registryEvents,
+  registryDeployment,
 ) => {
   const transferEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Transfer',
@@ -27,7 +28,7 @@ export const processDomainTransfers = async <I>(
 
   for (const { event, timestamp } of transferEvents) {
     console.log(event)
-    const tld = 'azero'
+    const tld = registryDeployment.tld
     const nameBuffer = (event.id as aznsRegistry.Id_Bytes).value
     const name = Buffer.from(nameBuffer).toString('utf-8')
     const id = `${name}.${tld}`

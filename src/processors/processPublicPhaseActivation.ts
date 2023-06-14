@@ -1,5 +1,4 @@
-import { Store } from '@subsquid/typeorm-store'
-import { EventWithMeta } from 'src/processor'
+import { EventWithMeta, RegistryProcessorFn } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { PublicPhaseActivated } from '../model'
 
@@ -7,9 +6,10 @@ import { PublicPhaseActivated } from '../model'
  * Processes the public phase activation event (there is only one).
  * NOTE: For consistency it's handled the same as the other processors are working.
  */
-export const processPublicPhaseActivation = async (
-  store: Store,
-  registryEvents: EventWithMeta<aznsRegistry.Event>[],
+export const processPublicPhaseActivation: RegistryProcessorFn = async (
+  store,
+  registryEvents,
+  registryDeployment,
 ) => {
   const publicPhaseActivatedEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'PublicPhaseActivated',
