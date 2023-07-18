@@ -1,3 +1,3 @@
-export const address = '5CowdrFqkRDPrsLuQdksZ3yPpTKNXWyeK4njPuU2kNUDFBeM'
-export const blockNumber = 33376312
+export const address = '5HXjj3xhtRMqRYCRaXTDcVPz3Mez2XBruyujw6UEkvn8PCiA'
+export const blockNumber = 36495410
 export const tld = 'tzero'
