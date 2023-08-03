@@ -1,6 +1,6 @@
 import { EventWithMeta, RegistryProcessorFn } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
-import { Domain, Owner } from '../model'
+import { Domain, Owner, Referral } from '../model'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -106,5 +106,28 @@ export const processDomainTransfers: RegistryProcessorFn = async (
         console.log('Removed Owner:', updatedOwner)
       }
     }
+  }
+}
+
+// Could have also done this with the isRegister of the above function but I don't know if it's better
+/**
+ * Process domain register events.
+ */
+export const processDomainRegistrations: RegistryProcessorFn = async (
+  store,
+  registryEvents,
+  registryDeployment,
+) => {
+  const transferEvents = registryEvents.filter(
+    ({ event }) => event.__kind === 'Register',
+  ) as EventWithMeta<aznsRegistry.Event_Register>[]
+
+  for (const { event, timestamp } of transferEvents) {
+    console.log(event)
+
+    const referral = new Referral({
+      referredAt: timestamp,
+    })
+    await store.insert(referral)
   }
 }
