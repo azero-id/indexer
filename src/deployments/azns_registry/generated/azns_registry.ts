@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x3c606936316ea4046198894a4fcfcf68d392e29a0648760d984e9f0c5af0e9f7",
+    "hash": "0x78bd57771c8bae8455ddb708300d631e0ea32ccfb3c99db7904223b7a5bb0bb4",
     "language": "ink! 4.2.1",
     "compiler": "rustc 1.68.0-nightly",
     "build_info": {
@@ -3945,6 +3945,10 @@ export const metadata = {
                   {
                     "type": 33,
                     "typeName": "AddressDict"
+                  },
+                  {
+                    "type": 9,
+                    "typeName": "Option<AccountId>"
                   }
                 ],
                 "index": 0,
@@ -6156,7 +6160,7 @@ export type NameStatus = NameStatus_Registered | NameStatus_Reserved | NameStatu
 
 export interface NameStatus_Registered {
     __kind: 'Registered'
-    value: AddressDict
+    value: [AddressDict, (AccountId | undefined)]
 }
 
 export interface NameStatus_Reserved {

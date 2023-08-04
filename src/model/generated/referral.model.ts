@@ -1,10 +1,7 @@
-import { Column as Column_, Entity as Entity_, Index as Index_, ManyToOne as ManyToOne_, PrimaryColumn as PrimaryColumn_ } from "typeorm"
-import { Domain } from "./domain.model"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
+import * as marshal from "./marshal"
 
-// So, this is a bit complicated and I never did this before so you might wanna have a look at it.
-
-// This composite unique index is suited for the latest referrals of a domain
-@Index_(["fromDomain", "referredAt"], {unique: true})
+@Index_(["tld", "name", "referredAt"], {unique: true})
 @Entity_()
 export class Referral {
     constructor(props?: Partial<Referral>) {
@@ -14,19 +11,30 @@ export class Referral {
     @PrimaryColumn_()
     id!: string
 
-    @Index_()
-    @ManyToOne_(() => Domain, {nullable: false})
     @Column_("text", {nullable: false})
-    fromDomain!: Domain
+    tld!: string
 
-    @Column_("text", {nullable: false, unique: true})
-    forDomain!: Domain
+    @Index_()
+    @Column_("text", {nullable: false})
+    name!: string
 
-    @Column_("number", {nullable: false})
-    referrerPayout!: number
+    @Index_()
+    @Column_("text", {nullable: false})
+    address!: string
 
-    @Column_("number", {nullable: false})
-    refereeDiscount!: number
+    @Index_()
+    @Column_("text", {nullable: false})
+    referrerName!: string
+
+    @Index_()
+    @Column_("text", {nullable: false})
+    referrerAddress!: string
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    referralAmount!: bigint
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    receivedFeeAmount!: bigint
 
     @Index_()
     @Column_("timestamp with time zone", {nullable: false})

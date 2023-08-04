@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x3c606936316ea4046198894a4fcfcf68d392e29a0648760d984e9f0c5af0e9f7",
+    "hash": "0x78bd57771c8bae8455ddb708300d631e0ea32ccfb3c99db7904223b7a5bb0bb4",
     "language": "ink! 4.2.1",
     "compiler": "rustc 1.68.0-nightly",
     "build_info": {
@@ -3943,6 +3943,10 @@
                   {
                     "type": 33,
                     "typeName": "AddressDict"
+                  },
+                  {
+                    "type": 9,
+                    "typeName": "Option<AccountId>"
                   }
                 ],
                 "index": 0,

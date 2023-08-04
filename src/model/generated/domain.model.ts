@@ -1,7 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, ManyToOne as ManyToOne_} from "typeorm"
 import {Owner} from "./owner.model"
 
-@Index_(["name", "tld"], {unique: true})
+@Index_(["tld", "name"], {unique: true})
 @Entity_()
 export class Domain {
     constructor(props?: Partial<Domain>) {
@@ -12,11 +12,11 @@ export class Domain {
     id!: string
 
     @Column_("text", {nullable: false})
-    name!: string
+    tld!: string
 
     @Index_()
     @Column_("text", {nullable: false})
-    tld!: string
+    name!: string
 
     @Index_()
     @ManyToOne_(() => Owner, {nullable: true})

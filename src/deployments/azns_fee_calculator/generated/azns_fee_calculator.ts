@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0xa7be1b557b66e1084ba1be9ca60d2c979c69eb877b2bee9f04060ffc225ea5a2",
+    "hash": "0x95148b9e2349325ff53f897334080dc9e93ec8edc6d83692ef8e4a27d34403b1",
     "language": "ink! 4.2.1",
     "compiler": "rustc 1.68.0-nightly",
     "build_info": {
