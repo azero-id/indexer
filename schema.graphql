@@ -1,5 +1,5 @@
 type PublicPhaseActivated @entity {
-  id: ID! @index @unique
+  id: ID! @unique
   activatedAt: DateTime! @index
 }
 
@@ -25,7 +25,7 @@ type Reservation @entity @index(fields: ["tld", "name"], unique: true) {
 }
 
 type Referral @entity @index(fields: ["tld", "name", "referredAt"], unique: true) {
-  id: ID! @index @unique
+  id: ID! @unique
   tld: String! @index
   name: String! @index
   address: String! @index

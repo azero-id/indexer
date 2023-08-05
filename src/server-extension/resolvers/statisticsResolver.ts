@@ -1,6 +1,6 @@
 import { Query, Resolver } from 'type-graphql'
-import type { EntityManager } from 'typeorm'
-import { Domain, Owner, Reservation } from '../../model/generated'
+import { type EntityManager } from 'typeorm'
+import { Domain, Owner, Referral, Reservation } from '../../model/generated'
 
 @Resolver()
 export class StatisticsResolver {
@@ -22,5 +22,22 @@ export class StatisticsResolver {
   async totalReservations() {
     const manager = await this.tx()
     return await manager.getRepository(Reservation).count()
+  }
+
+  @Query(() => Number)
+  async totalReferrals() {
+    const manager = await this.tx()
+    return await manager.getRepository(Referral).count()
+  }
+
+  @Query(() => Number)
+  async totalReferralAmount() {
+    const manager = await this.tx()
+    const { sum } = await manager
+      .getRepository(Referral)
+      .createQueryBuilder('referral')
+      .select('SUM(referral.referralAmount)', 'sum')
+      .getRawOne()
+    return sum
   }
 }

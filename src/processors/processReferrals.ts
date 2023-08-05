@@ -43,5 +43,6 @@ export const processReferrals: RegistryProcessorFn = async (
       referredAt,
     } satisfies Referral)
     await store.insert(referral)
+    console.log('Added Referral:', referral)
   }
 }
