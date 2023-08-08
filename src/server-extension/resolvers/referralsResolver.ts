@@ -23,4 +23,24 @@ export class ReferralsResolver {
       .getRawOne()
     return sum
   }
+
+  @Query(() => [TopReferrerEntity])
+  async topReferrers(
+    @Arg('limit', (_) => Int, { nullable: false, defaultValue: 10 }) limit: number,
+  ) {
+    const manager = await this.tx()
+    const repository = manager.getRepository(Referral)
+
+    return await repository
+      .createQueryBuilder('referral')
+      .select([
+        'referral.referrerAddress AS address',
+        'COUNT(referral.referrerAddress) AS count',
+        'SUM(referral.referralAmount) AS amount',
+      ])
+      .groupBy('referral.referrerAddress')
+      .orderBy('COUNT(referral.referrerAddress)', 'DESC')
+      .limit(limit)
+      .getRawMany()
+  }
 }
