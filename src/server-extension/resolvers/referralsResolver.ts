@@ -1,0 +1,26 @@
+import { Arg, Int, Query, Resolver } from 'type-graphql'
+import { type EntityManager } from 'typeorm'
+import { Referral } from '../../model/generated'
+import { TopReferrerEntity } from '../entity'
+
+@Resolver()
+export class ReferralsResolver {
+  constructor(private tx: () => Promise<EntityManager>) {}
+
+  @Query(() => Number)
+  async totalReferrals() {
+    const manager = await this.tx()
+    return await manager.getRepository(Referral).count()
+  }
+
+  @Query(() => Number)
+  async totalReferralAmount() {
+    const manager = await this.tx()
+    const { sum } = await manager
+      .getRepository(Referral)
+      .createQueryBuilder('referral')
+      .select('SUM(referral.referralAmount)', 'sum')
+      .getRawOne()
+    return sum
+  }
+}
