@@ -43,4 +43,24 @@ export class ReferralsResolver {
       .limit(limit)
       .getRawMany()
   }
+
+  @Query(() => Int)
+  async referrerRank(@Arg('address') address: string) {
+    const manager = await this.tx()
+    const repository = manager.getRepository(Referral)
+
+    // Get users ordered by referral counts
+    const results = await repository
+      .createQueryBuilder('referral')
+      .select(['referral.referrerAddress AS address'])
+      .groupBy('referral.referrerAddress')
+      .orderBy('COUNT(referral.referrerAddress)', 'DESC')
+      .getRawMany()
+
+    // Find the rank of the user with the given address
+    const userRank = results.findIndex((result) => result.address === address)
+
+    // If the user is found in the list, return their rank (index + 1). Otherwise, return null.
+    return userRank >= 0 ? userRank + 1 : null
+  }
 }
