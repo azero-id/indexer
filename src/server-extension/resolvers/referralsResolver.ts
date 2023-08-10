@@ -44,7 +44,7 @@ export class ReferralsResolver {
       .getRawMany()
   }
 
-  @Query(() => Int)
+  @Query(() => Int, { nullable: true })
   async referrerRank(@Arg('address') address: string) {
     const manager = await this.tx()
     const repository = manager.getRepository(Referral)
