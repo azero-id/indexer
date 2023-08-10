@@ -85,14 +85,14 @@ sqd auth -k <DEPLOYMENT_KEY>
 # Bump version in manifest-file
 
 # A: Deploy Squid for Aleph Zero Testnet
-sqd deploy . -m squid.azns-testnet.yaml
+sqd deploy . -o azero-id -m squid.azns-testnet.yaml
 
 # B: Deploy Squid for Aleph Zero Mainnet
-# TODO: sqd deploy . -m squid.azns-mainnet.yaml
+# TODO: sqd deploy . -o azero-id -m squid.azns-mainnet.yaml
 
 # After successful initialization, assign newly
 # deployed squid to the production endpoint
-sqd prod azns-testnet@v2
+sqd prod azns-testnet@v42
 ```
 
 ## Other Resources
