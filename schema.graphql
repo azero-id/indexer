@@ -1,12 +1,12 @@
 type PublicPhaseActivated @entity {
-  id: ID! @index @unique
+  id: ID! @unique
   activatedAt: DateTime! @index
 }
 
-type Domain @entity @index(fields: ["name", "tld"], unique: true) {
+type Domain @entity @index(fields: ["tld", "name"], unique: true) {
   id: ID! @index @unique
-  name: String! @index
   tld: String! @index
+  name: String! @index
   owner: Owner! @index
   registeredAt: DateTime! @index
 }
@@ -16,10 +16,22 @@ type Owner @entity {
   domains: [Domain!] @derivedFrom(field: "owner")
 }
 
-type Reservation @entity @index(fields: ["name", "tld"], unique: true) {
+type Reservation @entity @index(fields: ["tld", "name"], unique: true) {
   id: ID! @index @unique
-  name: String! @index
   tld: String! @index
+  name: String! @index
   address: String @index
   reservedAt: DateTime! @index
+}
+
+type Referral @entity @index(fields: ["tld", "name", "referredAt"], unique: true) {
+  id: ID! @unique
+  tld: String! @index
+  name: String! @index
+  address: String! @index
+  referrerName: String! @index
+  referrerAddress: String! @index
+  referralAmount: BigInt!
+  receivedFeeAmount: BigInt!
+  referredAt: DateTime! @index
 }

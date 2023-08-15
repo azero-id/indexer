@@ -4,20 +4,9 @@ import { Domain, Owner } from '../model'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
- * Process domain events.
- */
-export const processDomains: RegistryProcessorFn = async (
-  store,
-  registryEvents,
-  registryDeployment,
-) => {
-  await processDomainTransfers(store, registryEvents, registryDeployment)
-}
-
-/**
  * Process domain transfer events.
  */
-export const processDomainTransfers: RegistryProcessorFn = async (
+export const processDomains: RegistryProcessorFn = async (
   store,
   registryEvents,
   registryDeployment,

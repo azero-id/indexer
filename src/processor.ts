@@ -9,6 +9,7 @@ import { ContractDeployment, ContractIds, getContractDeployment } from './deploy
 import * as aznsRegistry from './deployments/azns_registry/generated/azns_registry'
 import { processDomains } from './processors/processDomains'
 import { processPublicPhaseActivation } from './processors/processPublicPhaseActivation'
+import { processReferrals } from './processors/processReferrals'
 import { processReservations } from './processors/processReservations'
 
 export type EventWithMeta<T> = { event: T; id: string; timestamp: Date; fee: bigint }
@@ -96,6 +97,9 @@ const main = async () => {
 
     // Process domains
     await processDomains(ctx.store, registryEvents, registryDeployment)
+
+    // Process referrals
+    await processReferrals(ctx.store, registryEvents, registryDeployment)
 
     // Process domain reservations
     await processReservations(ctx.store, registryEvents, registryDeployment)

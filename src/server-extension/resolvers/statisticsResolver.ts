@@ -1,5 +1,5 @@
 import { Query, Resolver } from 'type-graphql'
-import type { EntityManager } from 'typeorm'
+import { type EntityManager } from 'typeorm'
 import { Domain, Owner, Reservation } from '../../model/generated'
 
 @Resolver()

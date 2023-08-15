@@ -2,7 +2,7 @@ import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
-    "hash": "0x7cd7d35b76218c06331b60082d89ff89ca3c6937dc0b59df1e70e58a7723f337",
+    "hash": "0x543b89da37687cb0b9d317e3d97bab168b65dd8de16d589348f72aae17054efc",
     "language": "ink! 4.2.1",
     "compiler": "rustc 1.68.0-nightly",
     "build_info": {
@@ -45,7 +45,7 @@ export const metadata = {
             "ink_primitives",
             "ConstructorResult"
           ],
-          "type": 4
+          "type": 6
         },
         "selector": "0x9bae9d5e"
       }
@@ -62,32 +62,32 @@ export const metadata = {
         "displayName": [
           "Balance"
         ],
-        "type": 22
+        "type": 25
       },
       "blockNumber": {
         "displayName": [
           "BlockNumber"
         ],
-        "type": 25
+        "type": 28
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 26
+        "type": 29
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 23
+        "type": 26
       },
       "maxEventTopics": 4,
       "timestamp": {
         "displayName": [
           "Timestamp"
         ],
-        "type": 24
+        "type": 27
       }
     },
     "events": [],
@@ -96,7 +96,7 @@ export const metadata = {
         "ink",
         "LangError"
       ],
-      "type": 6
+      "type": 8
     },
     "messages": [
       {
@@ -107,7 +107,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 7
+              "type": 4
             }
           },
           {
@@ -142,7 +142,7 @@ export const metadata = {
               "displayName": [
                 "Vec"
               ],
-              "type": 7
+              "type": 4
             }
           },
           {
@@ -170,10 +170,36 @@ export const metadata = {
         "selector": "0x562de86b"
       },
       {
+        "args": [
+          {
+            "label": "registry_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "remove_registry_address",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 9
+        },
+        "selector": "0xcc78aead"
+      },
+      {
         "args": [],
         "default": false,
         "docs": [],
-        "label": "get_all_registry",
+        "label": "get_all_registries",
         "mutates": false,
         "payable": false,
         "returnType": {
@@ -183,7 +209,49 @@ export const metadata = {
           ],
           "type": 12
         },
-        "selector": "0x91cf4131"
+        "selector": "0xe6da7bf0"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_all_tlds",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 15
+        },
+        "selector": "0xf1a7af41"
+      },
+      {
+        "args": [
+          {
+            "label": "registry_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_associated_tlds",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 15
+        },
+        "selector": "0xcb18f821"
       },
       {
         "args": [
@@ -193,7 +261,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 8
+              "type": 5
             }
           }
         ],
@@ -207,7 +275,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 13
+          "type": 16
         },
         "selector": "0x15a5d20a"
       },
@@ -219,7 +287,7 @@ export const metadata = {
               "displayName": [
                 "String"
               ],
-              "type": 8
+              "type": 5
             }
           }
         ],
@@ -233,7 +301,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 15
+          "type": 18
         },
         "selector": "0xd259f7ba"
       },
@@ -254,7 +322,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 17
+              "type": 20
             }
           }
         ],
@@ -270,7 +338,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 21
         },
         "selector": "0xdf3a358e"
       },
@@ -286,7 +354,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 21
+          "type": 24
         },
         "selector": "0x57b8a8a7"
       },
@@ -302,7 +370,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 13
+          "type": 16
         },
         "selector": "0xbcd31d76"
       },
@@ -314,7 +382,7 @@ export const metadata = {
               "displayName": [
                 "Option"
               ],
-              "type": 14
+              "type": 17
             }
           }
         ],
@@ -368,7 +436,7 @@ export const metadata = {
             "ink",
             "MessageResult"
           ],
-          "type": 4
+          "type": 6
         },
         "selector": "0x1345543d"
       }
@@ -439,6 +507,20 @@ export const metadata = {
                 }
               },
               "name": "routes"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "leaf": {
+                      "key": "0x00000065",
+                      "ty": 4
+                    }
+                  },
+                  "root_key": "0x00000065"
+                }
+              },
+              "name": "associated_tlds"
             }
           ],
           "name": "Router"
@@ -501,12 +583,30 @@ export const metadata = {
       "id": 4,
       "type": {
         "def": {
+          "sequence": {
+            "type": 5
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "primitive": "str"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
           "variant": {
             "variants": [
               {
                 "fields": [
                   {
-                    "type": 5
+                    "type": 7
                   }
                 ],
                 "index": 0,
@@ -515,7 +615,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 8
                   }
                 ],
                 "index": 1,
@@ -527,11 +627,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 5
+            "type": 7
           },
           {
             "name": "E",
-            "type": 6
+            "type": 8
           }
         ],
         "path": [
@@ -540,7 +640,7 @@ export const metadata = {
       }
     },
     {
-      "id": 5,
+      "id": 7,
       "type": {
         "def": {
           "tuple": []
@@ -548,7 +648,7 @@ export const metadata = {
       }
     },
     {
-      "id": 6,
+      "id": 8,
       "type": {
         "def": {
           "variant": {
@@ -564,24 +664,6 @@ export const metadata = {
           "ink_primitives",
           "LangError"
         ]
-      }
-    },
-    {
-      "id": 7,
-      "type": {
-        "def": {
-          "sequence": {
-            "type": 8
-          }
-        }
-      }
-    },
-    {
-      "id": 8,
-      "type": {
-        "def": {
-          "primitive": "str"
-        }
       }
     },
     {
@@ -602,7 +684,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 8
                   }
                 ],
                 "index": 1,
@@ -618,7 +700,7 @@ export const metadata = {
           },
           {
             "name": "E",
-            "type": 6
+            "type": 8
           }
         ],
         "path": [
@@ -635,7 +717,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 5
+                    "type": 7
                   }
                 ],
                 "index": 0,
@@ -656,7 +738,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 5
+            "type": 7
           },
           {
             "name": "E",
@@ -685,7 +767,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 8,
+                    "type": 5,
                     "typeName": "String"
                   }
                 ],
@@ -695,7 +777,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 8,
+                    "type": 5,
                     "typeName": "String"
                   }
                 ],
@@ -709,6 +791,10 @@ export const metadata = {
               {
                 "index": 5,
                 "name": "InvalidDomainName"
+              },
+              {
+                "index": 6,
+                "name": "EmptyList"
               }
             ]
           }
@@ -729,7 +815,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 3
+                    "type": 13
                   }
                 ],
                 "index": 0,
@@ -738,7 +824,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 8
                   }
                 ],
                 "index": 1,
@@ -750,11 +836,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 3
+            "type": 13
           },
           {
             "name": "E",
-            "type": 6
+            "type": 8
           }
         ],
         "path": [
@@ -766,12 +852,33 @@ export const metadata = {
       "id": 13,
       "type": {
         "def": {
+          "sequence": {
+            "type": 14
+          }
+        }
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "tuple": [
+            0,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
           "variant": {
             "variants": [
               {
                 "fields": [
                   {
-                    "type": 14
+                    "type": 4
                   }
                 ],
                 "index": 0,
@@ -780,7 +887,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 8
                   }
                 ],
                 "index": 1,
@@ -792,11 +899,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 14
+            "type": 4
           },
           {
             "name": "E",
-            "type": 6
+            "type": 8
           }
         ],
         "path": [
@@ -805,7 +912,49 @@ export const metadata = {
       }
     },
     {
-      "id": 14,
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 8
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 17
+          },
+          {
+            "name": "E",
+            "type": 8
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 17,
       "type": {
         "def": {
           "variant": {
@@ -838,7 +987,7 @@ export const metadata = {
       }
     },
     {
-      "id": 15,
+      "id": 18,
       "type": {
         "def": {
           "variant": {
@@ -846,7 +995,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 19
                   }
                 ],
                 "index": 0,
@@ -855,7 +1004,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 8
                   }
                 ],
                 "index": 1,
@@ -867,11 +1016,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 16
+            "type": 19
           },
           {
             "name": "E",
-            "type": 6
+            "type": 8
           }
         ],
         "path": [
@@ -880,7 +1029,7 @@ export const metadata = {
       }
     },
     {
-      "id": 16,
+      "id": 19,
       "type": {
         "def": {
           "variant": {
@@ -922,7 +1071,7 @@ export const metadata = {
       }
     },
     {
-      "id": 17,
+      "id": 20,
       "type": {
         "def": {
           "variant": {
@@ -934,7 +1083,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 8
+                    "type": 5
                   }
                 ],
                 "index": 1,
@@ -946,7 +1095,7 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 8
+            "type": 5
           }
         ],
         "path": [
@@ -955,7 +1104,7 @@ export const metadata = {
       }
     },
     {
-      "id": 18,
+      "id": 21,
       "type": {
         "def": {
           "variant": {
@@ -963,7 +1112,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 19
+                    "type": 22
                   }
                 ],
                 "index": 0,
@@ -972,7 +1121,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 8
                   }
                 ],
                 "index": 1,
@@ -984,11 +1133,11 @@ export const metadata = {
         "params": [
           {
             "name": "T",
-            "type": 19
+            "type": 22
           },
           {
             "name": "E",
-            "type": 6
+            "type": 8
           }
         ],
         "path": [
@@ -997,28 +1146,28 @@ export const metadata = {
       }
     },
     {
-      "id": 19,
+      "id": 22,
       "type": {
         "def": {
           "sequence": {
-            "type": 20
+            "type": 23
           }
         }
       }
     },
     {
-      "id": 20,
+      "id": 23,
       "type": {
         "def": {
           "tuple": [
             0,
-            8
+            5
           ]
         }
       }
     },
     {
-      "id": 21,
+      "id": 24,
       "type": {
         "def": {
           "variant": {
@@ -1035,7 +1184,7 @@ export const metadata = {
               {
                 "fields": [
                   {
-                    "type": 6
+                    "type": 8
                   }
                 ],
                 "index": 1,
@@ -1051,7 +1200,7 @@ export const metadata = {
           },
           {
             "name": "E",
-            "type": 6
+            "type": 8
           }
         ],
         "path": [
@@ -1060,7 +1209,7 @@ export const metadata = {
       }
     },
     {
-      "id": 22,
+      "id": 25,
       "type": {
         "def": {
           "primitive": "u128"
@@ -1068,7 +1217,7 @@ export const metadata = {
       }
     },
     {
-      "id": 23,
+      "id": 26,
       "type": {
         "def": {
           "composite": {
@@ -1088,7 +1237,7 @@ export const metadata = {
       }
     },
     {
-      "id": 24,
+      "id": 27,
       "type": {
         "def": {
           "primitive": "u64"
@@ -1096,7 +1245,7 @@ export const metadata = {
       }
     },
     {
-      "id": 25,
+      "id": 28,
       "type": {
         "def": {
           "primitive": "u32"
@@ -1104,7 +1253,7 @@ export const metadata = {
       }
     },
     {
-      "id": 26,
+      "id": 29,
       "type": {
         "def": {
           "variant": {}
@@ -1147,8 +1296,16 @@ export interface ChainContext {
 export class Contract {
     constructor(private ctx: ChainContext, private address: string, private blockHash?: string) { }
 
-    get_all_registry(): Promise<Result<AccountId[], LangError>> {
-        return this.stateCall('0x91cf4131', [])
+    get_all_registries(): Promise<Result<[AccountId, Vec][], LangError>> {
+        return this.stateCall('0xe6da7bf0', [])
+    }
+
+    get_all_tlds(): Promise<Result<Vec, LangError>> {
+        return this.stateCall('0xf1a7af41', [])
+    }
+
+    get_associated_tlds(registry_addr: AccountId): Promise<Result<Vec, LangError>> {
+        return this.stateCall('0xcb18f821', [registry_addr])
     }
 
     get_registry(tld: String): Promise<Result<(AccountId | undefined), LangError>> {
@@ -1182,7 +1339,7 @@ export class Contract {
 
 export type Event = never
 
-export type Message = Message_add_registry | Message_update_registry | Message_get_all_registry | Message_get_registry | Message_get_address | Message_get_primary_domains | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
+export type Message = Message_add_registry | Message_update_registry | Message_remove_registry_address | Message_get_all_registries | Message_get_all_tlds | Message_get_associated_tlds | Message_get_registry | Message_get_address | Message_get_primary_domains | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
 
 export interface Message_add_registry {
     __kind: 'add_registry'
@@ -1196,8 +1353,22 @@ export interface Message_update_registry {
     registryAddr: AccountId
 }
 
-export interface Message_get_all_registry {
-    __kind: 'get_all_registry'
+export interface Message_remove_registry_address {
+    __kind: 'remove_registry_address'
+    registryAddr: AccountId
+}
+
+export interface Message_get_all_registries {
+    __kind: 'get_all_registries'
+}
+
+export interface Message_get_all_tlds {
+    __kind: 'get_all_tlds'
+}
+
+export interface Message_get_associated_tlds {
+    __kind: 'get_associated_tlds'
+    registryAddr: AccountId
 }
 
 export interface Message_get_registry {
@@ -1250,15 +1421,17 @@ export interface Constructor_new {
 
 export type AccountId = Uint8Array
 
+export type String = string
+
+export type Vec = String[]
+
 export type LangError = LangError_CouldNotReadInput
 
 export interface LangError_CouldNotReadInput {
     __kind: 'CouldNotReadInput'
 }
 
-export type String = string
-
-export type Error = Error_NotAdmin | Error_InvalidRegistryAddress | Error_TldAlreadyInUse | Error_TldNotFound | Error_CouldNotResolveDomain | Error_InvalidDomainName
+export type Error = Error_NotAdmin | Error_InvalidRegistryAddress | Error_TldAlreadyInUse | Error_TldNotFound | Error_CouldNotResolveDomain | Error_InvalidDomainName | Error_EmptyList
 
 export interface Error_NotAdmin {
     __kind: 'NotAdmin'
@@ -1286,6 +1459,8 @@ export interface Error_InvalidDomainName {
     __kind: 'InvalidDomainName'
 }
 
-export type Vec = String[]
+export interface Error_EmptyList {
+    __kind: 'EmptyList'
+}
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

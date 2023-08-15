@@ -1,6 +1,6 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
 
-@Index_(["name", "tld"], {unique: true})
+@Index_(["tld", "name"], {unique: true})
 @Entity_()
 export class Reservation {
     constructor(props?: Partial<Reservation>) {
@@ -11,11 +11,11 @@ export class Reservation {
     id!: string
 
     @Column_("text", {nullable: false})
-    name!: string
+    tld!: string
 
     @Index_()
     @Column_("text", {nullable: false})
-    tld!: string
+    name!: string
 
     @Index_()
     @Column_("text", {nullable: true})
