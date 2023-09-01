@@ -7,15 +7,17 @@ import {
 import { Store, TypeormDatabase } from '@subsquid/typeorm-store'
 import { ContractDeployment, ContractIds, getContractDeployment } from './deployments'
 import * as aznsRegistry from './deployments/azns_registry/generated/azns_registry'
+import * as domainGiveaway from './deployments/domain_giveaway/generated/domain_giveaway'
 import { processDomains } from './processors/processDomains'
+import { processGiveawayCoupons } from './processors/processGiveawayCoupons'
 import { processPublicPhaseActivation } from './processors/processPublicPhaseActivation'
 import { processReferrals } from './processors/processReferrals'
 import { processReservations } from './processors/processReservations'
 
 export type EventWithMeta<T> = { event: T; id: string; timestamp: Date; fee: bigint }
-export type RegistryProcessorFn = (
+export type EventProcessorFn<T> = (
   store: Store,
-  registryEvents: EventWithMeta<aznsRegistry.Event>[],
+  registryEvents: EventWithMeta<T>[],
   registryDeployment: ContractDeployment,
 ) => Promise<void>
 
@@ -25,6 +27,7 @@ export type RegistryProcessorFn = (
 const main = async () => {
   // Determine contract addresses
   const registryDeployment = await getContractDeployment(ContractIds.Registry)
+  const giveawayDeployment = await getContractDeployment(ContractIds.DomainGiveaway)
 
   // Determine Subquid Archive URL
   if (process.env.CHAIN !== 'development' && !process.env.ARCHIVE) {
@@ -43,6 +46,16 @@ const main = async () => {
       archive: archive,
     })
     .addContractsContractEmitted(registryDeployment.addressHex, {
+      data: {
+        event: {
+          args: true,
+          extrinsic: {
+            fee: true,
+          },
+        },
+      },
+    } as const)
+    .addContractsContractEmitted(giveawayDeployment.addressHex, {
       data: {
         event: {
           args: true,
@@ -103,6 +116,14 @@ const main = async () => {
 
     // Process domain reservations
     await processReservations(ctx.store, registryEvents, registryDeployment)
+
+    // Process giveaway coupons
+    const giveawayEvents = extractContractEvents<domainGiveaway.Event>(
+      ctx,
+      giveawayDeployment.addressHex,
+      domainGiveaway.decodeEvent,
+    )
+    await processGiveawayCoupons(ctx.store, giveawayEvents, giveawayDeployment)
   })
 }
 

@@ -1,4 +1,4 @@
-import { EventWithMeta, RegistryProcessorFn } from 'src/processor'
+import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Referral } from '../model'
 import { ss58Encode } from '../utils/ss58Encode'
@@ -6,7 +6,7 @@ import { ss58Encode } from '../utils/ss58Encode'
 /**
  * Process domain referrals.
  */
-export const processReferrals: RegistryProcessorFn = async (
+export const processReferrals: EventProcessorFn<aznsRegistry.Event> = async (
   store,
   registryEvents,
   registryDeployment,

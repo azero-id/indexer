@@ -1,4 +1,4 @@
-import { EventWithMeta, RegistryProcessorFn } from 'src/processor'
+import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Reservation } from '../model'
 import { ss58Encode } from '../utils/ss58Encode'
@@ -6,7 +6,7 @@ import { ss58Encode } from '../utils/ss58Encode'
 /**
  * Process domain reservation events.
  */
-export const processReservations: RegistryProcessorFn = async (
+export const processReservations: EventProcessorFn<aznsRegistry.Event> = async (
   store,
   registryEvents,
   registryDeployment,
@@ -35,7 +35,7 @@ export const processReservations: RegistryProcessorFn = async (
         tld,
         address,
         reservedAt: timestamp,
-      })
+      } satisfies Reservation)
 
       // Update or insert reservation
       if (existingReservation) {

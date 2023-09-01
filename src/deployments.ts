@@ -7,6 +7,7 @@ export enum ContractIds {
   FeeCalculator = 'azns_fee_calculator',
   MerkleVerifier = 'azns_merkle_verifier',
   NameChecker = 'azns_name_checker',
+  DomainGiveaway = 'domain_giveaway',
 }
 
 export interface ContractDeployment {
