@@ -1,4 +1,4 @@
-import { EventWithMeta, RegistryProcessorFn } from 'src/processor'
+import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { PublicPhaseActivated } from '../model'
 
@@ -6,7 +6,7 @@ import { PublicPhaseActivated } from '../model'
  * Processes the public phase activation event (there is only one).
  * NOTE: For consistency it's handled the same as the other processors are working.
  */
-export const processPublicPhaseActivation: RegistryProcessorFn = async (
+export const processPublicPhaseActivation: EventProcessorFn<aznsRegistry.Event> = async (
   store,
   registryEvents,
   registryDeployment,

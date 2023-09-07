@@ -35,3 +35,14 @@ type Referral @entity @index(fields: ["tld", "name", "referredAt"], unique: true
   receivedFeeAmount: BigInt!
   referredAt: DateTime! @index
 }
+
+type GiveawayCoupon @entity @index(fields: ["tld", "name", "reservedAt"], unique: true) {
+  id: ID! @unique
+  tld: String! @index
+  name: String! @index
+  publicCode: String! @index
+  reservedAt: DateTime! @index
+  claimedBy: String @index
+  claimedAt: DateTime @index
+  claimDurationInSeconds: Int
+}

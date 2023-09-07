@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: azns-mainnet
-version: 3
+version: 5
 description: 'AZERO.ID Subsquid Indexer (Aleph Zero Mainnet)'
 
 build:
@@ -32,6 +32,12 @@ deploy:
 
 scale:
   dedicated: true
+  processor:
+    profile: small
+  addons:
+    postgres:
+      storage: 10G
+      profile: small
   api:
     profile: small
-    replicas: 3
+    replicas: 2
