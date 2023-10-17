@@ -11,6 +11,14 @@ export class ReceivedFee {
     @PrimaryColumn_()
     id!: string
 
+    @Index_()
+    @Column_("text", {nullable: false})
+    blockHash!: string
+
+    @Index_()
+    @Column_("text", {nullable: false})
+    extrinsicId!: string
+
     @Column_("text", {nullable: false})
     tld!: string
 

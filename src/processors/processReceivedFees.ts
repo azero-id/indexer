@@ -24,7 +24,7 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
   const tld = registryDeployment.tld
 
   // Iterate over `FeeReceived` events
-  for (const { event, id, blockHash, timestamp } of feeReceivedEvents) {
+  for (const { event, id, timestamp, blockHash, extrinsicId } of feeReceivedEvents) {
     console.log(event)
 
     // Match according `Register` event
@@ -75,6 +75,8 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
       receivedAmount,
       receivedAmountEUR,
       registrationDurationInYears,
+      blockHash,
+      extrinsicId,
     } satisfies ReceivedFee)
 
     await store.insert(receivedFee)

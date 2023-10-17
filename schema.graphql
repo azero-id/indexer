@@ -49,6 +49,8 @@ type GiveawayCoupon @entity @index(fields: ["tld", "name", "reservedAt"], unique
 
 type ReceivedFee @entity @index(fields: ["tld", "name", "eventType", "receivedAt"], unique: true) {
   id: ID! @unique
+  blockHash: String! @index
+  extrinsicId: String! @index
   tld: String! @index
   name: String! @index
   from: String! @index

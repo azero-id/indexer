@@ -21,6 +21,7 @@ export type EventWithMeta<T> = {
   timestamp: Date
   fee: bigint
   blockHash: string
+  extrinsicId: string
 }
 export type EventProcessorFn<T> = (
   store: Store,
@@ -98,6 +99,7 @@ const main = async () => {
             timestamp: new Date(block.header.timestamp),
             fee: item.event.extrinsic?.fee || 0n,
             blockHash: block.header.hash,
+            extrinsicId: item.event.extrinsic.id,
           })
         }
       }
