@@ -11,6 +11,7 @@ export enum ContractIds {
 }
 
 export interface ContractDeployment {
+  chain: 'development' | 'alephzero-testnet' | 'alephzero'
   address: string
   addressHex: string
   blockNumber: number
@@ -21,8 +22,10 @@ export interface ContractDeployment {
  * Dynamically import the contract deployment metadata depending on the active chain.
  */
 export const getContractDeployment = async (contract: ContractIds): Promise<ContractDeployment> => {
-  const chain = process.env.CHAIN
-  if (!chain) throw new Error('`CHAIN` environment variable is not set.')
+  const chain = process.env.CHAIN as any
+  if (!chain || !['development', 'alephzero-testnet', 'alephzero'].includes(chain)) {
+    throw new Error(`'CHAIN' environment variable is not set or unsupported chain '${chain}'.`)
+  }
 
   let deployment
   try {
@@ -37,6 +40,7 @@ export const getContractDeployment = async (contract: ContractIds): Promise<Cont
   const tld = deployment.tld
 
   return {
+    chain,
     address,
     addressHex,
     blockNumber,

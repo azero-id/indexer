@@ -46,3 +46,15 @@ type GiveawayCoupon @entity @index(fields: ["tld", "name", "reservedAt"], unique
   claimedAt: DateTime @index
   claimDurationInSeconds: Int
 }
+
+type ReceivedFee @entity @index(fields: ["tld", "name", "eventType", "receivedAt"], unique: true) {
+  id: ID! @unique
+  tld: String! @index
+  name: String! @index
+  from: String! @index
+  eventType: String! @index
+  receivedAt: DateTime! @index
+  receivedAmount: BigInt!
+  receivedAmountEUR: Float!
+  registrationDurationInYears: Int!
+}
