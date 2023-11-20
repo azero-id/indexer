@@ -21,6 +21,7 @@
     "lint:fix": "prettier . --write && eslint --fix"
   },
   "dependencies": {
+    "@polkadot/util": "^12.5.1",
     "@subsquid/archive-registry": "^2.1.13",
     "@subsquid/graphql-server": "3.3.2",
     "@subsquid/ink-abi": "^1.1.0",
@@ -34,6 +35,8 @@
     "@types/node": "^16.18.23",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
+    "axios": "^1.5.1",
+    "axios-retry": "^3.8.0",
     "dayjs": "^1.11.9",
     "dotenv": "^16.0.3",
     "eslint": "^8.38.0",

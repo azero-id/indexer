@@ -11,10 +11,18 @@ import * as domainGiveaway from './deployments/domain_giveaway/generated/domain_
 import { processDomains } from './processors/processDomains'
 import { processGiveawayCoupons } from './processors/processGiveawayCoupons'
 import { processPublicPhaseActivation } from './processors/processPublicPhaseActivation'
+import { processReceivedFees } from './processors/processReceivedFees'
 import { processReferrals } from './processors/processReferrals'
 import { processReservations } from './processors/processReservations'
 
-export type EventWithMeta<T> = { event: T; id: string; timestamp: Date; fee: bigint }
+export type EventWithMeta<T> = {
+  event: T
+  id: string
+  timestamp: Date
+  fee: bigint
+  blockHash: string
+  extrinsicId: string
+}
 export type EventProcessorFn<T> = (
   store: Store,
   registryEvents: EventWithMeta<T>[],
@@ -90,6 +98,8 @@ const main = async () => {
             id: item.event.id,
             timestamp: new Date(block.header.timestamp),
             fee: item.event.extrinsic?.fee || 0n,
+            blockHash: block.header.hash,
+            extrinsicId: item.event.extrinsic.id,
           })
         }
       }
@@ -116,6 +126,9 @@ const main = async () => {
 
     // Process domain reservations
     await processReservations(ctx.store, registryEvents, registryDeployment)
+
+    // Process received fees
+    await processReceivedFees(ctx.store, registryEvents, registryDeployment)
 
     // Process giveaway coupons
     const giveawayEvents = extractContractEvents<domainGiveaway.Event>(
