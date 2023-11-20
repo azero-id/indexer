@@ -1,4 +1,4 @@
-import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
+import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
@@ -1271,21 +1271,21 @@ export const metadata = {
 
 const _abi = new Abi(metadata)
 
-export function decodeEvent(hex: string): Event {
-    return _abi.decodeEvent(hex)
+export function decodeEvent(bytes: Bytes): Event {
+    return _abi.decodeEvent(bytes)
 }
 
-export function decodeMessage(hex: string): Message {
-    return _abi.decodeMessage(hex)
+export function decodeMessage(bytes: Bytes): Message {
+    return _abi.decodeMessage(bytes)
 }
 
-export function decodeConstructor(hex: string): Constructor {
-    return _abi.decodeConstructor(hex)
+export function decodeConstructor(bytes: Bytes): Constructor {
+    return _abi.decodeConstructor(bytes)
 }
 
 export interface Chain {
-    client: {
-        call: <T=any>(method: string, params?: unknown[]) => Promise<T>
+    rpc: {
+        call<T=any>(method: string, params?: unknown[]): Promise<T>
     }
 }
 
@@ -1294,17 +1294,17 @@ export interface ChainContext {
 }
 
 export class Contract {
-    constructor(private ctx: ChainContext, private address: string, private blockHash?: string) { }
+    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
 
-    get_all_registries(): Promise<Result<[AccountId, Vec][], LangError>> {
+    get_all_registries(): Promise<Result<[AccountId, String[]][], LangError>> {
         return this.stateCall('0xe6da7bf0', [])
     }
 
-    get_all_tlds(): Promise<Result<Vec, LangError>> {
+    get_all_tlds(): Promise<Result<String[], LangError>> {
         return this.stateCall('0xf1a7af41', [])
     }
 
-    get_associated_tlds(registry_addr: AccountId): Promise<Result<Vec, LangError>> {
+    get_associated_tlds(registry_addr: AccountId): Promise<Result<String[], LangError>> {
         return this.stateCall('0xcb18f821', [registry_addr])
     }
 
@@ -1331,31 +1331,80 @@ export class Contract {
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
         let input = _abi.encodeMessageInput(selector, args)
         let data = encodeCall(this.address, input)
-        let result = await this.ctx._chain.client.call('state_call', ['ContractsApi_call', data, this.blockHash])
+        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
         let value = decodeResult(result)
         return _abi.decodeMessageOutput(selector, value)
     }
 }
 
-export type Event = never
+export type Error = Error_CouldNotResolveDomain | Error_EmptyList | Error_InvalidDomainName | Error_InvalidRegistryAddress | Error_NotAdmin | Error_TldAlreadyInUse | Error_TldNotFound
 
-export type Message = Message_add_registry | Message_update_registry | Message_remove_registry_address | Message_get_all_registries | Message_get_all_tlds | Message_get_associated_tlds | Message_get_registry | Message_get_address | Message_get_primary_domains | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
+export interface Error_CouldNotResolveDomain {
+    __kind: 'CouldNotResolveDomain'
+}
+
+export interface Error_EmptyList {
+    __kind: 'EmptyList'
+}
+
+export interface Error_InvalidDomainName {
+    __kind: 'InvalidDomainName'
+}
+
+export interface Error_InvalidRegistryAddress {
+    __kind: 'InvalidRegistryAddress'
+}
+
+export interface Error_NotAdmin {
+    __kind: 'NotAdmin'
+}
+
+export interface Error_TldAlreadyInUse {
+    __kind: 'TldAlreadyInUse'
+    value: String
+}
+
+export interface Error_TldNotFound {
+    __kind: 'TldNotFound'
+    value: String
+}
+
+export type LangError = LangError_CouldNotReadInput
+
+export interface LangError_CouldNotReadInput {
+    __kind: 'CouldNotReadInput'
+}
+
+export type String = string
+
+export type AccountId = Bytes
+
+export type Constructor = Constructor_new
+
+export interface Constructor_new {
+    __kind: 'new'
+    admin: AccountId
+}
+
+export type Message = Message_accept_ownership | Message_add_registry | Message_get_address | Message_get_admin | Message_get_all_registries | Message_get_all_tlds | Message_get_associated_tlds | Message_get_pending_admin | Message_get_primary_domains | Message_get_registry | Message_remove_registry_address | Message_transfer_ownership | Message_update_registry | Message_upgrade_contract
+
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
+}
 
 export interface Message_add_registry {
     __kind: 'add_registry'
-    tld: Vec
+    tld: String[]
     registryAddr: AccountId
 }
 
-export interface Message_update_registry {
-    __kind: 'update_registry'
-    tld: Vec
-    registryAddr: AccountId
+export interface Message_get_address {
+    __kind: 'get_address'
+    domain: String
 }
 
-export interface Message_remove_registry_address {
-    __kind: 'remove_registry_address'
-    registryAddr: AccountId
+export interface Message_get_admin {
+    __kind: 'get_admin'
 }
 
 export interface Message_get_all_registries {
@@ -1371,14 +1420,8 @@ export interface Message_get_associated_tlds {
     registryAddr: AccountId
 }
 
-export interface Message_get_registry {
-    __kind: 'get_registry'
-    tld: String
-}
-
-export interface Message_get_address {
-    __kind: 'get_address'
-    domain: String
+export interface Message_get_pending_admin {
+    __kind: 'get_pending_admin'
 }
 
 /**
@@ -1387,80 +1430,35 @@ export interface Message_get_address {
 export interface Message_get_primary_domains {
     __kind: 'get_primary_domains'
     account: AccountId
-    tld: (String | undefined)
+    tld?: (String | undefined)
 }
 
-export interface Message_get_admin {
-    __kind: 'get_admin'
+export interface Message_get_registry {
+    __kind: 'get_registry'
+    tld: String
 }
 
-export interface Message_get_pending_admin {
-    __kind: 'get_pending_admin'
+export interface Message_remove_registry_address {
+    __kind: 'remove_registry_address'
+    registryAddr: AccountId
 }
 
 export interface Message_transfer_ownership {
     __kind: 'transfer_ownership'
-    account: (AccountId | undefined)
+    account?: (AccountId | undefined)
 }
 
-export interface Message_accept_ownership {
-    __kind: 'accept_ownership'
+export interface Message_update_registry {
+    __kind: 'update_registry'
+    tld: String[]
+    registryAddr: AccountId
 }
 
 export interface Message_upgrade_contract {
     __kind: 'upgrade_contract'
-    codeHash: Uint8Array
+    codeHash: Bytes
 }
 
-export type Constructor = Constructor_new
-
-export interface Constructor_new {
-    __kind: 'new'
-    admin: AccountId
-}
-
-export type AccountId = Uint8Array
-
-export type String = string
-
-export type Vec = String[]
-
-export type LangError = LangError_CouldNotReadInput
-
-export interface LangError_CouldNotReadInput {
-    __kind: 'CouldNotReadInput'
-}
-
-export type Error = Error_NotAdmin | Error_InvalidRegistryAddress | Error_TldAlreadyInUse | Error_TldNotFound | Error_CouldNotResolveDomain | Error_InvalidDomainName | Error_EmptyList
-
-export interface Error_NotAdmin {
-    __kind: 'NotAdmin'
-}
-
-export interface Error_InvalidRegistryAddress {
-    __kind: 'InvalidRegistryAddress'
-}
-
-export interface Error_TldAlreadyInUse {
-    __kind: 'TldAlreadyInUse'
-    value: String
-}
-
-export interface Error_TldNotFound {
-    __kind: 'TldNotFound'
-    value: String
-}
-
-export interface Error_CouldNotResolveDomain {
-    __kind: 'CouldNotResolveDomain'
-}
-
-export interface Error_InvalidDomainName {
-    __kind: 'InvalidDomainName'
-}
-
-export interface Error_EmptyList {
-    __kind: 'EmptyList'
-}
+export type Event = never
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

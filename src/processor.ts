@@ -1,8 +1,8 @@
 import { KnownArchives, lookupArchive } from '@subsquid/archive-registry'
 import {
-  BatchContext,
-  BatchProcessorItem,
+  DataHandlerContext,
   SubstrateBatchProcessor,
+  SubstrateBatchProcessorFields,
 } from '@subsquid/substrate-processor'
 import { Store, TypeormDatabase } from '@subsquid/typeorm-store'
 import { ContractDeployment, ContractIds, getContractDeployment } from './deployments'
@@ -44,62 +44,63 @@ const main = async () => {
   const archive =
     process.env.CHAIN === 'development'
       ? `http://localhost:${process.env.ARCHIVE_GATEWAY_PORT}/graphql`
-      : lookupArchive(process.env.ARCHIVE as KnownArchives)
+      : lookupArchive(process.env.ARCHIVE as KnownArchives, { release: 'ArrowSquid' })
+
+  // Determine RPC URL
+  if (!process.env.RPC) {
+    throw new Error('`RPC` environment variable is not set.')
+  }
+  const chain = {
+    url: process.env.RPC,
+    rateLimit: 10,
+  }
 
   // Create processor
   const processor = new SubstrateBatchProcessor()
+    .setDataSource({ archive, chain })
     .setBlockRange({ from: registryDeployment.blockNumber })
-    .setDataSource({
-      chain: process.env.RPC,
-      archive: archive,
+    .addContractsContractEmitted({
+      contractAddress: [registryDeployment.addressHex, giveawayDeployment.addressHex],
+      extrinsic: true,
     })
-    .addContractsContractEmitted(registryDeployment.addressHex, {
-      data: {
-        event: {
-          args: true,
-          extrinsic: {
-            fee: true,
-          },
-        },
+    .setFields({
+      block: {
+        timestamp: true,
       },
-    } as const)
-    .addContractsContractEmitted(giveawayDeployment.addressHex, {
-      data: {
-        event: {
-          args: true,
-          extrinsic: {
-            fee: true,
-          },
-        },
+      extrinsic: {
+        fee: true,
+        hash: true,
       },
-    } as const)
+      event: {
+        args: true,
+      },
+    })
 
   // Helper types
-  type Item = BatchProcessorItem<typeof processor>
-  type Ctx = BatchContext<Store, Item>
+  type Fields = SubstrateBatchProcessorFields<typeof processor>
+  type ProcessorContext<Store> = DataHandlerContext<Store, Fields>
 
   // Helper function to extract contract events
   const extractContractEvents = <T>(
-    ctx: Ctx,
+    ctx: ProcessorContext<Store>,
     contractAddress: string,
     decodeEvent: (hex: string) => T,
   ) => {
     const events: EventWithMeta<T>[] = []
     for (const block of ctx.blocks) {
-      for (const item of block.items) {
+      for (const event of block.events) {
         if (
-          item.kind === 'event' &&
-          item.name === 'Contracts.ContractEmitted' &&
-          item.event.args.contract === contractAddress
+          event.name === 'Contracts.ContractEmitted' &&
+          event.args.contract === contractAddress &&
+          event.extrinsic?.id
         ) {
-          const event = decodeEvent(item.event.args.data)
           events.push({
-            event,
-            id: item.event.id,
-            timestamp: new Date(block.header.timestamp),
-            fee: item.event.extrinsic?.fee || 0n,
+            event: decodeEvent(event.args.data),
+            id: event.id,
+            timestamp: new Date((block.header as any).timestamp),
+            fee: (event.extrinsic as any)?.fee || 0n,
             blockHash: block.header.hash,
-            extrinsicId: item.event.extrinsic.id,
+            extrinsicId: event.extrinsic.id,
           })
         }
       }
