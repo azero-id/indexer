@@ -17,6 +17,8 @@
     "start:archive": "docker compose -f docker-compose.archive.yml up",
     "start:squid": "docker compose -f docker-compose.squid.yml up",
     "start:processor": "npm run build && npm run migration:apply && node -r dotenv/config lib/processor",
+    "stop:archive": "docker compose -f docker-compose.archive.yml down",
+    "stop:squid": "docker compose -f docker-compose.squid.yml down",
     "serve": "squid-graphql-server",
     "lint": "prettier . --check && eslint",
     "lint:fix": "prettier . --write && eslint --fix",
