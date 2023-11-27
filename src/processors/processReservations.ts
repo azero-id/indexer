@@ -15,10 +15,10 @@ export const processReservations: EventProcessorFn<aznsRegistry.Event> = async (
   const reserveEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Reserve',
   ) as EventWithMeta<aznsRegistry.Event_Reserve>[]
+  const tld = registryDeployment.tld
 
   for (const { event, timestamp } of reserveEvents) {
     logger.debug(event)
-    const tld = registryDeployment.tld
     const name = event.name
     const id = `${name}.${tld}`
     const address = ss58Encode(event.accountId)

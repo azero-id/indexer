@@ -51,8 +51,10 @@ const main = async () => {
   // See: https://docs.subsquid.io/deploy-squid/rpc-proxy/
   let rpcUrl = process.env.RPC
   if (!rpcUrl && process.env.CHAIN === 'alephzero') rpcUrl = process.env.RPC_ALEPH_ZERO_HTTP
-  else if (!rpcUrl) throw new Error('`RPC` environment variable is not set.')
-  const chain = { url: rpcUrl!, rateLimit: 10 }
+  else if (!rpcUrl && process.env.CHAIN === 'alephzero-testnet')
+    rpcUrl = process.env.RPC_ALEPH_ZERO_TESTNET_HTTP
+  if (!rpcUrl) throw new Error('`RPC` environment variable is not set.')
+  const chain = { url: rpcUrl, rateLimit: 10 }
 
   // Create processor
   logger.info('Starting processor with:', { archive, chain })

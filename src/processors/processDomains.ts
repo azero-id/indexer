@@ -15,10 +15,10 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
   const transferEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Transfer',
   ) as EventWithMeta<aznsRegistry.Event_Transfer>[]
+  const tld = registryDeployment.tld
 
   for (const { event, timestamp } of transferEvents) {
     logger.debug(event)
-    const tld = registryDeployment.tld
     const nameBuffer = (event.id as aznsRegistry.Id_Bytes).value
     const name = Buffer.from(nameBuffer).toString('utf-8')
     const id = `${name}.${tld}`
