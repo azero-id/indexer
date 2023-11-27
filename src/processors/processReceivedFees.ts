@@ -4,6 +4,7 @@ import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { ReceivedFee } from '../model'
 import { getTokenPriceAt } from '../utils/getTokenPriceAt'
+import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -24,7 +25,7 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
 
   const receivedFeeEntities: ReceivedFee[] = []
   for (const { event, id, timestamp, blockHash, extrinsicId } of feeReceivedEvents) {
-    console.log(event)
+    logger.debug(event)
 
     // Match according `Register` event
     // NOTE: Later, there might be other events that trigger a `FeeReceived` event (e.g. `Renewal`).
@@ -35,7 +36,7 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
     if (!registerEvent) {
       throw new Error('No matching `Register` event found for `FeeReceived` event.')
     }
-    console.log(registerEvent)
+    logger.debug(registerEvent)
 
     const name = event.name
     const from = ss58Encode(event.from)
@@ -84,6 +85,6 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
   // Inserting received fees
   if (receivedFeeEntities?.length) {
     await store.insert(receivedFeeEntities)
-    console.log('Added ReceivedFees:', receivedFeeEntities)
+    logger.debug('Added ReceivedFees:', receivedFeeEntities)
   }
 }

@@ -1,6 +1,7 @@
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Reservation } from '../model'
+import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -16,7 +17,7 @@ export const processReservations: EventProcessorFn<aznsRegistry.Event> = async (
   ) as EventWithMeta<aznsRegistry.Event_Reserve>[]
 
   for (const { event, timestamp } of reserveEvents) {
-    console.log(event)
+    logger.debug(event)
     const tld = registryDeployment.tld
     const name = event.name
     const id = `${name}.${tld}`
@@ -41,15 +42,15 @@ export const processReservations: EventProcessorFn<aznsRegistry.Event> = async (
       if (existingReservation) {
         await store.remove(Reservation, existingReservation.id)
         await store.insert(newReservation)
-        console.log('Updated Reservation:', newReservation)
+        logger.debug('Updated Reservation:', newReservation)
       } else {
         await store.insert(newReservation)
-        console.log('Added Reservation:', newReservation)
+        logger.debug('Added Reservation:', newReservation)
       }
     } else if (existingReservation) {
       // Remove reservation
       await store.remove(Reservation, existingReservation.id)
-      console.log('Removed Reservation:', existingReservation)
+      logger.debug('Removed Reservation:', existingReservation)
     }
   }
 }

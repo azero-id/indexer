@@ -1,6 +1,7 @@
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Referral } from '../model'
+import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -19,7 +20,7 @@ export const processReferrals: EventProcessorFn<aznsRegistry.Event> = async (
   const referralEntities: Referral[] = []
   for (const { event, timestamp, id } of feeReceivedEvents) {
     if (!event.referrer) continue
-    console.log(event)
+    logger.debug(event)
 
     const name = event.name
     const address = ss58Encode(event.from)
@@ -50,6 +51,6 @@ export const processReferrals: EventProcessorFn<aznsRegistry.Event> = async (
   // Inserting referrals
   if (referralEntities?.length) {
     await store.insert(referralEntities)
-    console.log('Added Referrals:', referralEntities)
+    logger.debug('Added Referrals:', referralEntities)
   }
 }

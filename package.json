@@ -36,6 +36,8 @@
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "pg": "^8.11.3",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3",
     "typeorm": "^0.3.17"
   },
   "devDependencies": {

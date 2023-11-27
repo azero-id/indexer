@@ -1,6 +1,7 @@
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { PublicPhaseActivated } from '../model'
+import { logger } from '../utils/logger'
 
 /**
  * Processes the public phase activation event (there is only one).
@@ -16,7 +17,7 @@ export const processPublicPhaseActivation: EventProcessorFn<aznsRegistry.Event> 
   ) as EventWithMeta<aznsRegistry.Event_PublicPhaseActivated>[]
 
   for (const { event, id, timestamp } of publicPhaseActivatedEvents) {
-    console.log(event)
+    logger.debug(event)
     await store.insert(
       new PublicPhaseActivated({
         id,

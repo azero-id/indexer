@@ -1,6 +1,7 @@
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Domain, Owner } from '../model'
+import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -16,7 +17,7 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
   ) as EventWithMeta<aznsRegistry.Event_Transfer>[]
 
   for (const { event, timestamp } of transferEvents) {
-    console.log(event)
+    logger.debug(event)
     const tld = registryDeployment.tld
     const nameBuffer = (event.id as aznsRegistry.Id_Bytes).value
     const name = Buffer.from(nameBuffer).toString('utf-8')
@@ -54,7 +55,7 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
           id: to,
         })
         await store.insert(toOwner)
-        console.log('Added Owner:', toOwner)
+        logger.debug('Added Owner:', toOwner)
       }
 
       // Create new domain object
@@ -70,16 +71,16 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
       if (existingDomain) {
         await store.remove(Domain, existingDomain.id)
         await store.insert(domain)
-        console.log('Updated Domain:', domain)
+        logger.debug('Updated Domain:', domain)
       } else {
         await store.insert(domain)
-        console.log('Added Domain:', domain)
+        logger.debug('Added Domain:', domain)
       }
     } else if (isRelease) {
       // Remove domain
       if (existingDomain) {
         await store.remove(Domain, existingDomain.id)
-        console.log('Removed Domain:', existingDomain)
+        logger.debug('Removed Domain:', existingDomain)
       }
     }
 
@@ -92,7 +93,7 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
       })
       if (updatedOwner && updatedOwner.domains?.length === 0) {
         await store.remove(Owner, updatedOwner.id)
-        console.log('Removed Owner:', updatedOwner)
+        logger.debug('Removed Owner:', updatedOwner)
       }
     }
   }

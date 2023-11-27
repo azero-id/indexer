@@ -14,6 +14,7 @@ import { processPublicPhaseActivation } from './processors/processPublicPhaseAct
 import { processReceivedFees } from './processors/processReceivedFees'
 import { processReferrals } from './processors/processReferrals'
 import { processReservations } from './processors/processReservations'
+import { logger } from './utils/logger'
 
 export type EventWithMeta<T> = {
   event: T
@@ -54,7 +55,7 @@ const main = async () => {
   const chain = { url: rpcUrl!, rateLimit: 10 }
 
   // Create processor
-  console.log('Starting processor with:', { archive, chain })
+  logger.info('Starting processor with:', { archive, chain })
   const processor = new SubstrateBatchProcessor()
     .setDataSource({ archive, chain })
     .setBlockRange({ from: registryDeployment.blockNumber })

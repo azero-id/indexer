@@ -3,6 +3,7 @@ import { ContractIds, getContractDeployment } from '../deployments'
 import * as domainGiveaway from '../deployments/domain_giveaway/generated/domain_giveaway'
 import { GiveawayCoupon } from '../model'
 import { EventProcessorFn, EventWithMeta } from '../processor'
+import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -22,7 +23,7 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
 
   const couponEntitiesToAdd: GiveawayCoupon[] = []
   for (const { event, timestamp, id } of reservedEvents) {
-    console.log(event)
+    logger.debug(event)
     const name = event.name
     const publicCode = event.coupon
     const reservedAt = timestamp
@@ -45,7 +46,7 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
   // Insert coupons
   if (couponEntitiesToAdd?.length) {
     await store.insert(couponEntitiesToAdd)
-    console.log('Reserved Coupons:', couponEntitiesToAdd)
+    logger.debug('Reserved Coupons:', couponEntitiesToAdd)
   }
 
   // Process coupon claims
@@ -55,7 +56,7 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
 
   const couponEntitiesToUpdate: GiveawayCoupon[] = []
   for (const { event, timestamp, id } of claimedEvents) {
-    console.log(event)
+    logger.debug(event)
     const publicCode = event.coupon
     const claimedBy = ss58Encode(event.claimedBy)
     const claimedAt = timestamp
@@ -85,6 +86,6 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
   // Update coupons
   if (couponEntitiesToUpdate?.length) {
     await store.upsert(couponEntitiesToUpdate)
-    console.log('Claimed Coupons:', couponEntitiesToUpdate)
+    logger.debug('Claimed Coupons:', couponEntitiesToUpdate)
   }
 }
