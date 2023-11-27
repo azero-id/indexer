@@ -20,6 +20,7 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
     ({ event }) => event.__kind === 'Reserved',
   ) as EventWithMeta<domainGiveaway.Event_Reserved>[]
 
+  const couponEntitiesToAdd: GiveawayCoupon[] = []
   for (const { event, timestamp, id } of reservedEvents) {
     console.log(event)
     const name = event.name
@@ -27,18 +28,24 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
     const reservedAt = timestamp
 
     // Insert coupon
-    const coupon = new GiveawayCoupon({
-      id,
-      tld,
-      name,
-      publicCode,
-      reservedAt,
-      claimedBy: undefined,
-      claimedAt: undefined,
-      claimDurationInSeconds: undefined,
-    } satisfies GiveawayCoupon)
-    await store.insert(coupon)
-    console.log('Reserved Coupon:', coupon)
+    couponEntitiesToAdd.push(
+      new GiveawayCoupon({
+        id,
+        tld,
+        name,
+        publicCode,
+        reservedAt,
+        claimedBy: undefined,
+        claimedAt: undefined,
+        claimDurationInSeconds: undefined,
+      } satisfies GiveawayCoupon),
+    )
+  }
+
+  // Insert coupons
+  if (couponEntitiesToAdd?.length) {
+    await store.insert(couponEntitiesToAdd)
+    console.log('Reserved Coupons:', couponEntitiesToAdd)
   }
 
   // Process coupon claims
@@ -46,6 +53,7 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
     ({ event }) => event.__kind === 'Claimed',
   ) as EventWithMeta<domainGiveaway.Event_Claimed>[]
 
+  const couponEntitiesToUpdate: GiveawayCoupon[] = []
   for (const { event, timestamp, id } of claimedEvents) {
     console.log(event)
     const publicCode = event.coupon
@@ -64,14 +72,19 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
 
     // Update coupon
     const claimDurationInSeconds = dayjs(claimedAt).diff(existingCoupon.reservedAt, 'seconds')
-    const coupon = new GiveawayCoupon({
-      ...existingCoupon,
-      claimedAt,
-      claimedBy,
-      claimDurationInSeconds,
-    } satisfies GiveawayCoupon)
-    await store.remove(GiveawayCoupon, coupon.id)
-    await store.insert(coupon)
-    console.log('Claimed Coupon:', coupon)
+    couponEntitiesToUpdate.push(
+      new GiveawayCoupon({
+        ...existingCoupon,
+        claimedAt,
+        claimedBy,
+        claimDurationInSeconds,
+      } satisfies GiveawayCoupon),
+    )
+  }
+
+  // Update coupons
+  if (couponEntitiesToUpdate?.length) {
+    await store.upsert(couponEntitiesToUpdate)
+    console.log('Claimed Coupons:', couponEntitiesToUpdate)
   }
 }

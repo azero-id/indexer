@@ -20,10 +20,9 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
   const registerEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Register',
   ) as EventWithMeta<aznsRegistry.Event_Register>[]
-
   const tld = registryDeployment.tld
 
-  // Iterate over `FeeReceived` events
+  const receivedFeeEntities: ReceivedFee[] = []
   for (const { event, id, timestamp, blockHash, extrinsicId } of feeReceivedEvents) {
     console.log(event)
 
@@ -65,21 +64,26 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
     const registrationDurationInYears = Math.round(registrationDurationInDays / 365)
 
     // Insert ReceivedFee entity
-    const receivedFee = new ReceivedFee({
-      id,
-      tld,
-      name,
-      from,
-      eventType: 'registration',
-      receivedAt: timestamp,
-      receivedAmount,
-      receivedAmountEUR,
-      registrationDurationInYears,
-      blockHash,
-      extrinsicId,
-    } satisfies ReceivedFee)
+    receivedFeeEntities.push(
+      new ReceivedFee({
+        id,
+        tld,
+        name,
+        from,
+        eventType: 'registration',
+        receivedAt: timestamp,
+        receivedAmount,
+        receivedAmountEUR,
+        registrationDurationInYears,
+        blockHash,
+        extrinsicId,
+      } satisfies ReceivedFee),
+    )
+  }
 
-    await store.insert(receivedFee)
-    console.log('Added ReceivedFee:', receivedFee)
+  // Inserting received fees
+  if (receivedFeeEntities?.length) {
+    await store.insert(receivedFeeEntities)
+    console.log('Added ReceivedFees:', receivedFeeEntities)
   }
 }

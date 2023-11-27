@@ -14,12 +14,13 @@ export const processReferrals: EventProcessorFn<aznsRegistry.Event> = async (
   const feeReceivedEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'FeeReceived',
   ) as EventWithMeta<aznsRegistry.Event_FeeReceived>[]
+  const tld = registryDeployment.tld
 
+  const referralEntities: Referral[] = []
   for (const { event, timestamp, id } of feeReceivedEvents) {
     if (!event.referrer) continue
     console.log(event)
 
-    const tld = registryDeployment.tld
     const name = event.name
     const address = ss58Encode(event.from)
     const referrerName = event.referrer
@@ -30,19 +31,25 @@ export const processReferrals: EventProcessorFn<aznsRegistry.Event> = async (
 
     if (!address || !referrerAddress) continue
 
-    // Insert referral
-    const referral = new Referral({
-      id,
-      tld,
-      name,
-      address,
-      referrerName,
-      referrerAddress,
-      referralAmount,
-      receivedFeeAmount,
-      referredAt,
-    } satisfies Referral)
-    await store.insert(referral)
-    console.log('Added Referral:', referral)
+    // Creating referral
+    referralEntities.push(
+      new Referral({
+        id,
+        tld,
+        name,
+        address,
+        referrerName,
+        referrerAddress,
+        referralAmount,
+        receivedFeeAmount,
+        referredAt,
+      } satisfies Referral),
+    )
+  }
+
+  // Inserting referrals
+  if (referralEntities?.length) {
+    await store.insert(referralEntities)
+    console.log('Added Referrals:', referralEntities)
   }
 }
