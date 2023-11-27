@@ -46,16 +46,15 @@ const main = async () => {
       ? `http://localhost:${process.env.ARCHIVE_GATEWAY_PORT}/graphql`
       : lookupArchive(process.env.ARCHIVE as KnownArchives, { release: 'ArrowSquid' })
 
-  // Determine RPC URL
-  if (!process.env.RPC) {
-    throw new Error('`RPC` environment variable is not set.')
-  }
-  const chain = {
-    url: process.env.RPC,
-    rateLimit: 10,
-  }
+  // Determine RPC URL (use Subsquid's RPC Proxy if available and no process.env.RPC is set)
+  // See: https://docs.subsquid.io/deploy-squid/rpc-proxy/
+  let rpcUrl = process.env.RPC
+  if (!rpcUrl && process.env.CHAIN === 'alephzero') rpcUrl = process.env.RPC_ALEPH_ZERO_HTTP
+  else if (!rpcUrl) throw new Error('`RPC` environment variable is not set.')
+  const chain = { url: rpcUrl!, rateLimit: 10 }
 
   // Create processor
+  console.log('Starting processor with:', { archive, chain })
   const processor = new SubstrateBatchProcessor()
     .setDataSource({ archive, chain })
     .setBlockRange({ from: registryDeployment.blockNumber })
