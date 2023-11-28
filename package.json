@@ -20,6 +20,7 @@
     "stop:archive": "docker compose -f docker-compose.archive.yml down",
     "stop:squid": "docker compose -f docker-compose.squid.yml down",
     "serve": "squid-graphql-server",
+    "deploy": "sqd deploy . -o azero-id -m",
     "lint": "prettier . --check && eslint",
     "lint:fix": "prettier . --write && eslint --fix",
     "type-check": "tsc --pretty --noEmit"

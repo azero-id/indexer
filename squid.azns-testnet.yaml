@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: azns-testnet
-version: 18
+version: 19
 description: 'AZERO.ID Indexer (Aleph Zero Testnet)'
 
 build:
@@ -41,6 +41,6 @@ scale:
       storage: 5G
       profile: small
     rpc:
-      max-rate: 50rps
+      max-rate: 100rps
   api:
     profile: small

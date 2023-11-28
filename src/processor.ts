@@ -1,6 +1,7 @@
 import { KnownArchives, lookupArchive } from '@subsquid/archive-registry'
 import {
   DataHandlerContext,
+  DataSource,
   SubstrateBatchProcessor,
   SubstrateBatchProcessorFields,
 } from '@subsquid/substrate-processor'
@@ -54,7 +55,7 @@ const main = async () => {
   else if (!rpcUrl && process.env.CHAIN === 'alephzero-testnet')
     rpcUrl = process.env.RPC_ALEPH_ZERO_TESTNET_HTTP
   if (!rpcUrl) throw new Error('`RPC` environment variable is not set.')
-  const chain = { url: rpcUrl, rateLimit: 10 }
+  const chain: DataSource['chain'] = { url: rpcUrl }
 
   // Create processor
   logger.info('Starting processor with:', { archive, chain })
