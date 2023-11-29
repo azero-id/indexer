@@ -23,7 +23,6 @@ export type EventWithMeta<T> = {
   timestamp: Date
   fee: bigint
   blockHash: string
-  extrinsicId: string
 }
 export type EventProcessorFn<T> = (
   store: Store,
@@ -67,16 +66,9 @@ const main = async () => {
       extrinsic: true,
     })
     .setFields({
-      block: {
-        timestamp: true,
-      },
-      extrinsic: {
-        fee: true,
-        hash: true,
-      },
-      event: {
-        args: true,
-      },
+      block: { timestamp: true },
+      extrinsic: { fee: true },
+      event: { args: true },
     })
 
   // Helper types
@@ -92,18 +84,13 @@ const main = async () => {
     const events: EventWithMeta<T>[] = []
     for (const block of ctx.blocks) {
       for (const event of block.events) {
-        if (
-          event.name === 'Contracts.ContractEmitted' &&
-          event.args.contract === contractAddress &&
-          event.extrinsic?.id
-        ) {
+        if (event.name === 'Contracts.ContractEmitted' && event.args.contract === contractAddress) {
           events.push({
             event: decodeEvent(event.args.data),
             id: event.id,
             timestamp: new Date((block.header as any).timestamp),
             fee: (event.extrinsic as any)?.fee || 0n,
             blockHash: block.header.hash,
-            extrinsicId: event.extrinsic.id,
           })
         }
       }

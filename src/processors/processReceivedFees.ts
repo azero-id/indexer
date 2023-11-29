@@ -24,7 +24,7 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
   const tld = registryDeployment.tld
 
   const receivedFeeEntities: ReceivedFee[] = []
-  for (const { event, id, timestamp, blockHash, extrinsicId } of feeReceivedEvents) {
+  for (const { event, id, timestamp, blockHash } of feeReceivedEvents) {
     logger.debug(event)
 
     // Match according `Register` event
@@ -77,7 +77,6 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
         receivedAmountEUR,
         registrationDurationInYears,
         blockHash,
-        extrinsicId,
       } satisfies ReceivedFee),
     )
   }
