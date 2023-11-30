@@ -1,5 +1,4 @@
-import * as ss58 from '@subsquid/ss58'
-import { toHex } from '@subsquid/substrate-processor'
+import { ss58Decode } from './utils/ss58Encode'
 
 export enum ContractIds {
   Router = 'azns_router',
@@ -35,7 +34,7 @@ export const getContractDeployment = async (contract: ContractIds): Promise<Cont
   }
 
   const address = deployment.address
-  const addressHex = toHex(ss58.decode(address).bytes)
+  const addressHex = ss58Decode(address)
   const blockNumber = deployment.blockNumber
   const tld = deployment.tld
 

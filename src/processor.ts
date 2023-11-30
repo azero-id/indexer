@@ -1,8 +1,9 @@
 import { KnownArchives, lookupArchive } from '@subsquid/archive-registry'
 import {
-  BatchContext,
-  BatchProcessorItem,
+  DataHandlerContext,
+  DataSource,
   SubstrateBatchProcessor,
+  SubstrateBatchProcessorFields,
 } from '@subsquid/substrate-processor'
 import { Store, TypeormDatabase } from '@subsquid/typeorm-store'
 import { ContractDeployment, ContractIds, getContractDeployment } from './deployments'
@@ -14,6 +15,7 @@ import { processPublicPhaseActivation } from './processors/processPublicPhaseAct
 import { processReceivedFees } from './processors/processReceivedFees'
 import { processReferrals } from './processors/processReferrals'
 import { processReservations } from './processors/processReservations'
+import { logger } from './utils/logger'
 
 export type EventWithMeta<T> = {
   event: T
@@ -21,7 +23,6 @@ export type EventWithMeta<T> = {
   timestamp: Date
   fee: bigint
   blockHash: string
-  extrinsicId: string
 }
 export type EventProcessorFn<T> = (
   store: Store,
@@ -44,62 +45,52 @@ const main = async () => {
   const archive =
     process.env.CHAIN === 'development'
       ? `http://localhost:${process.env.ARCHIVE_GATEWAY_PORT}/graphql`
-      : lookupArchive(process.env.ARCHIVE as KnownArchives)
+      : lookupArchive(process.env.ARCHIVE as KnownArchives, { release: 'ArrowSquid' })
+
+  // Determine RPC URL (use Subsquid's RPC Proxy if available and no process.env.RPC is set)
+  // See: https://docs.subsquid.io/deploy-squid/rpc-proxy/
+  let rpcUrl = process.env.RPC
+  if (!rpcUrl && process.env.CHAIN === 'alephzero') rpcUrl = process.env.RPC_ALEPH_ZERO_HTTP
+  else if (!rpcUrl && process.env.CHAIN === 'alephzero-testnet')
+    rpcUrl = process.env.RPC_ALEPH_ZERO_TESTNET_HTTP
+  if (!rpcUrl) throw new Error('`RPC` environment variable is not set.')
+  const chain: DataSource['chain'] = { url: rpcUrl }
 
   // Create processor
+  logger.info('Starting processor with:', { archive, chain })
   const processor = new SubstrateBatchProcessor()
+    .setDataSource({ archive, chain })
     .setBlockRange({ from: registryDeployment.blockNumber })
-    .setDataSource({
-      chain: process.env.RPC,
-      archive: archive,
+    .addContractsContractEmitted({
+      contractAddress: [registryDeployment.addressHex, giveawayDeployment.addressHex],
+      extrinsic: true,
     })
-    .addContractsContractEmitted(registryDeployment.addressHex, {
-      data: {
-        event: {
-          args: true,
-          extrinsic: {
-            fee: true,
-          },
-        },
-      },
-    } as const)
-    .addContractsContractEmitted(giveawayDeployment.addressHex, {
-      data: {
-        event: {
-          args: true,
-          extrinsic: {
-            fee: true,
-          },
-        },
-      },
-    } as const)
+    .setFields({
+      block: { timestamp: true },
+      extrinsic: { fee: true },
+      event: { args: true },
+    })
 
   // Helper types
-  type Item = BatchProcessorItem<typeof processor>
-  type Ctx = BatchContext<Store, Item>
+  type Fields = SubstrateBatchProcessorFields<typeof processor>
+  type ProcessorContext<Store> = DataHandlerContext<Store, Fields>
 
   // Helper function to extract contract events
   const extractContractEvents = <T>(
-    ctx: Ctx,
+    ctx: ProcessorContext<Store>,
     contractAddress: string,
     decodeEvent: (hex: string) => T,
   ) => {
     const events: EventWithMeta<T>[] = []
     for (const block of ctx.blocks) {
-      for (const item of block.items) {
-        if (
-          item.kind === 'event' &&
-          item.name === 'Contracts.ContractEmitted' &&
-          item.event.args.contract === contractAddress
-        ) {
-          const event = decodeEvent(item.event.args.data)
+      for (const event of block.events) {
+        if (event.name === 'Contracts.ContractEmitted' && event.args.contract === contractAddress) {
           events.push({
-            event,
-            id: item.event.id,
-            timestamp: new Date(block.header.timestamp),
-            fee: item.event.extrinsic?.fee || 0n,
+            event: decodeEvent(event.args.data),
+            id: event.id,
+            timestamp: new Date((block.header as any).timestamp),
+            fee: (event.extrinsic as any)?.fee || 0n,
             blockHash: block.header.hash,
-            extrinsicId: item.event.extrinsic.id,
           })
         }
       }

@@ -1,4 +1,4 @@
-import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
+import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
@@ -1017,21 +1017,21 @@ export const metadata = {
 
 const _abi = new Abi(metadata)
 
-export function decodeEvent(hex: string): Event {
-    return _abi.decodeEvent(hex)
+export function decodeEvent(bytes: Bytes): Event {
+    return _abi.decodeEvent(bytes)
 }
 
-export function decodeMessage(hex: string): Message {
-    return _abi.decodeMessage(hex)
+export function decodeMessage(bytes: Bytes): Message {
+    return _abi.decodeMessage(bytes)
 }
 
-export function decodeConstructor(hex: string): Constructor {
-    return _abi.decodeConstructor(hex)
+export function decodeConstructor(bytes: Bytes): Constructor {
+    return _abi.decodeConstructor(bytes)
 }
 
 export interface Chain {
-    client: {
-        call: <T=any>(method: string, params?: unknown[]) => Promise<T>
+    rpc: {
+        call<T=any>(method: string, params?: unknown[]): Promise<T>
     }
 }
 
@@ -1040,17 +1040,17 @@ export interface ChainContext {
 }
 
 export class Contract {
-    constructor(private ctx: ChainContext, private address: string, private blockHash?: string) { }
+    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
 
-    is_name_allowed(name: String): Promise<Result<Type_12, LangError>> {
+    is_name_allowed(name: String): Promise<Result<Result<null, Error>, LangError>> {
         return this.stateCall('0x1341a7ea', [name])
     }
 
-    get_allowed_unicode_ranges(): Promise<Result<Vec, LangError>> {
+    get_allowed_unicode_ranges(): Promise<Result<UnicodeRange[], LangError>> {
         return this.stateCall('0x760d33f9', [])
     }
 
-    get_disallowed_unicode_ranges_for_edges(): Promise<Result<Vec, LangError>> {
+    get_disallowed_unicode_ranges_for_edges(): Promise<Result<UnicodeRange[], LangError>> {
         return this.stateCall('0x5db54a26', [])
     }
 
@@ -1069,19 +1069,71 @@ export class Contract {
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
         let input = _abi.encodeMessageInput(selector, args)
         let data = encodeCall(this.address, input)
-        let result = await this.ctx._chain.client.call('state_call', ['ContractsApi_call', data, this.blockHash])
+        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
         let value = decodeResult(result)
         return _abi.decodeMessageOutput(selector, value)
     }
 }
 
-export type Event = never
+export type AccountId = Bytes
 
-export type Message = Message_is_name_allowed | Message_get_allowed_unicode_ranges | Message_get_disallowed_unicode_ranges_for_edges | Message_get_allowed_length | Message_set_allowed_unicode_ranges | Message_set_disallowed_unicode_ranges_for_edges | Message_set_allowed_length | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
+export interface UnicodeRange {
+    lower: number
+    upper: number
+}
 
-export interface Message_is_name_allowed {
-    __kind: 'is_name_allowed'
-    name: String
+export type LangError = LangError_CouldNotReadInput
+
+export interface LangError_CouldNotReadInput {
+    __kind: 'CouldNotReadInput'
+}
+
+export type Error = Error_ContainsDisallowedCharacters | Error_InvalidRange | Error_NotAdmin | Error_TooLong | Error_TooShort
+
+export interface Error_ContainsDisallowedCharacters {
+    __kind: 'ContainsDisallowedCharacters'
+}
+
+export interface Error_InvalidRange {
+    __kind: 'InvalidRange'
+}
+
+export interface Error_NotAdmin {
+    __kind: 'NotAdmin'
+}
+
+export interface Error_TooLong {
+    __kind: 'TooLong'
+}
+
+export interface Error_TooShort {
+    __kind: 'TooShort'
+}
+
+export type String = string
+
+export type Constructor = Constructor_new
+
+export interface Constructor_new {
+    __kind: 'new'
+    admin: AccountId
+    allowedLength: [number, number]
+    allowedUnicodeRanges: UnicodeRange[]
+    disallowedUnicodeRangesForEdges: UnicodeRange[]
+}
+
+export type Message = Message_accept_ownership | Message_get_admin | Message_get_allowed_length | Message_get_allowed_unicode_ranges | Message_get_disallowed_unicode_ranges_for_edges | Message_get_pending_admin | Message_is_name_allowed | Message_set_allowed_length | Message_set_allowed_unicode_ranges | Message_set_disallowed_unicode_ranges_for_edges | Message_transfer_ownership | Message_upgrade_contract
+
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
+}
+
+export interface Message_get_admin {
+    __kind: 'get_admin'
+}
+
+export interface Message_get_allowed_length {
+    __kind: 'get_allowed_length'
 }
 
 export interface Message_get_allowed_unicode_ranges {
@@ -1092,18 +1144,13 @@ export interface Message_get_disallowed_unicode_ranges_for_edges {
     __kind: 'get_disallowed_unicode_ranges_for_edges'
 }
 
-export interface Message_get_allowed_length {
-    __kind: 'get_allowed_length'
+export interface Message_get_pending_admin {
+    __kind: 'get_pending_admin'
 }
 
-export interface Message_set_allowed_unicode_ranges {
-    __kind: 'set_allowed_unicode_ranges'
-    newRanges: Vec
-}
-
-export interface Message_set_disallowed_unicode_ranges_for_edges {
-    __kind: 'set_disallowed_unicode_ranges_for_edges'
-    newRanges: Vec
+export interface Message_is_name_allowed {
+    __kind: 'is_name_allowed'
+    name: String
 }
 
 export interface Message_set_allowed_length {
@@ -1111,86 +1158,26 @@ export interface Message_set_allowed_length {
     newLength: [number, number]
 }
 
-export interface Message_get_admin {
-    __kind: 'get_admin'
+export interface Message_set_allowed_unicode_ranges {
+    __kind: 'set_allowed_unicode_ranges'
+    newRanges: UnicodeRange[]
 }
 
-export interface Message_get_pending_admin {
-    __kind: 'get_pending_admin'
+export interface Message_set_disallowed_unicode_ranges_for_edges {
+    __kind: 'set_disallowed_unicode_ranges_for_edges'
+    newRanges: UnicodeRange[]
 }
 
 export interface Message_transfer_ownership {
     __kind: 'transfer_ownership'
-    account: (AccountId | undefined)
-}
-
-export interface Message_accept_ownership {
-    __kind: 'accept_ownership'
+    account?: (AccountId | undefined)
 }
 
 export interface Message_upgrade_contract {
     __kind: 'upgrade_contract'
-    codeHash: Uint8Array
+    codeHash: Bytes
 }
 
-export type Constructor = Constructor_new
-
-export interface Constructor_new {
-    __kind: 'new'
-    admin: AccountId
-    allowedLength: [number, number]
-    allowedUnicodeRanges: Vec
-    disallowedUnicodeRangesForEdges: Vec
-}
-
-export type String = string
-
-export type Type_12 = Type_12_Ok | Type_12_Err
-
-export interface Type_12_Ok {
-    __kind: 'Ok'
-}
-
-export interface Type_12_Err {
-    __kind: 'Err'
-    value: Error
-}
-
-export type LangError = LangError_CouldNotReadInput
-
-export interface LangError_CouldNotReadInput {
-    __kind: 'CouldNotReadInput'
-}
-
-export interface UnicodeRange {
-    lower: number
-    upper: number
-}
-
-export type Vec = UnicodeRange[]
-
-export type AccountId = Uint8Array
-
-export type Error = Error_NotAdmin | Error_TooShort | Error_TooLong | Error_ContainsDisallowedCharacters | Error_InvalidRange
-
-export interface Error_NotAdmin {
-    __kind: 'NotAdmin'
-}
-
-export interface Error_TooShort {
-    __kind: 'TooShort'
-}
-
-export interface Error_TooLong {
-    __kind: 'TooLong'
-}
-
-export interface Error_ContainsDisallowedCharacters {
-    __kind: 'ContainsDisallowedCharacters'
-}
-
-export interface Error_InvalidRange {
-    __kind: 'InvalidRange'
-}
+export type Event = never
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

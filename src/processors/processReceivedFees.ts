@@ -4,6 +4,7 @@ import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { ReceivedFee } from '../model'
 import { getTokenPriceAt } from '../utils/getTokenPriceAt'
+import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -20,12 +21,11 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
   const registerEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Register',
   ) as EventWithMeta<aznsRegistry.Event_Register>[]
-
   const tld = registryDeployment.tld
 
-  // Iterate over `FeeReceived` events
-  for (const { event, id, timestamp, blockHash, extrinsicId } of feeReceivedEvents) {
-    console.log(event)
+  const receivedFeeEntities: ReceivedFee[] = []
+  for (const { event, id, timestamp, blockHash } of feeReceivedEvents) {
+    logger.debug(event)
 
     // Match according `Register` event
     // NOTE: Later, there might be other events that trigger a `FeeReceived` event (e.g. `Renewal`).
@@ -36,7 +36,7 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
     if (!registerEvent) {
       throw new Error('No matching `Register` event found for `FeeReceived` event.')
     }
-    console.log(registerEvent)
+    logger.debug(registerEvent)
 
     const name = event.name
     const from = ss58Encode(event.from)
@@ -65,21 +65,25 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
     const registrationDurationInYears = Math.round(registrationDurationInDays / 365)
 
     // Insert ReceivedFee entity
-    const receivedFee = new ReceivedFee({
-      id,
-      tld,
-      name,
-      from,
-      eventType: 'registration',
-      receivedAt: timestamp,
-      receivedAmount,
-      receivedAmountEUR,
-      registrationDurationInYears,
-      blockHash,
-      extrinsicId,
-    } satisfies ReceivedFee)
+    receivedFeeEntities.push(
+      new ReceivedFee({
+        id,
+        tld,
+        name,
+        from,
+        eventType: 'registration',
+        receivedAt: timestamp,
+        receivedAmount,
+        receivedAmountEUR,
+        registrationDurationInYears,
+        blockHash,
+      } satisfies ReceivedFee),
+    )
+  }
 
-    await store.insert(receivedFee)
-    console.log('Added ReceivedFee:', receivedFee)
+  // Inserting received fees
+  if (receivedFeeEntities?.length) {
+    await store.insert(receivedFeeEntities)
+    logger.debug('Added ReceivedFees:', receivedFeeEntities)
   }
 }
