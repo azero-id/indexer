@@ -1,4 +1,4 @@
-import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
+import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
@@ -5431,21 +5431,21 @@ export const metadata = {
 
 const _abi = new Abi(metadata)
 
-export function decodeEvent(hex: string): Event {
-    return _abi.decodeEvent(hex)
+export function decodeEvent(bytes: Bytes): Event {
+    return _abi.decodeEvent(bytes)
 }
 
-export function decodeMessage(hex: string): Message {
-    return _abi.decodeMessage(hex)
+export function decodeMessage(bytes: Bytes): Message {
+    return _abi.decodeMessage(bytes)
 }
 
-export function decodeConstructor(hex: string): Constructor {
-    return _abi.decodeConstructor(hex)
+export function decodeConstructor(bytes: Bytes): Constructor {
+    return _abi.decodeConstructor(bytes)
 }
 
 export interface Chain {
-    client: {
-        call: <T=any>(method: string, params?: unknown[]) => Promise<T>
+    rpc: {
+        call<T=any>(method: string, params?: unknown[]): Promise<T>
     }
 }
 
@@ -5454,7 +5454,7 @@ export interface ChainContext {
 }
 
 export class Contract {
-    constructor(private ctx: ChainContext, private address: string, private blockHash?: string) { }
+    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
 
     get_name_status(names: String[]): Promise<Result<NameStatus[], LangError>> {
         return this.stateCall('0x964d7612', [names])
@@ -5480,7 +5480,7 @@ export class Contract {
         return this.stateCall('0x61437185', [name])
     }
 
-    get_all_records(name: String): Promise<Result<Vec, LangError>> {
+    get_all_records(name: String): Promise<Result<[String, String][], LangError>> {
         return this.stateCall('0x528be9f1', [name])
     }
 
@@ -5544,7 +5544,7 @@ export class Contract {
         return this.stateCall('0x59d8255b', [])
     }
 
-    verify_proof(account: AccountId, merkle_proof: (Uint8Array[] | undefined)): Promise<Result<bool, LangError>> {
+    verify_proof(account: AccountId, merkle_proof: (Bytes[] | undefined)): Promise<Result<bool, LangError>> {
         return this.stateCall('0x71c9d9ba', [account, merkle_proof])
     }
 
@@ -5592,7 +5592,7 @@ export class Contract {
         return this.stateCall('0xcd0340d0', [_index])
     }
 
-    PSP34Metadata_get_attribute(id: Id, key: Uint8Array): Promise<Result<(Uint8Array | undefined), LangError>> {
+    PSP34Metadata_get_attribute(id: Id, key: Vec): Promise<Result<(Vec | undefined), LangError>> {
         return this.stateCall('0xf19d48d1', [id, key])
     }
 
@@ -5619,683 +5619,52 @@ export class Contract {
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
         let input = _abi.encodeMessageInput(selector, args)
         let data = encodeCall(this.address, input)
-        let result = await this.ctx._chain.client.call('state_call', ['ContractsApi_call', data, this.blockHash])
+        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
         let value = decodeResult(result)
         return _abi.decodeMessageOutput(selector, value)
     }
 }
 
-export type Event = Event_Register | Event_FeeReceived | Event_Release | Event_SetAddress | Event_SetController | Event_SetPrimaryName | Event_RecordsUpdated | Event_Transfer | Event_Lock | Event_Unlock | Event_Approval | Event_PublicPhaseActivated | Event_Reserve
+export type Vec = Bytes
 
-export interface Event_Register {
-    __kind: 'Register'
-    name: String
-    from: AccountId
-    registrationTimestamp: u64
-    expirationTimestamp: u64
-}
-
-export interface Event_FeeReceived {
-    __kind: 'FeeReceived'
-    name: String
-    from: AccountId
-    referrer: (String | undefined)
-    referrerAddr: (AccountId | undefined)
-    receivedFee: bigint
-    forwardedReferrerFee: bigint
-}
-
-export interface Event_Release {
-    __kind: 'Release'
-    name: String
-    from: AccountId
-}
-
-export interface Event_SetAddress {
-    __kind: 'SetAddress'
-    name: String
-    from: AccountId
-    oldAddress: (AccountId | undefined)
-    newAddress: AccountId
-}
-
-export interface Event_SetController {
-    __kind: 'SetController'
-    name: String
-    from: AccountId
-    oldController: (AccountId | undefined)
-    newController: AccountId
-}
-
-export interface Event_SetPrimaryName {
-    __kind: 'SetPrimaryName'
-    account: AccountId
-    primaryName: (String | undefined)
-}
-
-export interface Event_RecordsUpdated {
-    __kind: 'RecordsUpdated'
-    name: String
-    from: AccountId
-}
-
-export interface Event_Transfer {
-    __kind: 'Transfer'
-    from: (AccountId | undefined)
-    to: (AccountId | undefined)
-    id: Id
-}
-
-export interface Event_Lock {
-    __kind: 'Lock'
-    name: String
-    caller: AccountId
-    unlocker: AccountId
-}
-
-export interface Event_Unlock {
-    __kind: 'Unlock'
-    name: String
-}
-
-export interface Event_Approval {
-    __kind: 'Approval'
-    owner: AccountId
-    operator: AccountId
-    id: (Id | undefined)
-    approved: bool
-}
-
-export interface Event_PublicPhaseActivated {
-    __kind: 'PublicPhaseActivated'
-}
-
-export interface Event_Reserve {
-    __kind: 'Reserve'
-    name: String
-    accountId: (AccountId | undefined)
-    action: bool
-}
-
-export type Message = Message_register_on_behalf_of | Message_register | Message_claim_reserved_name | Message_release | Message_transfer | Message_clear_expired_names | Message_set_primary_name | Message_set_address | Message_set_controller | Message_reset_resolved_address | Message_reset_controller | Message_update_records | Message_get_name_status | Message_get_address_dict | Message_get_owner | Message_get_controller | Message_get_address | Message_get_registration_period | Message_get_all_records | Message_get_record | Message_get_owned_names_of_address | Message_get_controlled_names_of_address | Message_get_resolving_names_of_address | Message_get_primary_name | Message_get_primary_domain | Message_get_lock_info | Message_get_names_of_address | Message_get_owner_to_name_count | Message_get_controller_to_name_count | Message_get_resolving_to_name_count | Message_get_records_size_limit | Message_get_tld | Message_get_base_uri | Message_is_whitelist_phase | Message_verify_proof | Message_withdraw | Message_switch_to_public_phase | Message_add_reserved_names | Message_remove_reserved_name | Message_set_records_size_limit | Message_get_name_price | Message_validate_referrer | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract | Message_PSP34_collection_id | Message_PSP34_balance_of | Message_PSP34_owner_of | Message_PSP34_allowance | Message_PSP34_approve | Message_PSP34_transfer | Message_PSP34_total_supply | Message_PSP34Enumerable_owners_token_by_index | Message_PSP34Enumerable_token_by_index | Message_PSP34Metadata_get_attribute | Message_Psp34Traits_get_owner | Message_Psp34Traits_token_uri | Message_Psp34Traits_set_base_uri | Message_Psp34Traits_get_attribute_count | Message_Psp34Traits_get_attribute_name | Message_Psp34Traits_get_attributes | Message_Psp34Traits_set_multiple_attributes
-
-/**
- *  Register specific name on behalf of some other address.
- *  Pay the fee, but forward the ownership of the name to the provided recipient
- * 
- *  NOTE: During the whitelist phase, use `register()` method instead.
- */
-export interface Message_register_on_behalf_of {
-    __kind: 'register_on_behalf_of'
-    name: String
-    recipient: AccountId
-    yearsToRegister: u8
-    referrer: (String | undefined)
-    merkleProof: (Uint8Array[] | undefined)
-}
-
-/**
- *  Register specific name with caller as owner.
- * 
- *  NOTE: Whitelisted addresses can buy one name during the whitelist phase by submitting its proof
- */
-export interface Message_register {
-    __kind: 'register'
-    name: String
-    yearsToRegister: u8
-    referrer: (String | undefined)
-    merkleProof: (Uint8Array[] | undefined)
-    setAsPrimaryName: bool
-}
-
-/**
- *  Allows users to claim their reserved name at zero cost
- */
-export interface Message_claim_reserved_name {
-    __kind: 'claim_reserved_name'
-    name: String
-}
-
-/**
- *  Release name from registration.
- */
-export interface Message_release {
-    __kind: 'release'
-    name: String
-}
-
-/**
- *  Transfer owner to another address.
- */
-export interface Message_transfer {
-    __kind: 'transfer'
-    to: AccountId
-    name: String
-    keepRecords: bool
-    keepController: bool
-    keepResolving: bool
-    data: Uint8Array
-}
-
-/**
- *  Removes the associated state of expired-names from storage
- */
-export interface Message_clear_expired_names {
-    __kind: 'clear_expired_names'
-    names: String[]
-}
-
-/**
- *  Set primary name of an address (reverse record)
- *  @note if name is set to None then the primary-name for the caller will be removed (if exists)
- */
-export interface Message_set_primary_name {
-    __kind: 'set_primary_name'
-    primaryName: (String | undefined)
-}
-
-/**
- *  Set resolved address for specific name.
- */
-export interface Message_set_address {
-    __kind: 'set_address'
-    name: String
-    newAddress: AccountId
-}
-
-export interface Message_set_controller {
-    __kind: 'set_controller'
-    name: String
-    newController: AccountId
-}
-
-export interface Message_reset_resolved_address {
-    __kind: 'reset_resolved_address'
-    names: String[]
-}
-
-export interface Message_reset_controller {
-    __kind: 'reset_controller'
-    names: String[]
-}
-
-export interface Message_update_records {
-    __kind: 'update_records'
-    name: String
-    records: [String, (String | undefined)][]
-    removeRest: bool
-}
-
-/**
- *  Returns the current status of the name
- */
-export interface Message_get_name_status {
-    __kind: 'get_name_status'
-    names: String[]
-}
-
-/**
- *  Get the addresses related to specific name
- */
-export interface Message_get_address_dict {
-    __kind: 'get_address_dict'
-    name: String
-}
-
-/**
- *  Get owner of specific name.
- */
-export interface Message_get_owner {
-    __kind: 'get_owner'
-    name: String
-}
-
-/**
- *  Get controller of specific name.
- */
-export interface Message_get_controller {
-    __kind: 'get_controller'
-    name: String
-}
-
-/**
- *  Get address for specific name.
- */
-export interface Message_get_address {
-    __kind: 'get_address'
-    name: String
-}
-
-export interface Message_get_registration_period {
-    __kind: 'get_registration_period'
-    name: String
-}
-
-/**
- *  Gets all records
- */
-export interface Message_get_all_records {
-    __kind: 'get_all_records'
-    name: String
-}
-
-/**
- *  Gets an arbitrary record by key
- */
-export interface Message_get_record {
-    __kind: 'get_record'
-    name: String
-    key: String
-}
-
-/**
- *  Returns all names the address owns
- */
-export interface Message_get_owned_names_of_address {
-    __kind: 'get_owned_names_of_address'
-    owner: AccountId
-}
-
-export interface Message_get_controlled_names_of_address {
-    __kind: 'get_controlled_names_of_address'
-    controller: AccountId
-}
-
-export interface Message_get_resolving_names_of_address {
-    __kind: 'get_resolving_names_of_address'
-    address: AccountId
-}
-
-export interface Message_get_primary_name {
-    __kind: 'get_primary_name'
-    address: AccountId
-}
-
-export interface Message_get_primary_domain {
-    __kind: 'get_primary_domain'
-    address: AccountId
-}
-
-export interface Message_get_lock_info {
-    __kind: 'get_lock_info'
-    name: String
-}
-
-export interface Message_get_names_of_address {
-    __kind: 'get_names_of_address'
-    address: AccountId
-}
-
-export interface Message_get_owner_to_name_count {
-    __kind: 'get_owner_to_name_count'
-    user: AccountId
-}
-
-export interface Message_get_controller_to_name_count {
-    __kind: 'get_controller_to_name_count'
-    user: AccountId
-}
-
-export interface Message_get_resolving_to_name_count {
-    __kind: 'get_resolving_to_name_count'
-    user: AccountId
-}
-
-export interface Message_get_records_size_limit {
-    __kind: 'get_records_size_limit'
-}
-
-export interface Message_get_tld {
-    __kind: 'get_tld'
-}
-
-export interface Message_get_base_uri {
-    __kind: 'get_base_uri'
-}
-
-/**
- *  Returns `true` when contract is in whitelist-phase
- *  and `false` when it is in public-phase
- */
-export interface Message_is_whitelist_phase {
-    __kind: 'is_whitelist_phase'
-}
-
-export interface Message_verify_proof {
-    __kind: 'verify_proof'
-    account: AccountId
-    merkleProof: (Uint8Array[] | undefined)
-}
-
-/**
- *  (ADMIN-OPERATION)
- *  Transfers `value` amount of tokens to the caller.
- */
-export interface Message_withdraw {
-    __kind: 'withdraw'
-    beneficiary: (AccountId | undefined)
-    value: (bigint | undefined)
-}
-
-/**
- *  (ADMIN-OPERATION)
- *  Switch from whitelist-phase to public-phase
- */
-export interface Message_switch_to_public_phase {
-    __kind: 'switch_to_public_phase'
-}
-
-/**
- *  (ADMIN-OPERATION)
- *  Reserve name name for specific addresses
- */
-export interface Message_add_reserved_names {
-    __kind: 'add_reserved_names'
-    set: [String, (AccountId | undefined)][]
-}
-
-/**
- *  (ADMIN-OPERATION)
- *  Remove given names from the list of reserved names
- */
-export interface Message_remove_reserved_name {
-    __kind: 'remove_reserved_name'
-    set: String[]
-}
+export type PSP34Error = PSP34Error_Custom | PSP34Error_NotApproved | PSP34Error_SafeTransferCheckFailed | PSP34Error_SelfApprove | PSP34Error_TokenExists | PSP34Error_TokenNotExists
 
-/**
- *  (ADMIN-OPERATION)
- *  Update the limit of records allowed to store per name
- */
-export interface Message_set_records_size_limit {
-    __kind: 'set_records_size_limit'
-    limit: (u32 | undefined)
+export interface PSP34Error_Custom {
+    __kind: 'Custom'
+    value: String
 }
 
-export interface Message_get_name_price {
-    __kind: 'get_name_price'
-    name: String
-    recipient: AccountId
-    yearsToRegister: u8
-    referrer: (String | undefined)
+export interface PSP34Error_NotApproved {
+    __kind: 'NotApproved'
 }
 
-export interface Message_validate_referrer {
-    __kind: 'validate_referrer'
-    recipient: AccountId
-    referrerName: String
+export interface PSP34Error_SafeTransferCheckFailed {
+    __kind: 'SafeTransferCheckFailed'
+    value: String
 }
 
-export interface Message_get_admin {
-    __kind: 'get_admin'
+export interface PSP34Error_SelfApprove {
+    __kind: 'SelfApprove'
 }
 
-export interface Message_get_pending_admin {
-    __kind: 'get_pending_admin'
+export interface PSP34Error_TokenExists {
+    __kind: 'TokenExists'
 }
 
-export interface Message_transfer_ownership {
-    __kind: 'transfer_ownership'
-    account: (AccountId | undefined)
+export interface PSP34Error_TokenNotExists {
+    __kind: 'TokenNotExists'
 }
 
-export interface Message_accept_ownership {
-    __kind: 'accept_ownership'
-}
-
-export interface Message_upgrade_contract {
-    __kind: 'upgrade_contract'
-    codeHash: Uint8Array
-}
-
-export interface Message_PSP34_collection_id {
-    __kind: 'PSP34_collection_id'
-}
-
-export interface Message_PSP34_balance_of {
-    __kind: 'PSP34_balance_of'
-    owner: AccountId
-}
-
-export interface Message_PSP34_owner_of {
-    __kind: 'PSP34_owner_of'
-    id: Id
-}
-
-export interface Message_PSP34_allowance {
-    __kind: 'PSP34_allowance'
-    owner: AccountId
-    operator: AccountId
-    id: (Id | undefined)
-}
-
-export interface Message_PSP34_approve {
-    __kind: 'PSP34_approve'
-    operator: AccountId
-    id: (Id | undefined)
-    approved: bool
-}
-
-export interface Message_PSP34_transfer {
-    __kind: 'PSP34_transfer'
-    to: AccountId
-    id: Id
-    data: Uint8Array
-}
-
-export interface Message_PSP34_total_supply {
-    __kind: 'PSP34_total_supply'
-}
-
-export interface Message_PSP34Enumerable_owners_token_by_index {
-    __kind: 'PSP34Enumerable_owners_token_by_index'
-    owner: AccountId
-    index: bigint
-}
-
-export interface Message_PSP34Enumerable_token_by_index {
-    __kind: 'PSP34Enumerable_token_by_index'
-    index: bigint
-}
-
-export interface Message_PSP34Metadata_get_attribute {
-    __kind: 'PSP34Metadata_get_attribute'
-    id: Id
-    key: Uint8Array
-}
-
-export interface Message_Psp34Traits_get_owner {
-    __kind: 'Psp34Traits_get_owner'
-}
-
-export interface Message_Psp34Traits_token_uri {
-    __kind: 'Psp34Traits_token_uri'
-    tokenId: Id
-}
-
-export interface Message_Psp34Traits_set_base_uri {
-    __kind: 'Psp34Traits_set_base_uri'
-    uri: String
-}
-
-export interface Message_Psp34Traits_get_attribute_count {
-    __kind: 'Psp34Traits_get_attribute_count'
-}
-
-export interface Message_Psp34Traits_get_attribute_name {
-    __kind: 'Psp34Traits_get_attribute_name'
-    index: u32
-}
-
-export interface Message_Psp34Traits_get_attributes {
-    __kind: 'Psp34Traits_get_attributes'
-    tokenId: Id
-    attributes: String[]
-}
-
-export interface Message_Psp34Traits_set_multiple_attributes {
-    __kind: 'Psp34Traits_set_multiple_attributes'
-    tokenId: Id
-    metadata: Vec
-}
-
-export type Constructor = Constructor_new
-
-/**
- * Creates a new AZNS contract.
- */
-export interface Constructor_new {
-    __kind: 'new'
-    admin: AccountId
-    nameCheckerAddr: (AccountId | undefined)
-    feeCalculatorAddr: (AccountId | undefined)
-    merkleVerifierAddr: (AccountId | undefined)
-    tld: String
-    baseUri: String
-}
-
-export type String = string
-
-export type NameStatus = NameStatus_Registered | NameStatus_Reserved | NameStatus_Available | NameStatus_Unavailable
-
-export interface NameStatus_Registered {
-    __kind: 'Registered'
-    value: [AddressDict, (AccountId | undefined)]
-}
-
-export interface NameStatus_Reserved {
-    __kind: 'Reserved'
-    value: (AccountId | undefined)
-}
-
-export interface NameStatus_Available {
-    __kind: 'Available'
-}
-
-export interface NameStatus_Unavailable {
-    __kind: 'Unavailable'
-}
-
-export type LangError = LangError_CouldNotReadInput
-
-export interface LangError_CouldNotReadInput {
-    __kind: 'CouldNotReadInput'
-}
-
-export interface AddressDict {
-    owner: AccountId
-    controller: AccountId
-    resolved: AccountId
-}
-
-export type Error = Error_NotAdmin | Error_NameAlreadyExists | Error_NameDoesntExist | Error_NameNotAllowed | Error_CallerIsNotOwner | Error_CallerIsNotController | Error_FeeNotPaid | Error_NameEmpty | Error_RecordNotFound | Error_WithdrawFailed | Error_InsufficientBalance | Error_NoResolvedAddress | Error_AlreadyClaimed | Error_InvalidMerkleProof | Error_CannotBuyReservedName | Error_NotReservedName | Error_NotAuthorised | Error_ZeroAddress | Error_RecordsOverflow | Error_FeeError | Error_OnlyDuringWhitelistPhase | Error_RestrictedDuringWhitelistPhase
-
-export interface Error_NotAdmin {
-    __kind: 'NotAdmin'
-}
-
-export interface Error_NameAlreadyExists {
-    __kind: 'NameAlreadyExists'
-}
-
-export interface Error_NameDoesntExist {
-    __kind: 'NameDoesntExist'
-}
-
-export interface Error_NameNotAllowed {
-    __kind: 'NameNotAllowed'
-}
-
-export interface Error_CallerIsNotOwner {
-    __kind: 'CallerIsNotOwner'
-}
-
-export interface Error_CallerIsNotController {
-    __kind: 'CallerIsNotController'
-}
-
-export interface Error_FeeNotPaid {
-    __kind: 'FeeNotPaid'
-}
-
-export interface Error_NameEmpty {
-    __kind: 'NameEmpty'
-}
-
-export interface Error_RecordNotFound {
-    __kind: 'RecordNotFound'
-}
-
-export interface Error_WithdrawFailed {
-    __kind: 'WithdrawFailed'
-}
-
-export interface Error_InsufficientBalance {
-    __kind: 'InsufficientBalance'
-}
+export type Id = Id_Bytes | Id_U128 | Id_U16 | Id_U32 | Id_U64 | Id_U8
 
-export interface Error_NoResolvedAddress {
-    __kind: 'NoResolvedAddress'
+export interface Id_Bytes {
+    __kind: 'Bytes'
+    value: Vec
 }
-
-export interface Error_AlreadyClaimed {
-    __kind: 'AlreadyClaimed'
-}
-
-export interface Error_InvalidMerkleProof {
-    __kind: 'InvalidMerkleProof'
-}
-
-export interface Error_CannotBuyReservedName {
-    __kind: 'CannotBuyReservedName'
-}
-
-export interface Error_NotReservedName {
-    __kind: 'NotReservedName'
-}
-
-export interface Error_NotAuthorised {
-    __kind: 'NotAuthorised'
-}
-
-export interface Error_ZeroAddress {
-    __kind: 'ZeroAddress'
-}
-
-export interface Error_RecordsOverflow {
-    __kind: 'RecordsOverflow'
-}
-
-export interface Error_FeeError {
-    __kind: 'FeeError'
-    value: Type_19
-}
-
-export interface Error_OnlyDuringWhitelistPhase {
-    __kind: 'OnlyDuringWhitelistPhase'
-}
-
-export interface Error_RestrictedDuringWhitelistPhase {
-    __kind: 'RestrictedDuringWhitelistPhase'
-}
-
-export type AccountId = Uint8Array
-
-export type u64 = bigint
-
-export type Vec = [String, String][]
-
-export type u32 = number
-
-export type bool = boolean
-
-export type u8 = number
-
-export type Id = Id_U8 | Id_U16 | Id_U32 | Id_U64 | Id_U128 | Id_Bytes
 
-export interface Id_U8 {
-    __kind: 'U8'
-    value: u8
+export interface Id_U128 {
+    __kind: 'U128'
+    value: bigint
 }
 
 export interface Id_U16 {
@@ -6313,52 +5682,120 @@ export interface Id_U64 {
     value: u64
 }
 
-export interface Id_U128 {
-    __kind: 'U128'
-    value: bigint
+export interface Id_U8 {
+    __kind: 'U8'
+    value: u8
 }
 
-export interface Id_Bytes {
-    __kind: 'Bytes'
-    value: Uint8Array
+export type u8 = number
+
+export type bool = boolean
+
+export type u32 = number
+
+export type u64 = bigint
+
+export type AccountId = Bytes
+
+export type Error = Error_AlreadyClaimed | Error_CallerIsNotController | Error_CallerIsNotOwner | Error_CannotBuyReservedName | Error_FeeError | Error_FeeNotPaid | Error_InsufficientBalance | Error_InvalidMerkleProof | Error_NameAlreadyExists | Error_NameDoesntExist | Error_NameEmpty | Error_NameNotAllowed | Error_NoResolvedAddress | Error_NotAdmin | Error_NotAuthorised | Error_NotReservedName | Error_OnlyDuringWhitelistPhase | Error_RecordNotFound | Error_RecordsOverflow | Error_RestrictedDuringWhitelistPhase | Error_WithdrawFailed | Error_ZeroAddress
+
+export interface Error_AlreadyClaimed {
+    __kind: 'AlreadyClaimed'
 }
 
-export type PSP34Error = PSP34Error_Custom | PSP34Error_SelfApprove | PSP34Error_NotApproved | PSP34Error_TokenExists | PSP34Error_TokenNotExists | PSP34Error_SafeTransferCheckFailed
-
-export interface PSP34Error_Custom {
-    __kind: 'Custom'
-    value: String
+export interface Error_CallerIsNotController {
+    __kind: 'CallerIsNotController'
 }
 
-export interface PSP34Error_SelfApprove {
-    __kind: 'SelfApprove'
+export interface Error_CallerIsNotOwner {
+    __kind: 'CallerIsNotOwner'
 }
 
-export interface PSP34Error_NotApproved {
-    __kind: 'NotApproved'
+export interface Error_CannotBuyReservedName {
+    __kind: 'CannotBuyReservedName'
 }
 
-export interface PSP34Error_TokenExists {
-    __kind: 'TokenExists'
+export interface Error_FeeError {
+    __kind: 'FeeError'
+    value: Type_19
 }
 
-export interface PSP34Error_TokenNotExists {
-    __kind: 'TokenNotExists'
+export interface Error_FeeNotPaid {
+    __kind: 'FeeNotPaid'
 }
 
-export interface PSP34Error_SafeTransferCheckFailed {
-    __kind: 'SafeTransferCheckFailed'
-    value: String
+export interface Error_InsufficientBalance {
+    __kind: 'InsufficientBalance'
 }
 
-export type Type_19 = Type_19_NotAdmin | Type_19_InvalidDuration | Type_19_ZeroLength | Type_19_ZeroPrice
+export interface Error_InvalidMerkleProof {
+    __kind: 'InvalidMerkleProof'
+}
 
-export interface Type_19_NotAdmin {
+export interface Error_NameAlreadyExists {
+    __kind: 'NameAlreadyExists'
+}
+
+export interface Error_NameDoesntExist {
+    __kind: 'NameDoesntExist'
+}
+
+export interface Error_NameEmpty {
+    __kind: 'NameEmpty'
+}
+
+export interface Error_NameNotAllowed {
+    __kind: 'NameNotAllowed'
+}
+
+export interface Error_NoResolvedAddress {
+    __kind: 'NoResolvedAddress'
+}
+
+export interface Error_NotAdmin {
     __kind: 'NotAdmin'
 }
 
+export interface Error_NotAuthorised {
+    __kind: 'NotAuthorised'
+}
+
+export interface Error_NotReservedName {
+    __kind: 'NotReservedName'
+}
+
+export interface Error_OnlyDuringWhitelistPhase {
+    __kind: 'OnlyDuringWhitelistPhase'
+}
+
+export interface Error_RecordNotFound {
+    __kind: 'RecordNotFound'
+}
+
+export interface Error_RecordsOverflow {
+    __kind: 'RecordsOverflow'
+}
+
+export interface Error_RestrictedDuringWhitelistPhase {
+    __kind: 'RestrictedDuringWhitelistPhase'
+}
+
+export interface Error_WithdrawFailed {
+    __kind: 'WithdrawFailed'
+}
+
+export interface Error_ZeroAddress {
+    __kind: 'ZeroAddress'
+}
+
+export type Type_19 = Type_19_InvalidDuration | Type_19_NotAdmin | Type_19_ZeroLength | Type_19_ZeroPrice
+
 export interface Type_19_InvalidDuration {
     __kind: 'InvalidDuration'
+}
+
+export interface Type_19_NotAdmin {
+    __kind: 'NotAdmin'
 }
 
 export interface Type_19_ZeroLength {
@@ -6367,6 +5804,569 @@ export interface Type_19_ZeroLength {
 
 export interface Type_19_ZeroPrice {
     __kind: 'ZeroPrice'
+}
+
+export interface AddressDict {
+    owner: AccountId
+    controller: AccountId
+    resolved: AccountId
+}
+
+export type LangError = LangError_CouldNotReadInput
+
+export interface LangError_CouldNotReadInput {
+    __kind: 'CouldNotReadInput'
+}
+
+export type NameStatus = NameStatus_Available | NameStatus_Registered | NameStatus_Reserved | NameStatus_Unavailable
+
+export interface NameStatus_Available {
+    __kind: 'Available'
+}
+
+export interface NameStatus_Registered {
+    __kind: 'Registered'
+    value: [AddressDict, (AccountId | undefined)]
+}
+
+export interface NameStatus_Reserved {
+    __kind: 'Reserved'
+    value?: (AccountId | undefined)
+}
+
+export interface NameStatus_Unavailable {
+    __kind: 'Unavailable'
+}
+
+export type String = string
+
+export type Constructor = Constructor_new
+
+/**
+ * Creates a new AZNS contract.
+ */
+export interface Constructor_new {
+    __kind: 'new'
+    admin: AccountId
+    nameCheckerAddr?: (AccountId | undefined)
+    feeCalculatorAddr?: (AccountId | undefined)
+    merkleVerifierAddr?: (AccountId | undefined)
+    tld: String
+    baseUri: String
+}
+
+export type Message = Message_PSP34Enumerable_owners_token_by_index | Message_PSP34Enumerable_token_by_index | Message_PSP34Metadata_get_attribute | Message_PSP34_allowance | Message_PSP34_approve | Message_PSP34_balance_of | Message_PSP34_collection_id | Message_PSP34_owner_of | Message_PSP34_total_supply | Message_PSP34_transfer | Message_Psp34Traits_get_attribute_count | Message_Psp34Traits_get_attribute_name | Message_Psp34Traits_get_attributes | Message_Psp34Traits_get_owner | Message_Psp34Traits_set_base_uri | Message_Psp34Traits_set_multiple_attributes | Message_Psp34Traits_token_uri | Message_accept_ownership | Message_add_reserved_names | Message_claim_reserved_name | Message_clear_expired_names | Message_get_address | Message_get_address_dict | Message_get_admin | Message_get_all_records | Message_get_base_uri | Message_get_controlled_names_of_address | Message_get_controller | Message_get_controller_to_name_count | Message_get_lock_info | Message_get_name_price | Message_get_name_status | Message_get_names_of_address | Message_get_owned_names_of_address | Message_get_owner | Message_get_owner_to_name_count | Message_get_pending_admin | Message_get_primary_domain | Message_get_primary_name | Message_get_record | Message_get_records_size_limit | Message_get_registration_period | Message_get_resolving_names_of_address | Message_get_resolving_to_name_count | Message_get_tld | Message_is_whitelist_phase | Message_register | Message_register_on_behalf_of | Message_release | Message_remove_reserved_name | Message_reset_controller | Message_reset_resolved_address | Message_set_address | Message_set_controller | Message_set_primary_name | Message_set_records_size_limit | Message_switch_to_public_phase | Message_transfer | Message_transfer_ownership | Message_update_records | Message_upgrade_contract | Message_validate_referrer | Message_verify_proof | Message_withdraw
+
+export interface Message_PSP34Enumerable_owners_token_by_index {
+    __kind: 'PSP34Enumerable_owners_token_by_index'
+    owner: AccountId
+    index: bigint
+}
+
+export interface Message_PSP34Enumerable_token_by_index {
+    __kind: 'PSP34Enumerable_token_by_index'
+    index: bigint
+}
+
+export interface Message_PSP34Metadata_get_attribute {
+    __kind: 'PSP34Metadata_get_attribute'
+    id: Id
+    key: Vec
+}
+
+export interface Message_PSP34_allowance {
+    __kind: 'PSP34_allowance'
+    owner: AccountId
+    operator: AccountId
+    id?: (Id | undefined)
+}
+
+export interface Message_PSP34_approve {
+    __kind: 'PSP34_approve'
+    operator: AccountId
+    id?: (Id | undefined)
+    approved: bool
+}
+
+export interface Message_PSP34_balance_of {
+    __kind: 'PSP34_balance_of'
+    owner: AccountId
+}
+
+export interface Message_PSP34_collection_id {
+    __kind: 'PSP34_collection_id'
+}
+
+export interface Message_PSP34_owner_of {
+    __kind: 'PSP34_owner_of'
+    id: Id
+}
+
+export interface Message_PSP34_total_supply {
+    __kind: 'PSP34_total_supply'
+}
+
+export interface Message_PSP34_transfer {
+    __kind: 'PSP34_transfer'
+    to: AccountId
+    id: Id
+    data: Vec
+}
+
+export interface Message_Psp34Traits_get_attribute_count {
+    __kind: 'Psp34Traits_get_attribute_count'
+}
+
+export interface Message_Psp34Traits_get_attribute_name {
+    __kind: 'Psp34Traits_get_attribute_name'
+    index: u32
+}
+
+export interface Message_Psp34Traits_get_attributes {
+    __kind: 'Psp34Traits_get_attributes'
+    tokenId: Id
+    attributes: String[]
+}
+
+export interface Message_Psp34Traits_get_owner {
+    __kind: 'Psp34Traits_get_owner'
+}
+
+export interface Message_Psp34Traits_set_base_uri {
+    __kind: 'Psp34Traits_set_base_uri'
+    uri: String
+}
+
+export interface Message_Psp34Traits_set_multiple_attributes {
+    __kind: 'Psp34Traits_set_multiple_attributes'
+    tokenId: Id
+    metadata: [String, String][]
+}
+
+export interface Message_Psp34Traits_token_uri {
+    __kind: 'Psp34Traits_token_uri'
+    tokenId: Id
+}
+
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
+}
+
+/**
+ *  (ADMIN-OPERATION)
+ *  Reserve name name for specific addresses
+ */
+export interface Message_add_reserved_names {
+    __kind: 'add_reserved_names'
+    set: [String, (AccountId | undefined)][]
+}
+
+/**
+ *  Allows users to claim their reserved name at zero cost
+ */
+export interface Message_claim_reserved_name {
+    __kind: 'claim_reserved_name'
+    name: String
+}
+
+/**
+ *  Removes the associated state of expired-names from storage
+ */
+export interface Message_clear_expired_names {
+    __kind: 'clear_expired_names'
+    names: String[]
+}
+
+/**
+ *  Get address for specific name.
+ */
+export interface Message_get_address {
+    __kind: 'get_address'
+    name: String
+}
+
+/**
+ *  Get the addresses related to specific name
+ */
+export interface Message_get_address_dict {
+    __kind: 'get_address_dict'
+    name: String
+}
+
+export interface Message_get_admin {
+    __kind: 'get_admin'
+}
+
+/**
+ *  Gets all records
+ */
+export interface Message_get_all_records {
+    __kind: 'get_all_records'
+    name: String
+}
+
+export interface Message_get_base_uri {
+    __kind: 'get_base_uri'
+}
+
+export interface Message_get_controlled_names_of_address {
+    __kind: 'get_controlled_names_of_address'
+    controller: AccountId
+}
+
+/**
+ *  Get controller of specific name.
+ */
+export interface Message_get_controller {
+    __kind: 'get_controller'
+    name: String
+}
+
+export interface Message_get_controller_to_name_count {
+    __kind: 'get_controller_to_name_count'
+    user: AccountId
+}
+
+export interface Message_get_lock_info {
+    __kind: 'get_lock_info'
+    name: String
+}
+
+export interface Message_get_name_price {
+    __kind: 'get_name_price'
+    name: String
+    recipient: AccountId
+    yearsToRegister: u8
+    referrer?: (String | undefined)
+}
+
+/**
+ *  Returns the current status of the name
+ */
+export interface Message_get_name_status {
+    __kind: 'get_name_status'
+    names: String[]
+}
+
+export interface Message_get_names_of_address {
+    __kind: 'get_names_of_address'
+    address: AccountId
+}
+
+/**
+ *  Returns all names the address owns
+ */
+export interface Message_get_owned_names_of_address {
+    __kind: 'get_owned_names_of_address'
+    owner: AccountId
+}
+
+/**
+ *  Get owner of specific name.
+ */
+export interface Message_get_owner {
+    __kind: 'get_owner'
+    name: String
+}
+
+export interface Message_get_owner_to_name_count {
+    __kind: 'get_owner_to_name_count'
+    user: AccountId
+}
+
+export interface Message_get_pending_admin {
+    __kind: 'get_pending_admin'
+}
+
+export interface Message_get_primary_domain {
+    __kind: 'get_primary_domain'
+    address: AccountId
+}
+
+export interface Message_get_primary_name {
+    __kind: 'get_primary_name'
+    address: AccountId
+}
+
+/**
+ *  Gets an arbitrary record by key
+ */
+export interface Message_get_record {
+    __kind: 'get_record'
+    name: String
+    key: String
+}
+
+export interface Message_get_records_size_limit {
+    __kind: 'get_records_size_limit'
+}
+
+export interface Message_get_registration_period {
+    __kind: 'get_registration_period'
+    name: String
+}
+
+export interface Message_get_resolving_names_of_address {
+    __kind: 'get_resolving_names_of_address'
+    address: AccountId
+}
+
+export interface Message_get_resolving_to_name_count {
+    __kind: 'get_resolving_to_name_count'
+    user: AccountId
+}
+
+export interface Message_get_tld {
+    __kind: 'get_tld'
+}
+
+/**
+ *  Returns `true` when contract is in whitelist-phase
+ *  and `false` when it is in public-phase
+ */
+export interface Message_is_whitelist_phase {
+    __kind: 'is_whitelist_phase'
+}
+
+/**
+ *  Register specific name with caller as owner.
+ * 
+ *  NOTE: Whitelisted addresses can buy one name during the whitelist phase by submitting its proof
+ */
+export interface Message_register {
+    __kind: 'register'
+    name: String
+    yearsToRegister: u8
+    referrer?: (String | undefined)
+    merkleProof?: (Bytes[] | undefined)
+    setAsPrimaryName: bool
+}
+
+/**
+ *  Register specific name on behalf of some other address.
+ *  Pay the fee, but forward the ownership of the name to the provided recipient
+ * 
+ *  NOTE: During the whitelist phase, use `register()` method instead.
+ */
+export interface Message_register_on_behalf_of {
+    __kind: 'register_on_behalf_of'
+    name: String
+    recipient: AccountId
+    yearsToRegister: u8
+    referrer?: (String | undefined)
+    merkleProof?: (Bytes[] | undefined)
+}
+
+/**
+ *  Release name from registration.
+ */
+export interface Message_release {
+    __kind: 'release'
+    name: String
+}
+
+/**
+ *  (ADMIN-OPERATION)
+ *  Remove given names from the list of reserved names
+ */
+export interface Message_remove_reserved_name {
+    __kind: 'remove_reserved_name'
+    set: String[]
+}
+
+export interface Message_reset_controller {
+    __kind: 'reset_controller'
+    names: String[]
+}
+
+export interface Message_reset_resolved_address {
+    __kind: 'reset_resolved_address'
+    names: String[]
+}
+
+/**
+ *  Set resolved address for specific name.
+ */
+export interface Message_set_address {
+    __kind: 'set_address'
+    name: String
+    newAddress: AccountId
+}
+
+export interface Message_set_controller {
+    __kind: 'set_controller'
+    name: String
+    newController: AccountId
+}
+
+/**
+ *  Set primary name of an address (reverse record)
+ *  @note if name is set to None then the primary-name for the caller will be removed (if exists)
+ */
+export interface Message_set_primary_name {
+    __kind: 'set_primary_name'
+    primaryName?: (String | undefined)
+}
+
+/**
+ *  (ADMIN-OPERATION)
+ *  Update the limit of records allowed to store per name
+ */
+export interface Message_set_records_size_limit {
+    __kind: 'set_records_size_limit'
+    limit?: (u32 | undefined)
+}
+
+/**
+ *  (ADMIN-OPERATION)
+ *  Switch from whitelist-phase to public-phase
+ */
+export interface Message_switch_to_public_phase {
+    __kind: 'switch_to_public_phase'
+}
+
+/**
+ *  Transfer owner to another address.
+ */
+export interface Message_transfer {
+    __kind: 'transfer'
+    to: AccountId
+    name: String
+    keepRecords: bool
+    keepController: bool
+    keepResolving: bool
+    data: Vec
+}
+
+export interface Message_transfer_ownership {
+    __kind: 'transfer_ownership'
+    account?: (AccountId | undefined)
+}
+
+export interface Message_update_records {
+    __kind: 'update_records'
+    name: String
+    records: [String, (String | undefined)][]
+    removeRest: bool
+}
+
+export interface Message_upgrade_contract {
+    __kind: 'upgrade_contract'
+    codeHash: Bytes
+}
+
+export interface Message_validate_referrer {
+    __kind: 'validate_referrer'
+    recipient: AccountId
+    referrerName: String
+}
+
+export interface Message_verify_proof {
+    __kind: 'verify_proof'
+    account: AccountId
+    merkleProof?: (Bytes[] | undefined)
+}
+
+/**
+ *  (ADMIN-OPERATION)
+ *  Transfers `value` amount of tokens to the caller.
+ */
+export interface Message_withdraw {
+    __kind: 'withdraw'
+    beneficiary?: (AccountId | undefined)
+    value?: (bigint | undefined)
+}
+
+export type Event = Event_Approval | Event_FeeReceived | Event_Lock | Event_PublicPhaseActivated | Event_RecordsUpdated | Event_Register | Event_Release | Event_Reserve | Event_SetAddress | Event_SetController | Event_SetPrimaryName | Event_Transfer | Event_Unlock
+
+export interface Event_Approval {
+    __kind: 'Approval'
+    owner: AccountId
+    operator: AccountId
+    id?: (Id | undefined)
+    approved: bool
+}
+
+export interface Event_FeeReceived {
+    __kind: 'FeeReceived'
+    name: String
+    from: AccountId
+    referrer?: (String | undefined)
+    referrerAddr?: (AccountId | undefined)
+    receivedFee: bigint
+    forwardedReferrerFee: bigint
+}
+
+export interface Event_Lock {
+    __kind: 'Lock'
+    name: String
+    caller: AccountId
+    unlocker: AccountId
+}
+
+export interface Event_PublicPhaseActivated {
+    __kind: 'PublicPhaseActivated'
+}
+
+export interface Event_RecordsUpdated {
+    __kind: 'RecordsUpdated'
+    name: String
+    from: AccountId
+}
+
+export interface Event_Register {
+    __kind: 'Register'
+    name: String
+    from: AccountId
+    registrationTimestamp: u64
+    expirationTimestamp: u64
+}
+
+export interface Event_Release {
+    __kind: 'Release'
+    name: String
+    from: AccountId
+}
+
+export interface Event_Reserve {
+    __kind: 'Reserve'
+    name: String
+    accountId?: (AccountId | undefined)
+    action: bool
+}
+
+export interface Event_SetAddress {
+    __kind: 'SetAddress'
+    name: String
+    from: AccountId
+    oldAddress?: (AccountId | undefined)
+    newAddress: AccountId
+}
+
+export interface Event_SetController {
+    __kind: 'SetController'
+    name: String
+    from: AccountId
+    oldController?: (AccountId | undefined)
+    newController: AccountId
+}
+
+export interface Event_SetPrimaryName {
+    __kind: 'SetPrimaryName'
+    account: AccountId
+    primaryName?: (String | undefined)
+}
+
+export interface Event_Transfer {
+    __kind: 'Transfer'
+    from?: (AccountId | undefined)
+    to?: (AccountId | undefined)
+    id: Id
+}
+
+export interface Event_Unlock {
+    __kind: 'Unlock'
+    name: String
 }
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

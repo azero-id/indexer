@@ -1,19 +1,21 @@
 manifestVersion: subsquid.io/v0.1
 name: azns-mainnet
-version: 6
-description: 'AZERO.ID Subsquid Indexer (Aleph Zero Mainnet)'
+version: 7
+description: 'AZERO.ID Indexer (Aleph Zero Mainnet)'
 
 build:
 
 deploy:
   addons:
     postgres:
+    rpc:
+      - aleph-zero:http
   processor:
     cmd: ['node', 'lib/processor']
     env:
       CHAIN: alephzero
       CHAIN_PREFIX: 42
-      RPC: wss://ws.azero.dev
+      RPC: wss://ws.azero.dev/
       ARCHIVE: aleph-zero
   api:
     cmd:
@@ -36,8 +38,10 @@ scale:
     profile: small
   addons:
     postgres:
-      storage: 10G
+      storage: 5G
       profile: small
+    rpc:
+      max-rate: 100rps
   api:
     profile: small
     replicas: 2

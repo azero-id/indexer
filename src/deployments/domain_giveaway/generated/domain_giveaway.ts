@@ -1,4 +1,4 @@
-import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
+import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
@@ -1601,21 +1601,21 @@ export const metadata = {
 
 const _abi = new Abi(metadata)
 
-export function decodeEvent(hex: string): Event {
-    return _abi.decodeEvent(hex)
+export function decodeEvent(bytes: Bytes): Event {
+    return _abi.decodeEvent(bytes)
 }
 
-export function decodeMessage(hex: string): Message {
-    return _abi.decodeMessage(hex)
+export function decodeMessage(bytes: Bytes): Message {
+    return _abi.decodeMessage(bytes)
 }
 
-export function decodeConstructor(hex: string): Constructor {
-    return _abi.decodeConstructor(hex)
+export function decodeConstructor(bytes: Bytes): Constructor {
+    return _abi.decodeConstructor(bytes)
 }
 
 export interface Chain {
-    client: {
-        call: <T=any>(method: string, params?: unknown[]) => Promise<T>
+    rpc: {
+        call<T=any>(method: string, params?: unknown[]): Promise<T>
     }
 }
 
@@ -1624,7 +1624,7 @@ export interface ChainContext {
 }
 
 export class Contract {
-    constructor(private ctx: ChainContext, private address: string, private blockHash?: string) { }
+    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
 
     get_registry_address(): Promise<Result<AccountId, LangError>> {
         return this.stateCall('0x915381d6', [])
@@ -1638,7 +1638,7 @@ export class Contract {
         return this.stateCall('0x8b923c06', [coupon_code])
     }
 
-    get_coupon_status(coupon_codes: Vec): Promise<Result<CouponStatus[], LangError>> {
+    get_coupon_status(coupon_codes: String[]): Promise<Result<CouponStatus[], LangError>> {
         return this.stateCall('0x898ef7c2', [coupon_codes])
     }
 
@@ -1653,116 +1653,45 @@ export class Contract {
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
         let input = _abi.encodeMessageInput(selector, args)
         let data = encodeCall(this.address, input)
-        let result = await this.ctx._chain.client.call('state_call', ['ContractsApi_call', data, this.blockHash])
+        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
         let value = decodeResult(result)
         return _abi.decodeMessageOutput(selector, value)
     }
 }
 
-export type Event = Event_Reserved | Event_Claimed
+export type CouponStatus = CouponStatus_Claimed | CouponStatus_NotFound | CouponStatus_Reserved
 
-export interface Event_Reserved {
-    __kind: 'Reserved'
-    coupon: String
-    name: String
-}
-
-export interface Event_Claimed {
+export interface CouponStatus_Claimed {
     __kind: 'Claimed'
-    coupon: String
-    claimedBy: AccountId
+    value: [String, bigint, bigint, AccountId]
 }
 
-export type Message = Message_get_registry_address | Message_get_merkle_roots | Message_get_coupon_record | Message_get_coupon_status | Message_fund_me | Message_reserve_name | Message_claim_name | Message_reserve_and_claim_name | Message_set_registry_address | Message_set_coupon_merkle_root | Message_set_secret_merkle_root | Message_withdraw_funds | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
-
-export interface Message_get_registry_address {
-    __kind: 'get_registry_address'
+export interface CouponStatus_NotFound {
+    __kind: 'NotFound'
 }
 
-export interface Message_get_merkle_roots {
-    __kind: 'get_merkle_roots'
+export interface CouponStatus_Reserved {
+    __kind: 'Reserved'
+    value: [String, bigint]
 }
 
-export interface Message_get_coupon_record {
-    __kind: 'get_coupon_record'
-    couponCode: String
-}
-
-export interface Message_get_coupon_status {
-    __kind: 'get_coupon_status'
-    couponCodes: Vec
-}
-
-export interface Message_fund_me {
-    __kind: 'fund_me'
-}
-
-export interface Message_reserve_name {
-    __kind: 'reserve_name'
+export interface CouponRecord {
     name: String
-    couponCode: String
-    proof: MerkleHash[]
+    claimedBy?: ([AccountId, bigint] | undefined)
+    reserveTimestamp: bigint
 }
 
-export interface Message_claim_name {
-    __kind: 'claim_name'
-    couponCode: String
-    secretCode: String
-    proof: MerkleHash[]
-    receiver: (AccountId | undefined)
+export type String = string
+
+export type MerkleHash = Bytes
+
+export type LangError = LangError_CouldNotReadInput
+
+export interface LangError_CouldNotReadInput {
+    __kind: 'CouldNotReadInput'
 }
 
-export interface Message_reserve_and_claim_name {
-    __kind: 'reserve_and_claim_name'
-    name: String
-    couponCode: String
-    secretCode: String
-    proof: MerkleHash[]
-    receiver: (AccountId | undefined)
-}
-
-export interface Message_set_registry_address {
-    __kind: 'set_registry_address'
-    newRegistryAddr: AccountId
-}
-
-export interface Message_set_coupon_merkle_root {
-    __kind: 'set_coupon_merkle_root'
-    newRootHash: MerkleHash
-}
-
-export interface Message_set_secret_merkle_root {
-    __kind: 'set_secret_merkle_root'
-    newRootHash: MerkleHash
-}
-
-export interface Message_withdraw_funds {
-    __kind: 'withdraw_funds'
-    beneficiary: (AccountId | undefined)
-    amount: Balance
-}
-
-export interface Message_get_admin {
-    __kind: 'get_admin'
-}
-
-export interface Message_get_pending_admin {
-    __kind: 'get_pending_admin'
-}
-
-export interface Message_transfer_ownership {
-    __kind: 'transfer_ownership'
-    account: (AccountId | undefined)
-}
-
-export interface Message_accept_ownership {
-    __kind: 'accept_ownership'
-}
-
-export interface Message_upgrade_contract {
-    __kind: 'upgrade_contract'
-    codeHash: MerkleHash
-}
+export type AccountId = Bytes
 
 export type Constructor = Constructor_new
 
@@ -1774,42 +1703,111 @@ export interface Constructor_new {
     secretMerkleRoot: MerkleHash
 }
 
-export type AccountId = Uint8Array
+export type Message = Message_accept_ownership | Message_claim_name | Message_fund_me | Message_get_admin | Message_get_coupon_record | Message_get_coupon_status | Message_get_merkle_roots | Message_get_pending_admin | Message_get_registry_address | Message_reserve_and_claim_name | Message_reserve_name | Message_set_coupon_merkle_root | Message_set_registry_address | Message_set_secret_merkle_root | Message_transfer_ownership | Message_upgrade_contract | Message_withdraw_funds
 
-export type LangError = LangError_CouldNotReadInput
-
-export interface LangError_CouldNotReadInput {
-    __kind: 'CouldNotReadInput'
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
 }
 
-export type MerkleHash = Uint8Array
+export interface Message_claim_name {
+    __kind: 'claim_name'
+    couponCode: String
+    secretCode: String
+    proof: MerkleHash[]
+    receiver?: (AccountId | undefined)
+}
 
-export type String = string
+export interface Message_fund_me {
+    __kind: 'fund_me'
+}
 
-export interface CouponRecord {
+export interface Message_get_admin {
+    __kind: 'get_admin'
+}
+
+export interface Message_get_coupon_record {
+    __kind: 'get_coupon_record'
+    couponCode: String
+}
+
+export interface Message_get_coupon_status {
+    __kind: 'get_coupon_status'
+    couponCodes: String[]
+}
+
+export interface Message_get_merkle_roots {
+    __kind: 'get_merkle_roots'
+}
+
+export interface Message_get_pending_admin {
+    __kind: 'get_pending_admin'
+}
+
+export interface Message_get_registry_address {
+    __kind: 'get_registry_address'
+}
+
+export interface Message_reserve_and_claim_name {
+    __kind: 'reserve_and_claim_name'
     name: String
-    claimedBy: ([AccountId, bigint] | undefined)
-    reserveTimestamp: bigint
+    couponCode: String
+    secretCode: String
+    proof: MerkleHash[]
+    receiver?: (AccountId | undefined)
 }
 
-export type Vec = String[]
-
-export type CouponStatus = CouponStatus_NotFound | CouponStatus_Reserved | CouponStatus_Claimed
-
-export interface CouponStatus_NotFound {
-    __kind: 'NotFound'
+export interface Message_reserve_name {
+    __kind: 'reserve_name'
+    name: String
+    couponCode: String
+    proof: MerkleHash[]
 }
 
-export interface CouponStatus_Reserved {
-    __kind: 'Reserved'
-    value: [String, bigint]
+export interface Message_set_coupon_merkle_root {
+    __kind: 'set_coupon_merkle_root'
+    newRootHash: MerkleHash
 }
 
-export interface CouponStatus_Claimed {
-    __kind: 'Claimed'
-    value: [String, bigint, bigint, AccountId]
+export interface Message_set_registry_address {
+    __kind: 'set_registry_address'
+    newRegistryAddr: AccountId
+}
+
+export interface Message_set_secret_merkle_root {
+    __kind: 'set_secret_merkle_root'
+    newRootHash: MerkleHash
+}
+
+export interface Message_transfer_ownership {
+    __kind: 'transfer_ownership'
+    account?: (AccountId | undefined)
+}
+
+export interface Message_upgrade_contract {
+    __kind: 'upgrade_contract'
+    codeHash: MerkleHash
+}
+
+export interface Message_withdraw_funds {
+    __kind: 'withdraw_funds'
+    beneficiary?: (AccountId | undefined)
+    amount: Balance
 }
 
 export type Balance = bigint
+
+export type Event = Event_Claimed | Event_Reserved
+
+export interface Event_Claimed {
+    __kind: 'Claimed'
+    coupon: String
+    claimedBy: AccountId
+}
+
+export interface Event_Reserved {
+    __kind: 'Reserved'
+    coupon: String
+    name: String
+}
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

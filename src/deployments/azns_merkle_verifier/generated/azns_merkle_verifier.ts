@@ -1,4 +1,4 @@
-import {Abi, encodeCall, decodeResult} from "@subsquid/ink-abi"
+import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
   "source": {
@@ -843,21 +843,21 @@ export const metadata = {
 
 const _abi = new Abi(metadata)
 
-export function decodeEvent(hex: string): Event {
-    return _abi.decodeEvent(hex)
+export function decodeEvent(bytes: Bytes): Event {
+    return _abi.decodeEvent(bytes)
 }
 
-export function decodeMessage(hex: string): Message {
-    return _abi.decodeMessage(hex)
+export function decodeMessage(bytes: Bytes): Message {
+    return _abi.decodeMessage(bytes)
 }
 
-export function decodeConstructor(hex: string): Constructor {
-    return _abi.decodeConstructor(hex)
+export function decodeConstructor(bytes: Bytes): Constructor {
+    return _abi.decodeConstructor(bytes)
 }
 
 export interface Chain {
-    client: {
-        call: <T=any>(method: string, params?: unknown[]) => Promise<T>
+    rpc: {
+        call<T=any>(method: string, params?: unknown[]): Promise<T>
     }
 }
 
@@ -866,13 +866,13 @@ export interface ChainContext {
 }
 
 export class Contract {
-    constructor(private ctx: ChainContext, private address: string, private blockHash?: string) { }
+    constructor(private ctx: ChainContext, private address: Bytes, private blockHash?: Bytes) { }
 
-    root(): Promise<Result<Uint8Array, LangError>> {
+    root(): Promise<Result<Bytes, LangError>> {
         return this.stateCall('0x0859bfce', [])
     }
 
-    verify_proof(leaf: Uint8Array, proof: Vec): Promise<Result<boolean, LangError>> {
+    verify_proof(leaf: Bytes, proof: Bytes[]): Promise<Result<boolean, LangError>> {
         return this.stateCall('0x71c9d9ba', [leaf, proof])
     }
 
@@ -887,35 +887,32 @@ export class Contract {
     private async stateCall<T>(selector: string, args: any[]): Promise<T> {
         let input = _abi.encodeMessageInput(selector, args)
         let data = encodeCall(this.address, input)
-        let result = await this.ctx._chain.client.call('state_call', ['ContractsApi_call', data, this.blockHash])
+        let result = await this.ctx._chain.rpc.call('state_call', ['ContractsApi_call', data, this.blockHash])
         let value = decodeResult(result)
         return _abi.decodeMessageOutput(selector, value)
     }
 }
 
-export type Event = never
+export type AccountId = Bytes
 
-export type Message = Message_update_root | Message_root | Message_verify_proof | Message_get_admin | Message_get_pending_admin | Message_transfer_ownership | Message_accept_ownership | Message_upgrade_contract
+export type LangError = LangError_CouldNotReadInput
 
-export interface Message_update_root {
-    __kind: 'update_root'
-    newRoot: Uint8Array
+export interface LangError_CouldNotReadInput {
+    __kind: 'CouldNotReadInput'
 }
 
-/**
- *  Returns the merkle root
- */
-export interface Message_root {
-    __kind: 'root'
+export type Constructor = Constructor_new
+
+export interface Constructor_new {
+    __kind: 'new'
+    admin: AccountId
+    root: Bytes
 }
 
-/**
- *  Verifies inclusion of leaf in the merkle tree
- */
-export interface Message_verify_proof {
-    __kind: 'verify_proof'
-    leaf: Uint8Array
-    proof: Vec
+export type Message = Message_accept_ownership | Message_get_admin | Message_get_pending_admin | Message_root | Message_transfer_ownership | Message_update_root | Message_upgrade_contract | Message_verify_proof
+
+export interface Message_accept_ownership {
+    __kind: 'accept_ownership'
 }
 
 export interface Message_get_admin {
@@ -926,36 +923,37 @@ export interface Message_get_pending_admin {
     __kind: 'get_pending_admin'
 }
 
-export interface Message_transfer_ownership {
-    __kind: 'transfer_ownership'
-    account: (AccountId | undefined)
+/**
+ *  Returns the merkle root
+ */
+export interface Message_root {
+    __kind: 'root'
 }
 
-export interface Message_accept_ownership {
-    __kind: 'accept_ownership'
+export interface Message_transfer_ownership {
+    __kind: 'transfer_ownership'
+    account?: (AccountId | undefined)
+}
+
+export interface Message_update_root {
+    __kind: 'update_root'
+    newRoot: Bytes
 }
 
 export interface Message_upgrade_contract {
     __kind: 'upgrade_contract'
-    codeHash: Uint8Array
+    codeHash: Bytes
 }
 
-export type Constructor = Constructor_new
-
-export interface Constructor_new {
-    __kind: 'new'
-    admin: AccountId
-    root: Uint8Array
+/**
+ *  Verifies inclusion of leaf in the merkle tree
+ */
+export interface Message_verify_proof {
+    __kind: 'verify_proof'
+    leaf: Bytes
+    proof: Bytes[]
 }
 
-export type LangError = LangError_CouldNotReadInput
-
-export interface LangError_CouldNotReadInput {
-    __kind: 'CouldNotReadInput'
-}
-
-export type Vec = Uint8Array[]
-
-export type AccountId = Uint8Array
+export type Event = never
 
 export type Result<T, E> = {__kind: 'Ok', value: T} | {__kind: 'Err', value: E}

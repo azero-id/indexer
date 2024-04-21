@@ -1,6 +1,9 @@
+import { hexToU8a } from '@polkadot/util'
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
+import { In } from 'typeorm'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Domain, Owner } from '../model'
+import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
@@ -14,14 +17,16 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
   const transferEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Transfer',
   ) as EventWithMeta<aznsRegistry.Event_Transfer>[]
+  const tld = registryDeployment.tld
 
+  const ownerIdsToCheckForRemoval = new Set<string>()
   for (const { event, timestamp } of transferEvents) {
-    console.log(event)
-    const tld = registryDeployment.tld
-    const nameBuffer = (event.id as aznsRegistry.Id_Bytes).value
+    logger.debug(event)
+    const nameBuffer = hexToU8a((event.id as aznsRegistry.Id_Bytes).value as string)
     const name = Buffer.from(nameBuffer).toString('utf-8')
     const id = `${name}.${tld}`
     const from = ss58Encode(event.from)
+    if (from) ownerIdsToCheckForRemoval.add(from)
     const to = ss58Encode(event.to)
 
     // Determine event type
@@ -34,27 +39,14 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
       where: { id },
     })
 
-    // Find existing owners
-    let fromOwner: Owner | undefined
-    if (from)
-      fromOwner = await store.findOne(Owner, {
-        where: { id: from },
-      })
-    let toOwner: Owner | undefined
-    if (to)
-      toOwner = await store.findOne(Owner, {
-        where: { id: to },
-      })
-
     // Handle event
     if (isRegister || isTransfer) {
-      // Create new owner if not existant
-      if (!toOwner) {
-        toOwner = new Owner({
-          id: to,
-        })
-        await store.insert(toOwner)
-        console.log('Added Owner:', toOwner)
+      // Find existing owner & create if not existant
+      let owner = await store.findOne(Owner, { where: { id: to } })
+      if (!owner) {
+        owner = new Owner({ id: to })
+        await store.insert(owner)
+        logger.debug('Added Owner:', owner)
       }
 
       // Create new domain object
@@ -62,38 +54,30 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
         id,
         name,
         tld,
-        owner: toOwner,
+        owner,
         registeredAt: existingDomain?.registeredAt || timestamp,
       })
 
       // Update or insert domain
-      if (existingDomain) {
-        await store.remove(Domain, existingDomain.id)
-        await store.insert(domain)
-        console.log('Updated Domain:', domain)
-      } else {
-        await store.insert(domain)
-        console.log('Added Domain:', domain)
-      }
+      await store.upsert(domain)
+      logger.debug('Added/Updated Domain:', domain)
     } else if (isRelease) {
       // Remove domain
       if (existingDomain) {
-        await store.remove(Domain, existingDomain.id)
-        console.log('Removed Domain:', existingDomain)
+        await store.remove(Domain, id)
+        logger.debug('Removed Domain:', existingDomain)
       }
     }
+  }
 
-    // Remove owner if no domains left
-    for (const owner of [fromOwner, toOwner]) {
-      if (!owner) continue
-      const updatedOwner = await store.findOne(Owner, {
-        where: { id: owner.id },
-        relations: { domains: true },
-      })
-      if (updatedOwner && updatedOwner.domains?.length === 0) {
-        await store.remove(Owner, updatedOwner.id)
-        console.log('Removed Owner:', updatedOwner)
-      }
-    }
+  // Remove owners with no domains left
+  const updatedOwners = await store.find(Owner, {
+    where: { id: In(Array.from(ownerIdsToCheckForRemoval)) },
+    relations: { domains: true },
+  })
+  const ownerEntitiesToRemove = updatedOwners.filter((owner) => !owner.domains?.length)
+  if (ownerEntitiesToRemove.length) {
+    await store.remove(ownerEntitiesToRemove)
+    logger.debug('Removed Owners:', ownerEntitiesToRemove)
   }
 }

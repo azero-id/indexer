@@ -1,82 +1,93 @@
-# AZERO.ID – Indexer (Subsquid)
+# AZERO.ID – Subsquid Indexer
 
-This repository contains a [Subsquid](https://docs.subsquid.io/), indexing the smart contracts of [AZERO.ID](https://azero.id).
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![Typescript](https://img.shields.io/badge/Typescript-blue)
+![Subsquid](https://img.shields.io/badge/Subsquid-pink)
+
+This repository contains an indexer for the smart contracts of [AZERO.ID](https://azero.id).
 
 ## Development
+
+> [!WARNING]  
+> Subsquid strictly requires `npm` to be used as the package manager. `pnpm` is not supported.
 
 ### Prerequisites
 
 ```bash
-# Install Node.js & Docker
+# Install Node.js 18 & Docker
 
 # Install Squid CLI
 npm i -g @subsquid/cli
 
 # Install local dependencies
-# IMPORTANT: Use `npm`, not `pnpm`
 npm install
 
 # Copy & fill environments
 cp .env.example .env
 ```
 
-### Index Local Node
+### Index Live Node
 
-**Important:** Use [`aleph-node`](https://github.com/aleph-zero-foundation/aleph-node), `substrate-contracts-node` is not working currently due to its instant finality.
+To index a live network (e.g. Aleph Zero Testnet), a remote [Subsquid Archive](https://docs.subsquid.io/archives/overview/) is queried from its registry. Therefore, make sure to set up the `.env` file accordingly.
 
-To index a locally running node, it's necessary to instantiate the following components in parallel:
+> [!IMPORTANT]  
+> All tasks need to be run in different terminal windows.
+
+```bash
+# Start database (`sqd up`)
+npm run start:squid
+
+# Build & start processor (`sqd process`)
+npm run codegen
+npm run start:processor
+
+# Serve GraphQL API (`sqd serve`)
+npm run serve
+```
+
+If needed, clear all existing docker images via `docker rm -f $(docker ps -a -q)`.
+
+### Advanced: Index Local Node
+
+> [!WARNING]  
+> Due to its instant finality, `substrate-contracts-node` is not working currently. Use [`aleph-node`](https://github.com/aleph-zero-foundation/aleph-node) instead.
+
+To index a locally running node, it's necessary to run our own Subsquid Archive locally. This means running all of the following components in parallel:
 
 - Subsquid Archive (only for local nodes)
 - Subsquid Squid DB for Processor
 - Subsquid Processor
 - Subsquid GraphQL API
 
-_All tasks need to be run in different terminal windows._
+> [!IMPORTANT]  
+> All tasks need to be run in different terminal windows.
 
 ```bash
-# Start Subsquid Archive (for local nodes only)
-# NOTE: Does not work with `substrate-contracts-node` currently
+# Start archive
 npm run start:archive
 
-# Start Squid DB (`sqd up`)
+# Start database (`sqd up`)
 npm run start:squid
 
-# Build & Start Processor (`sqd process`)
+# Build & start processor (`sqd process`)
 npm run codegen
 npm run start:processor
 
-# Serve Processor DB via GraphQL API (`sqd serve`)
+# Serve GraphQL API (`sqd serve`)
 npm run serve
 ```
-
-### Index Live Node
-
-To index a live network, no matter if it's a test or production network, no local archive must be started. Instead, the identifier for the matching remote archive has to be determined by running: `npx squid-archive-registry`. Then the `.env` file needs to be updated accordingly.
-
-_All tasks need to be run in different terminal windows._
-
-```bash
-# Start Squid DB (`sqd up`)
-npm run start:squid
-
-# Build & Start Processor (`sqd process`)
-npm run codegen
-npm run start:processor
-
-# Serve Processor DB via GraphQL API (`sqd serve`)
-npm run serve
-```
-
-If needed, clear all existing docker images via `docker rm -f $(docker ps -a -q)`.
 
 ## Deployment
 
-The Squid is deployed to [Aquarium](https://app.subsquid.io/) (hosted service by Subsquid) for each live network.
+The Squid is deployed to [Subsquid Cloud](https://app.subsquid.io/) (hosted service) for each live network.
 
-| Network            | Endpoint                                       |
-| ------------------ | ---------------------------------------------- |
-| Aleph Zero Testnet | https://squid.subsquid.io/azns-testnet/graphql |
-| Aleph Zero Mainnet | https://squid.subsquid.io/azns-mainnet/graphql |
+| Network            | Endpoint                                       | Manifest File                                          |
+| ------------------ | ---------------------------------------------- | ------------------------------------------------------ |
+| Aleph Zero Testnet | https://squid.subsquid.io/azns-testnet/graphql | [`squid.azns-testnet.yaml`](./squid.azns-testnet.yaml) |
+| Aleph Zero Mainnet | https://squid.subsquid.io/azns-mainnet/graphql | [`squid.azns-mainnet.yaml`](./squid.azns-mainnet.yaml) |
+
+> [!IMPORTANT]  
+> Each time, the version needs to be bumped manually in the respective manifest-file.
 
 ```bash
 # Prerequisite: Install & authenticate Squid CLI
@@ -84,18 +95,16 @@ sqd auth -k <DEPLOYMENT_KEY>
 
 # Bump version in manifest-file
 
-# A: Deploy Squid for Aleph Zero Testnet
-sqd deploy . -o azero-id -m squid.azns-testnet.yaml
+# Deploy Squid (e.g. for Aleph Zero Testnet)
+npm run deploy squid.azns-testnet.yaml
+# OR: sqd deploy . -o azero-id -m squid.azns-testnet.yaml
 
-# B: Deploy Squid for Aleph Zero Mainnet
-# TODO: sqd deploy . -o azero-id -m squid.azns-mainnet.yaml
-
-# After successful initialization, assign newly
-# deployed squid to the production endpoint
+# After successful initialization, optionally assign
+# new squid to the respectove production endpoint.
 sqd prod azns-testnet@v42
 ```
 
 ## Other Resources
 
 - [Subsquid Documentation](https://docs.subsquid.io/)
-- [Squid ink! Template](https://github.com/subsquid-labs/squid-ink-template#dev-flow)
+- [Squid ink! Template](https://github.com/subsquid-labs/squid-ink-template)
