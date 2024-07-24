@@ -79,11 +79,12 @@ const main = async () => {
     for (const block of ctx.blocks) {
       for (const event of block.events) {
         if (event.name === 'Contracts.ContractEmitted' && event.args.contract === contractAddress) {
-          const eventData = decodeEvent(event.args.data)
-          if (!eventData) {
-            console.log("Couldn't decode event:", event)
-            // TODO
-            throw new Error("Couldn't decode event")
+          let eventData = decodeEvent(event.args.data)
+          // HACK Manually "decode" the one event without args
+          if (event.args.data === '0x0b') {
+            eventData = {
+              __kind: 'PublicPhaseActivated',
+            } as T
           }
           events.push({
             event: eventData,
