@@ -13,6 +13,8 @@ export const logger = pino({
     },
   },
   level: process.env.LOG_LEVEL || 'info',
+  base: undefined,
+  timestamp: process.env.LOG_TIMESTAMP === 'true',
   transport: {
     target: 'pino-pretty',
     options: {

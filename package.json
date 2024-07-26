@@ -20,7 +20,7 @@
     "stop:archive": "docker compose -f docker-compose.archive.yml down",
     "stop:squid": "docker compose -f docker-compose.squid.yml down",
     "serve": "squid-graphql-server",
-    "deploy": "sqd deploy . -o azero-id -m",
+    "deploy": "npm run codegen && npm run build && sqd deploy . -o azero-id -m",
     "lint": "prettier . --check && eslint",
     "lint:fix": "prettier . --write && eslint --fix",
     "update": "npx npm-check-updates --interactive --root --format group --install never && npm install",
