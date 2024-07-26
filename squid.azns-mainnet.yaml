@@ -17,6 +17,7 @@ deploy:
       CHAIN_PREFIX: 42
       RPC: wss://ws.azero.dev/
       ARCHIVE: aleph-zero
+      GATEWAY: https://v2.archive.subsquid.io/network/aleph-zero
   api:
     cmd:
       [
