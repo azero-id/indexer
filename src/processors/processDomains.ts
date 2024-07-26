@@ -7,21 +7,43 @@ import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
- * Process domain transfer events.
+ * Process domain ownership & expiration
  */
 export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
   store,
   registryEvents,
   registryDeployment,
 ) => {
+  // Process domain ownership changes via transfers (also registrations)
   const transferEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Transfer',
   ) as EventWithMeta<aznsRegistry.Event_Transfer>[]
-  const tld = registryDeployment.tld
+  await processTransfers(store, transferEvents, registryDeployment)
 
+  // Process domain expiration changes via registrations & renewals
+  const registrationEvents = registryEvents.filter(
+    ({ event }) => event.__kind === 'Register',
+  ) as EventWithMeta<aznsRegistry.Event_Register>[]
+  await processRegistrations(store, registrationEvents, registryDeployment)
+
+  const renewalEvents = registryEvents.filter(
+    ({ event }) => event.__kind === 'Renew',
+  ) as EventWithMeta<aznsRegistry.Event_Renew>[]
+  await processRenewals(store, renewalEvents, registryDeployment)
+}
+
+/**
+ * Process domain transfers
+ */
+const processTransfers: EventProcessorFn<aznsRegistry.Event_Transfer> = async (
+  store,
+  transferEvents,
+  registryDeployment,
+) => {
+  const tld = registryDeployment.tld
   const ownerIdsToCheckForRemoval = new Set<string>()
   for (const { event, timestamp } of transferEvents) {
-    logger.debug(event)
+    logger.debug('Event_Transfer:', event)
     const nameBuffer = hexToU8a((event.id as aznsRegistry.Id_Bytes).value as string)
     const name = Buffer.from(nameBuffer).toString('utf-8')
     const id = `${name}.${tld}`
@@ -79,5 +101,61 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
   if (ownerEntitiesToRemove.length) {
     await store.remove(ownerEntitiesToRemove)
     logger.debug('Removed Owners:', ownerEntitiesToRemove)
+  }
+}
+
+/**
+ * Process domain registrations
+ */
+const processRegistrations: EventProcessorFn<aznsRegistry.Event_Register> = async (
+  store,
+  registrationEvents,
+  registryDeployment,
+) => {
+  const tld = registryDeployment.tld
+  for (const { event } of registrationEvents) {
+    logger.debug('Event_Register:', event)
+    const name = event.name
+    const id = `${name}.${tld}`
+
+    // Find existing domain
+    const existingDomain = await store.findOne(Domain, {
+      where: { id },
+    })
+
+    // Handle event
+    if (existingDomain) {
+      existingDomain.expiresAt = new Date(parseInt(event.expirationTimestamp.toString()))
+      await store.save(existingDomain)
+      logger.debug('Updated Domain Expiry on Registration:', existingDomain)
+    }
+  }
+}
+
+/**
+ * Process domain renewals
+ */
+const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
+  store,
+  renewalEvents,
+  registryDeployment,
+) => {
+  const tld = registryDeployment.tld
+  for (const { event } of renewalEvents) {
+    logger.debug('Event_Renew:', event)
+    const name = event.name
+    const id = `${name}.${tld}`
+
+    // Find existing domain
+    const existingDomain = await store.findOne(Domain, {
+      where: { id },
+    })
+
+    // Handle event
+    if (existingDomain) {
+      existingDomain.expiresAt = new Date(parseInt(event.newExpiry.toString()))
+      await store.save(existingDomain)
+      logger.debug('Updated Domain Expiry on Renewal:', existingDomain)
+    }
   }
 }
