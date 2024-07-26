@@ -79,13 +79,13 @@ const main = async () => {
     for (const block of ctx.blocks) {
       for (const event of block.events) {
         if (event.name === 'Contracts.ContractEmitted' && event.args.contract === contractAddress) {
-          let eventData = decodeEvent(event.args.data)
-          // HACK Manually "decode" the one event without args
-          if (event.args.data === '0x0b') {
-            eventData = {
-              __kind: 'PublicPhaseActivated',
-            } as T
-          }
+          // Decode event
+          let eventData: any = decodeEvent(event.args.data)
+
+          // Since @subsquid/ink-abi@3.1.1, `__kind` is provided as `__type`
+          eventData.__kind = (eventData as any)?.__kind || (eventData as any)?.__type
+          delete eventData.__type
+
           events.push({
             event: eventData,
             id: event.id,
