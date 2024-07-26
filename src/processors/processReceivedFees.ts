@@ -25,7 +25,7 @@ export const processReceivedFees: EventProcessorFn<aznsRegistry.Event> = async (
 
   const receivedFeeEntities: ReceivedFee[] = []
   for (const { event, id, timestamp, blockHash } of feeReceivedEvents) {
-    logger.debug(event)
+    logger.debug('Event_FeeReceived:', event)
 
     // Match according `Register` event
     // NOTE: Later, there might be other events that trigger a `FeeReceived` event (e.g. `Renewal`).

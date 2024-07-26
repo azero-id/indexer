@@ -2,13 +2,13 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
     "source": {
-        "hash": "0x106a159a9b11e7a33e1037a60ff30b5334f278ef2695bb97766b9eb8dbcc485f",
+        "hash": "0x40a7034c5848d632294dbb81f971c40df2a5d41a5e02d211e810556e23a92ade",
         "language": "ink! 4.2.1",
-        "compiler": "rustc 1.68.0-nightly",
+        "compiler": "rustc 1.79.0",
         "build_info": {
             "build_mode": "Release",
-            "cargo_contract_version": "3.0.1",
-            "rust_toolchain": "nightly-aarch64-apple-darwin",
+            "cargo_contract_version": "3.2.0",
+            "rust_toolchain": "stable-aarch64-apple-darwin",
             "wasm_opt_settings": {
                 "keep_debug_symbols": false,
                 "optimization_passes": "Z"

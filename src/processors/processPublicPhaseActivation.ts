@@ -17,7 +17,7 @@ export const processPublicPhaseActivation: EventProcessorFn<aznsRegistry.Event> 
   ) as EventWithMeta<aznsRegistry.Event_PublicPhaseActivated>[]
 
   for (const { event, id, timestamp } of publicPhaseActivatedEvents) {
-    logger.debug(event)
+    logger.debug('Event_PublicPhaseActivated:', event)
     await store.insert(
       new PublicPhaseActivated({
         id,

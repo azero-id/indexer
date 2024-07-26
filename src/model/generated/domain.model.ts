@@ -25,4 +25,8 @@ export class Domain {
     @Index_()
     @DateTimeColumn_({nullable: false})
     registeredAt!: Date
+
+    @Index_()
+    @DateTimeColumn_({nullable: true})
+    expiresAt!: Date | undefined | null
 }

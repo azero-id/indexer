@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: azns-mainnet
-version: 7
+version: 8
 description: 'AZERO.ID Indexer (Aleph Zero Mainnet)'
 
 build:
@@ -16,7 +16,7 @@ deploy:
       CHAIN: alephzero
       CHAIN_PREFIX: 42
       RPC: wss://ws.azero.dev/
-      ARCHIVE: aleph-zero
+      GATEWAY: https://v2.archive.subsquid.io/network/aleph-zero
   api:
     cmd:
       [

@@ -18,7 +18,7 @@ export const processReservations: EventProcessorFn<aznsRegistry.Event> = async (
   const tld = registryDeployment.tld
 
   for (const { event, timestamp } of reserveEvents) {
-    logger.debug(event)
+    logger.debug('Event_Reserve:', event)
     const name = event.name
     const id = `${name}.${tld}`
     const address = ss58Encode(event.accountId)

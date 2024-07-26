@@ -35,6 +35,7 @@ const main = async () => {
   // Determine contract addresses
   const registryDeployment = await getContractDeployment(ContractIds.Registry)
   const giveawayDeployment = await getContractDeployment(ContractIds.DomainGiveaway)
+  logger.info('Deployments:', { registryDeployment, giveawayDeployment })
 
   // Determine RPC URL (use Subsquid's RPC Proxy if available and no process.env.RPC is set)
   // See: https://docs.subsquid.io/deploy-squid/rpc-proxy/
@@ -49,8 +50,7 @@ const main = async () => {
   if (!gateway) throw new Error('`GATEWAY` environment variable is not set.')
 
   // Create processor
-  logger.info({ gateway, rpcUrl })
-  logger.info('Starting processor…')
+  logger.info('Starting processor…', { gateway, rpcUrl })
   const processor = new SubstrateBatchProcessor()
     .setGateway(gateway)
     .setRpcEndpoint({ url: rpcUrl })
@@ -78,29 +78,23 @@ const main = async () => {
     const events: EventWithMeta<T>[] = []
     for (const block of ctx.blocks) {
       for (const event of block.events) {
-        if (event.name === 'Contracts.ContractEmitted' && event.args.contract === contractAddress) {
-          let eventData = decodeEvent(event.args.data)
-          // HACK Manually "decode" the one event without args
-          if (event.args.data === '0x0b') {
-            eventData = {
-              __kind: 'PublicPhaseActivated',
-            } as T
-          }
-          events.push({
-            event: eventData,
-            id: event.id,
-            timestamp: new Date((block.header as any).timestamp),
-            fee: (event.extrinsic as any)?.fee || 0n,
-            blockHash: block.header.hash,
-          })
-        }
+        if (event.name !== 'Contracts.ContractEmitted' || event.args.contract !== contractAddress)
+          continue
+
+        events.push({
+          event: decodeEvent(event.args.data),
+          id: event.id,
+          timestamp: new Date((block.header as any).timestamp),
+          fee: (event.extrinsic as any)?.fee || 0n,
+          blockHash: block.header.hash,
+        })
       }
     }
     return events
   }
 
   // Process batches of blocks
-  processor.run(new TypeormDatabase(), async (ctx) => {
+  processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
     const registryEvents = extractContractEvents<aznsRegistry.Event>(
       ctx,
       registryDeployment.addressHex,
