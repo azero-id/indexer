@@ -9,6 +9,7 @@ type Domain @entity @index(fields: ["tld", "name"], unique: true) {
   name: String! @index
   owner: Owner! @index
   registeredAt: DateTime! @index
+  expiresAt: DateTime @index
 }
 
 type Owner @entity {
