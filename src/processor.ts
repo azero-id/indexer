@@ -78,22 +78,16 @@ const main = async () => {
     const events: EventWithMeta<T>[] = []
     for (const block of ctx.blocks) {
       for (const event of block.events) {
-        if (event.name === 'Contracts.ContractEmitted' && event.args.contract === contractAddress) {
-          // Decode event
-          let eventData: any = decodeEvent(event.args.data)
+        if (event.name !== 'Contracts.ContractEmitted' || event.args.contract !== contractAddress)
+          continue
 
-          // Since @subsquid/ink-abi@3.1.1, `__kind` is provided as `__type`
-          eventData.__kind = (eventData as any)?.__kind || (eventData as any)?.__type
-          delete eventData.__type
-
-          events.push({
-            event: eventData,
-            id: event.id,
-            timestamp: new Date((block.header as any).timestamp),
-            fee: (event.extrinsic as any)?.fee || 0n,
-            blockHash: block.header.hash,
-          })
-        }
+        events.push({
+          event: decodeEvent(event.args.data),
+          id: event.id,
+          timestamp: new Date((block.header as any).timestamp),
+          fee: (event.extrinsic as any)?.fee || 0n,
+          blockHash: block.header.hash,
+        })
       }
     }
     return events
