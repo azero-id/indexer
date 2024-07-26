@@ -2,7 +2,7 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
     "source": {
-        "hash": "0x8371402ee24d58d68e02364bfb87016a7c3a0df24ad71f23c819ed0497057f32",
+        "hash": "0x06f12c27f3ffbc82a9e8badd01975668d253122c7a66f0eacf7650be6d4ab094",
         "language": "ink! 4.2.1",
         "compiler": "rustc 1.79.0",
         "build_info": {
@@ -180,47 +180,6 @@ export const metadata = {
                     "Emitted whenever a new name is registered."
                 ],
                 "label": "Register"
-            },
-            {
-                "args": [
-                    {
-                        "docs": [],
-                        "indexed": true,
-                        "label": "name",
-                        "type": {
-                            "displayName": [
-                                "String"
-                            ],
-                            "type": 3
-                        }
-                    },
-                    {
-                        "docs": [],
-                        "indexed": false,
-                        "label": "old_expiry",
-                        "type": {
-                            "displayName": [
-                                "u64"
-                            ],
-                            "type": 6
-                        }
-                    },
-                    {
-                        "docs": [],
-                        "indexed": false,
-                        "label": "new_expiry",
-                        "type": {
-                            "displayName": [
-                                "u64"
-                            ],
-                            "type": 6
-                        }
-                    }
-                ],
-                "docs": [
-                    "Emitted whenever a name is renewed."
-                ],
-                "label": "Renew"
             },
             {
                 "args": [
@@ -684,6 +643,47 @@ export const metadata = {
                     "Emitted when a name is reserved or removed from the reservation list"
                 ],
                 "label": "Reserve"
+            },
+            {
+                "args": [
+                    {
+                        "docs": [],
+                        "indexed": true,
+                        "label": "name",
+                        "type": {
+                            "displayName": [
+                                "String"
+                            ],
+                            "type": 3
+                        }
+                    },
+                    {
+                        "docs": [],
+                        "indexed": false,
+                        "label": "old_expiry",
+                        "type": {
+                            "displayName": [
+                                "u64"
+                            ],
+                            "type": 6
+                        }
+                    },
+                    {
+                        "docs": [],
+                        "indexed": false,
+                        "label": "new_expiry",
+                        "type": {
+                            "displayName": [
+                                "u64"
+                            ],
+                            "type": 6
+                        }
+                    }
+                ],
+                "docs": [
+                    "Emitted whenever a name is renewed."
+                ],
+                "label": "Renew"
             }
         ],
         "lang_error": {
