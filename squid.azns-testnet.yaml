@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: azns-testnet
-version: 20
+version: 22
 description: 'AZERO.ID Indexer (Aleph Zero Testnet)'
 
 build:
