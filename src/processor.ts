@@ -35,6 +35,7 @@ const main = async () => {
   // Determine contract addresses
   const registryDeployment = await getContractDeployment(ContractIds.Registry)
   const giveawayDeployment = await getContractDeployment(ContractIds.DomainGiveaway)
+  logger.info('Deployments:', { registryDeployment, giveawayDeployment })
 
   // Determine RPC URL (use Subsquid's RPC Proxy if available and no process.env.RPC is set)
   // See: https://docs.subsquid.io/deploy-squid/rpc-proxy/
@@ -49,8 +50,7 @@ const main = async () => {
   if (!gateway) throw new Error('`GATEWAY` environment variable is not set.')
 
   // Create processor
-  logger.info({ gateway, rpcUrl })
-  logger.info('Starting processor…')
+  logger.info('Starting processor…', { gateway, rpcUrl })
   const processor = new SubstrateBatchProcessor()
     .setGateway(gateway)
     .setRpcEndpoint({ url: rpcUrl })
@@ -100,7 +100,7 @@ const main = async () => {
   }
 
   // Process batches of blocks
-  processor.run(new TypeormDatabase(), async (ctx) => {
+  processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
     const registryEvents = extractContractEvents<aznsRegistry.Event>(
       ctx,
       registryDeployment.addressHex,

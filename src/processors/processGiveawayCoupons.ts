@@ -23,7 +23,7 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
 
   const couponEntitiesToAdd: GiveawayCoupon[] = []
   for (const { event, timestamp, id } of reservedEvents) {
-    logger.debug(event)
+    logger.debug('Event_Reserved:', event)
     const name = event.name
     const publicCode = event.coupon
     const reservedAt = timestamp
@@ -56,7 +56,7 @@ export const processGiveawayCoupons: EventProcessorFn<domainGiveaway.Event> = as
 
   const couponEntitiesToUpdate: GiveawayCoupon[] = []
   for (const { event, timestamp, id } of claimedEvents) {
-    logger.debug(event)
+    logger.debug('Event_Claimed:', event)
     const publicCode = event.coupon
     const claimedBy = ss58Encode(event.claimedBy)
     const claimedAt = timestamp
