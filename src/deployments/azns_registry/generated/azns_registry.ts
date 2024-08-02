@@ -2,7 +2,7 @@ import {Abi, Bytes, encodeCall, decodeResult} from "@subsquid/ink-abi"
 
 export const metadata = {
     "source": {
-        "hash": "0x06f12c27f3ffbc82a9e8badd01975668d253122c7a66f0eacf7650be6d4ab094",
+        "hash": "0x8bc23023f7db0913fb1e803a6e161a551337011ca3cd71c1e4bc8fa495adc91d",
         "language": "ink! 4.2.1",
         "compiler": "rustc 1.79.0",
         "build_info": {
@@ -17,7 +17,7 @@ export const metadata = {
     },
     "contract": {
         "name": "azns_registry",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "authors": [
             "AZERO.ID <hello@azero.id>"
         ]

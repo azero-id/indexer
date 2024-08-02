@@ -17,7 +17,7 @@ export const metadata = {
     },
     "contract": {
         "name": "azns_fee_calculator",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "authors": [
             "AZERO.ID <hello@azero.id>"
         ]
