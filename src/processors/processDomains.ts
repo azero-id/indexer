@@ -1,6 +1,6 @@
 import { hexToU8a } from '@polkadot/util'
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
-import { In } from 'typeorm'
+import { IsNull, LessThan } from 'typeorm'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Domain, Owner } from '../model'
 import { logger } from '../utils/logger'
@@ -30,6 +30,9 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
     ({ event }) => event.__kind === 'Renew',
   ) as EventWithMeta<aznsRegistry.Event_Renew>[]
   await processRenewals(store, renewalEvents, registryDeployment)
+
+  // Regularly check for expired domains
+  // await processExpirations(store, [], registryDeployment)
 }
 
 /**
@@ -41,14 +44,12 @@ const processTransfers: EventProcessorFn<aznsRegistry.Event_Transfer> = async (
   registryDeployment,
 ) => {
   const tld = registryDeployment.tld
-  const ownerIdsToCheckForRemoval = new Set<string>()
   for (const { event, timestamp } of transferEvents) {
     logger.debug('Event_Transfer:', event)
     const nameBuffer = hexToU8a((event.id as aznsRegistry.Id_Bytes).value as string)
     const name = Buffer.from(nameBuffer).toString('utf-8')
     const id = `${name}.${tld}`
     const from = ss58Encode(event.from)
-    if (from) ownerIdsToCheckForRemoval.add(from)
     const to = ss58Encode(event.to)
 
     // Determine event type
@@ -90,17 +91,6 @@ const processTransfers: EventProcessorFn<aznsRegistry.Event_Transfer> = async (
         logger.debug('Removed Domain:', existingDomain)
       }
     }
-  }
-
-  // Remove owners with no domains left
-  const updatedOwners = await store.find(Owner, {
-    where: { id: In(Array.from(ownerIdsToCheckForRemoval)) },
-    relations: { domains: true },
-  })
-  const ownerEntitiesToRemove = updatedOwners.filter((owner) => !owner.domains?.length)
-  if (ownerEntitiesToRemove.length) {
-    await store.remove(ownerEntitiesToRemove)
-    logger.debug('Removed Owners:', ownerEntitiesToRemove)
   }
 }
 
@@ -157,5 +147,35 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
       await store.save(existingDomain)
       logger.debug('Updated Domain Expiry on Renewal:', existingDomain)
     }
+  }
+}
+
+/**
+ * Process domain expirations
+ */
+const processExpirations: EventProcessorFn<never> = async (store, _, __) => {
+  // Remove expired domains
+  const expiredDomains = await store.find(Domain, {
+    where: {
+      expiresAt: LessThan(new Date()),
+    },
+  })
+  if (expiredDomains.length) {
+    await store.remove(expiredDomains)
+    logger.debug('Removed Expired Domains:', expiredDomains)
+  }
+
+  // Remove owners with no domains left
+  const updatedOwners = await store.find(Owner, {
+    where: {
+      domains: {
+        id: IsNull(),
+      },
+    },
+    relations: { domains: true },
+  })
+  if (updatedOwners.length) {
+    await store.remove(updatedOwners)
+    logger.debug('Removed Owners:', updatedOwners)
   }
 }
