@@ -101,28 +101,33 @@ const main = async () => {
       aznsRegistry.decodeEvent,
     )
 
-    // Process active phase (whitelist → public)
-    await processPublicPhaseActivation(ctx.store, registryEvents, registryDeployment)
+    if (registryEvents.length > 0) {
+      // Process active phase (whitelist → public)
+      await processPublicPhaseActivation(ctx.store, registryEvents, registryDeployment)
 
-    // Process domains
-    await processDomains(ctx.store, registryEvents, registryDeployment)
+      // Process domains
+      await processDomains(ctx.store, registryEvents, registryDeployment)
 
-    // Process referrals
-    await processReferrals(ctx.store, registryEvents, registryDeployment)
+      // Process referrals
+      await processReferrals(ctx.store, registryEvents, registryDeployment)
 
-    // Process domain reservations
-    await processReservations(ctx.store, registryEvents, registryDeployment)
+      // Process domain reservations
+      await processReservations(ctx.store, registryEvents, registryDeployment)
 
-    // Process received fees
-    await processReceivedFees(ctx.store, registryEvents, registryDeployment)
+      // Process received fees
+      await processReceivedFees(ctx.store, registryEvents, registryDeployment)
+    }
 
-    // Process giveaway coupons
     const giveawayEvents = extractContractEvents<domainGiveaway.Event>(
       ctx,
       giveawayDeployment.addressHex,
       domainGiveaway.decodeEvent,
     )
-    await processGiveawayCoupons(ctx.store, giveawayEvents, giveawayDeployment)
+
+    if (giveawayEvents.length > 0) {
+      // Process giveaway coupons
+      await processGiveawayCoupons(ctx.store, giveawayEvents, giveawayDeployment)
+    }
   })
 }
 
