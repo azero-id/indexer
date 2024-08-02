@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: azns-mainnet
-version: 8
+version: 9
 description: 'AZERO.ID Indexer (Aleph Zero Mainnet)'
 
 build:
@@ -9,7 +9,7 @@ deploy:
   addons:
     postgres:
     rpc:
-      - aleph-zero:http
+      - aleph-zero.http
   processor:
     cmd: ['node', 'lib/processor']
     env:
