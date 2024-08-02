@@ -32,6 +32,7 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
   await processRenewals(store, renewalEvents, registryDeployment)
 
   // Regularly check for expired domains
+  // TODO: Must take grace-period (1st October 2024) into account
   // await processExpirations(store, [], registryDeployment)
 }
 
@@ -152,6 +153,7 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
 
 /**
  * Process domain expirations
+ * TODO: Must take grace-period (1st October 2024) into account
  */
 const processExpirations: EventProcessorFn<never> = async (store, _, __) => {
   // Remove expired domains
