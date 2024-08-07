@@ -20,7 +20,7 @@ export const processReferrals: EventProcessorFn<aznsRegistry.Event> = async (
   const referralEntities: Referral[] = []
   for (const { event, timestamp, id } of feeReceivedEvents) {
     if (!event.referrer) continue
-    logger.debug(event)
+    logger.debug('Event_FeeReceived:', event)
 
     const name = event.name
     const address = ss58Encode(event.from)

@@ -1,32 +1,56 @@
 import { hexToU8a } from '@polkadot/util'
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
-import { In } from 'typeorm'
+import { IsNull, LessThan } from 'typeorm'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
 import { Domain, Owner } from '../model'
 import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
 /**
- * Process domain transfer events.
+ * Process domain ownership & expiration
  */
 export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
   store,
   registryEvents,
   registryDeployment,
 ) => {
+  // Process domain ownership changes via transfers (also registrations)
   const transferEvents = registryEvents.filter(
     ({ event }) => event.__kind === 'Transfer',
   ) as EventWithMeta<aznsRegistry.Event_Transfer>[]
-  const tld = registryDeployment.tld
+  await processTransfers(store, transferEvents, registryDeployment)
 
-  const ownerIdsToCheckForRemoval = new Set<string>()
+  // Process domain expiration changes via registrations & renewals
+  const registrationEvents = registryEvents.filter(
+    ({ event }) => event.__kind === 'Register',
+  ) as EventWithMeta<aznsRegistry.Event_Register>[]
+  await processRegistrations(store, registrationEvents, registryDeployment)
+
+  const renewalEvents = registryEvents.filter(
+    ({ event }) => event.__kind === 'Renew',
+  ) as EventWithMeta<aznsRegistry.Event_Renew>[]
+  await processRenewals(store, renewalEvents, registryDeployment)
+
+  // Regularly check for expired domains
+  // TODO: Must take grace-period (1st October 2024) into account
+  // await processExpirations(store, [], registryDeployment)
+}
+
+/**
+ * Process domain transfers
+ */
+const processTransfers: EventProcessorFn<aznsRegistry.Event_Transfer> = async (
+  store,
+  transferEvents,
+  registryDeployment,
+) => {
+  const tld = registryDeployment.tld
   for (const { event, timestamp } of transferEvents) {
-    logger.debug(event)
+    logger.debug('Event_Transfer:', event)
     const nameBuffer = hexToU8a((event.id as aznsRegistry.Id_Bytes).value as string)
     const name = Buffer.from(nameBuffer).toString('utf-8')
     const id = `${name}.${tld}`
     const from = ss58Encode(event.from)
-    if (from) ownerIdsToCheckForRemoval.add(from)
     const to = ss58Encode(event.to)
 
     // Determine event type
@@ -69,15 +93,91 @@ export const processDomains: EventProcessorFn<aznsRegistry.Event> = async (
       }
     }
   }
+}
+
+/**
+ * Process domain registrations
+ */
+const processRegistrations: EventProcessorFn<aznsRegistry.Event_Register> = async (
+  store,
+  registrationEvents,
+  registryDeployment,
+) => {
+  const tld = registryDeployment.tld
+  for (const { event } of registrationEvents) {
+    logger.debug('Event_Register:', event)
+    const name = event.name
+    const id = `${name}.${tld}`
+
+    // Find existing domain
+    const existingDomain = await store.findOne(Domain, {
+      where: { id },
+    })
+
+    // Handle event
+    if (existingDomain) {
+      existingDomain.expiresAt = new Date(parseInt(event.expirationTimestamp.toString()))
+      await store.save(existingDomain)
+      logger.debug('Updated Domain Expiry on Registration:', existingDomain)
+    }
+  }
+}
+
+/**
+ * Process domain renewals
+ */
+const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
+  store,
+  renewalEvents,
+  registryDeployment,
+) => {
+  const tld = registryDeployment.tld
+  for (const { event } of renewalEvents) {
+    logger.debug('Event_Renew:', event)
+    const name = event.name
+    const id = `${name}.${tld}`
+
+    // Find existing domain
+    const existingDomain = await store.findOne(Domain, {
+      where: { id },
+    })
+
+    // Handle event
+    if (existingDomain) {
+      existingDomain.expiresAt = new Date(parseInt(event.newExpiry.toString()))
+      await store.save(existingDomain)
+      logger.debug('Updated Domain Expiry on Renewal:', existingDomain)
+    }
+  }
+}
+
+/**
+ * Process domain expirations
+ * TODO: Must take grace-period (1st October 2024) into account
+ */
+const processExpirations: EventProcessorFn<never> = async (store, _, __) => {
+  // Remove expired domains
+  const expiredDomains = await store.find(Domain, {
+    where: {
+      expiresAt: LessThan(new Date()),
+    },
+  })
+  if (expiredDomains.length) {
+    await store.remove(expiredDomains)
+    logger.debug('Removed Expired Domains:', expiredDomains)
+  }
 
   // Remove owners with no domains left
   const updatedOwners = await store.find(Owner, {
-    where: { id: In(Array.from(ownerIdsToCheckForRemoval)) },
+    where: {
+      domains: {
+        id: IsNull(),
+      },
+    },
     relations: { domains: true },
   })
-  const ownerEntitiesToRemove = updatedOwners.filter((owner) => !owner.domains?.length)
-  if (ownerEntitiesToRemove.length) {
-    await store.remove(ownerEntitiesToRemove)
-    logger.debug('Removed Owners:', ownerEntitiesToRemove)
+  if (updatedOwners.length) {
+    await store.remove(updatedOwners)
+    logger.debug('Removed Owners:', updatedOwners)
   }
 }

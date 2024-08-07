@@ -1,7 +1,5 @@
-import { KnownArchives, lookupArchive } from '@subsquid/archive-registry'
 import {
   DataHandlerContext,
-  DataSource,
   SubstrateBatchProcessor,
   SubstrateBatchProcessorFields,
 } from '@subsquid/substrate-processor'
@@ -37,15 +35,7 @@ const main = async () => {
   // Determine contract addresses
   const registryDeployment = await getContractDeployment(ContractIds.Registry)
   const giveawayDeployment = await getContractDeployment(ContractIds.DomainGiveaway)
-
-  // Determine Subquid Archive URL
-  if (process.env.CHAIN !== 'development' && !process.env.ARCHIVE) {
-    throw new Error('`ARCHIVE` environment variable is not set.')
-  }
-  const archive =
-    process.env.CHAIN === 'development'
-      ? `http://localhost:${process.env.ARCHIVE_GATEWAY_PORT}/graphql`
-      : lookupArchive(process.env.ARCHIVE as KnownArchives, { release: 'ArrowSquid' })
+  logger.info('Deployments:', { registryDeployment, giveawayDeployment })
 
   // Determine RPC URL (use Subsquid's RPC Proxy if available and no process.env.RPC is set)
   // See: https://docs.subsquid.io/deploy-squid/rpc-proxy/
@@ -54,12 +44,16 @@ const main = async () => {
   else if (!rpcUrl && process.env.CHAIN === 'alephzero-testnet')
     rpcUrl = process.env.RPC_ALEPH_ZERO_TESTNET_HTTP
   if (!rpcUrl) throw new Error('`RPC` environment variable is not set.')
-  const chain: DataSource['chain'] = { url: rpcUrl }
+
+  // Determine gateway
+  const gateway = process.env.GATEWAY
+  if (!gateway) throw new Error('`GATEWAY` environment variable is not set.')
 
   // Create processor
-  logger.info('Starting processor with:', { archive, chain })
+  logger.info('Starting processor…', { gateway, rpcUrl })
   const processor = new SubstrateBatchProcessor()
-    .setDataSource({ archive, chain })
+    .setGateway(gateway)
+    .setRpcEndpoint({ url: rpcUrl })
     .setBlockRange({ from: registryDeployment.blockNumber })
     .addContractsContractEmitted({
       contractAddress: [registryDeployment.addressHex, giveawayDeployment.addressHex],
@@ -67,8 +61,8 @@ const main = async () => {
     })
     .setFields({
       block: { timestamp: true },
-      extrinsic: { fee: true },
-      event: { args: true },
+      extrinsic: { fee: true, hash: true },
+      event: { args: true, name: true },
     })
 
   // Helper types
@@ -84,50 +78,56 @@ const main = async () => {
     const events: EventWithMeta<T>[] = []
     for (const block of ctx.blocks) {
       for (const event of block.events) {
-        if (event.name === 'Contracts.ContractEmitted' && event.args.contract === contractAddress) {
-          events.push({
-            event: decodeEvent(event.args.data),
-            id: event.id,
-            timestamp: new Date((block.header as any).timestamp),
-            fee: (event.extrinsic as any)?.fee || 0n,
-            blockHash: block.header.hash,
-          })
-        }
+        if (event.name !== 'Contracts.ContractEmitted' || event.args.contract !== contractAddress)
+          continue
+
+        events.push({
+          event: decodeEvent(event.args.data),
+          id: event.id,
+          timestamp: new Date((block.header as any).timestamp),
+          fee: (event.extrinsic as any)?.fee || 0n,
+          blockHash: block.header.hash,
+        })
       }
     }
     return events
   }
 
   // Process batches of blocks
-  processor.run(new TypeormDatabase(), async (ctx) => {
+  processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (ctx) => {
     const registryEvents = extractContractEvents<aznsRegistry.Event>(
       ctx,
       registryDeployment.addressHex,
       aznsRegistry.decodeEvent,
     )
 
-    // Process active phase (whitelist → public)
-    await processPublicPhaseActivation(ctx.store, registryEvents, registryDeployment)
+    if (registryEvents.length > 0) {
+      // Process active phase (whitelist → public)
+      await processPublicPhaseActivation(ctx.store, registryEvents, registryDeployment)
 
-    // Process domains
-    await processDomains(ctx.store, registryEvents, registryDeployment)
+      // Process domains
+      await processDomains(ctx.store, registryEvents, registryDeployment)
 
-    // Process referrals
-    await processReferrals(ctx.store, registryEvents, registryDeployment)
+      // Process referrals
+      await processReferrals(ctx.store, registryEvents, registryDeployment)
 
-    // Process domain reservations
-    await processReservations(ctx.store, registryEvents, registryDeployment)
+      // Process domain reservations
+      await processReservations(ctx.store, registryEvents, registryDeployment)
 
-    // Process received fees
-    await processReceivedFees(ctx.store, registryEvents, registryDeployment)
+      // Process received fees
+      await processReceivedFees(ctx.store, registryEvents, registryDeployment)
+    }
 
-    // Process giveaway coupons
     const giveawayEvents = extractContractEvents<domainGiveaway.Event>(
       ctx,
       giveawayDeployment.addressHex,
       domainGiveaway.decodeEvent,
     )
-    await processGiveawayCoupons(ctx.store, giveawayEvents, giveawayDeployment)
+
+    if (giveawayEvents.length > 0) {
+      // Process giveaway coupons
+      await processGiveawayCoupons(ctx.store, giveawayEvents, giveawayDeployment)
+    }
   })
 }
 

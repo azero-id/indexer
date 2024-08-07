@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: azns-testnet
-version: 19
+version: 24
 description: 'AZERO.ID Indexer (Aleph Zero Testnet)'
 
 build:
@@ -9,14 +9,14 @@ deploy:
   addons:
     postgres:
     rpc:
-      - aleph-zero-testnet:http
+      - aleph-zero-testnet.http
   processor:
     cmd: ['node', 'lib/processor']
     env:
       CHAIN: alephzero-testnet
       CHAIN_PREFIX: 42
       RPC: wss://ws.test.azero.dev/
-      ARCHIVE: aleph-zero-testnet
+      GATEWAY: https://v2.archive.subsquid.io/network/aleph-zero-testnet
   api:
     cmd:
       [
