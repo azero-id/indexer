@@ -1,8 +1,10 @@
-import { hexToU8a } from '@polkadot/util'
+import { BN, bnToBn, hexToU8a } from '@polkadot/util'
+import dayjs from 'dayjs'
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import { IsNull, LessThan } from 'typeorm'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
-import { Domain, Owner } from '../model'
+import { Domain, Owner, ReceivedFee } from '../model'
+import { getTokenPriceAt } from '../utils/getTokenPriceAt'
 import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
@@ -132,7 +134,7 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
   registryDeployment,
 ) => {
   const tld = registryDeployment.tld
-  for (const { event } of renewalEvents) {
+  for (const { event, value, caller, timestamp, blockHash } of renewalEvents) {
     logger.debug('Event_Renew:', event)
     const name = event.name
     const id = `${name}.${tld}`
@@ -148,6 +150,41 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
       await store.save(existingDomain)
       logger.debug('Updated Domain Expiry on Renewal:', existingDomain)
     }
+
+    // Store ReceivedFee
+    if (!value || !caller) continue
+
+    // Determine received amount in EUR
+    const azeroPriceInEur =
+      registryDeployment.chain === 'alephzero' ? (await getTokenPriceAt(timestamp)) || 0 : 0
+    const precision = 5
+    const receivedAmountEUR =
+      bnToBn(value)
+        .div(new BN(10 ** 12))
+        .mul(new BN(azeroPriceInEur * 10 ** precision))
+        .toNumber() /
+      10 ** precision
+
+    // Determine registration duration
+    const oldExpiration = dayjs(parseInt(event.oldExpiry.toString()))
+    const newExpiration = dayjs(parseInt(event.newExpiry.toString()))
+    const registrationDurationInDays = newExpiration.diff(oldExpiration, 'day')
+    const registrationDurationInYears = Math.round(registrationDurationInDays / 365)
+
+    const newReceivedFee = new ReceivedFee({
+      id,
+      tld,
+      name,
+      from: caller,
+      eventType: 'renewal',
+      receivedAt: timestamp,
+      receivedAmount: value,
+      receivedAmountEUR,
+      registrationDurationInYears,
+      blockHash,
+    })
+    await store.insert(newReceivedFee)
+    logger.debug('Added ReceivedFees:', newReceivedFee)
   }
 }
 
