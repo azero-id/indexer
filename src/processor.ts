@@ -87,13 +87,7 @@ const main = async () => {
           continue
 
         // Find matching call and extract value & caller
-        const call = block.calls.find(
-          (c) =>
-            c.success &&
-            c.name === 'Contracts.call' &&
-            c.args.dest.value === event.args.contract &&
-            c.extrinsicIndex === event.extrinsicIndex,
-        )
+        const call = event.getCall()
         const value = call?.args.value ? BigInt(call.args.value) : undefined
         const caller = call?.origin?.value?.value
           ? ss58Encode(call?.origin?.value?.value)
