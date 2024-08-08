@@ -48,8 +48,8 @@ type GiveawayCoupon @entity @index(fields: ["tld", "name", "reservedAt"], unique
   claimDurationInSeconds: Int
 }
 
-type ReceivedFee @entity @index(fields: ["tld", "name", "eventType", "receivedAt"], unique: true) {
-  id: ID! @unique
+type ReceivedFee @entity {
+  id: ID! @index @unique
   blockHash: String! @index
   tld: String! @index
   name: String! @index

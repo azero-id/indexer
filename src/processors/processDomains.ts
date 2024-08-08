@@ -134,7 +134,7 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
   registryDeployment,
 ) => {
   const tld = registryDeployment.tld
-  for (const { event, value, caller, timestamp, blockHash } of renewalEvents) {
+  for (const { event, id: eventId, value, caller, timestamp, blockHash } of renewalEvents) {
     logger.debug('Event_Renew:', event)
     const name = event.name
     const id = `${name}.${tld}`
@@ -172,7 +172,7 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
     const registrationDurationInYears = Math.round(registrationDurationInDays / 365)
 
     const newReceivedFee = new ReceivedFee({
-      id,
+      id: eventId,
       tld,
       name,
       from: caller,
