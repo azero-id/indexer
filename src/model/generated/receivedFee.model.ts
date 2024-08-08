@@ -1,6 +1,5 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, StringColumn as StringColumn_, DateTimeColumn as DateTimeColumn_, BigIntColumn as BigIntColumn_, FloatColumn as FloatColumn_, IntColumn as IntColumn_} from "@subsquid/typeorm-store"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, StringColumn as StringColumn_, Index as Index_, DateTimeColumn as DateTimeColumn_, BigIntColumn as BigIntColumn_, FloatColumn as FloatColumn_, IntColumn as IntColumn_} from "@subsquid/typeorm-store"
 
-@Index_(["tld", "name", "eventType", "receivedAt"], {unique: true})
 @Entity_()
 export class ReceivedFee {
     constructor(props?: Partial<ReceivedFee>) {
@@ -14,6 +13,7 @@ export class ReceivedFee {
     @StringColumn_({nullable: false})
     blockHash!: string
 
+    @Index_()
     @StringColumn_({nullable: false})
     tld!: string
 

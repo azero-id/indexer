@@ -1,8 +1,10 @@
-import { hexToU8a } from '@polkadot/util'
+import { BN, bnToBn, hexToU8a } from '@polkadot/util'
+import dayjs from 'dayjs'
 import { EventProcessorFn, EventWithMeta } from 'src/processor'
 import { IsNull, LessThan } from 'typeorm'
 import * as aznsRegistry from '../deployments/azns_registry/generated/azns_registry'
-import { Domain, Owner } from '../model'
+import { Domain, Owner, ReceivedFee } from '../model'
+import { getTokenPriceAt } from '../utils/getTokenPriceAt'
 import { logger } from '../utils/logger'
 import { ss58Encode } from '../utils/ss58Encode'
 
@@ -116,7 +118,12 @@ const processRegistrations: EventProcessorFn<aznsRegistry.Event_Register> = asyn
 
     // Handle event
     if (existingDomain) {
-      existingDomain.expiresAt = new Date(parseInt(event.expirationTimestamp.toString()))
+      const gracePeriodTimestamp = dayjs(1727740800000) // 1st October 2024
+      const expirationTimestamp = dayjs(parseInt(event.expirationTimestamp.toString()))
+      const expiresAt = expirationTimestamp.isAfter(gracePeriodTimestamp)
+        ? expirationTimestamp
+        : gracePeriodTimestamp
+      existingDomain.expiresAt = expiresAt.toDate()
       await store.save(existingDomain)
       logger.debug('Updated Domain Expiry on Registration:', existingDomain)
     }
@@ -132,7 +139,7 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
   registryDeployment,
 ) => {
   const tld = registryDeployment.tld
-  for (const { event } of renewalEvents) {
+  for (const { event, id: eventId, call, value, caller, timestamp, blockHash } of renewalEvents) {
     logger.debug('Event_Renew:', event)
     const name = event.name
     const id = `${name}.${tld}`
@@ -148,6 +155,48 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
       await store.save(existingDomain)
       logger.debug('Updated Domain Expiry on Renewal:', existingDomain)
     }
+
+    // Store ReceivedFee
+    if (!value || !caller || !call) continue
+
+    // Check how many further renewals are included in the call
+    const renewalEventsPerCall = renewalEvents.filter((e) => {
+      return e.call?.id === call.id
+    }).length
+    if (!renewalEventsPerCall) continue
+
+    // Determine received amount in EUR
+    const receivedAmount = BigInt(bnToBn(value).div(new BN(renewalEventsPerCall)).toString())
+    const azeroPriceInEur =
+      registryDeployment.chain === 'alephzero' ? (await getTokenPriceAt(timestamp)) || 0 : 0
+    const precision = 5
+    const receivedAmountEUR =
+      bnToBn(receivedAmount)
+        .div(new BN(10 ** 12))
+        .mul(new BN(azeroPriceInEur * 10 ** precision))
+        .toNumber() /
+      10 ** precision
+
+    // Determine registration duration
+    const oldExpiration = dayjs(parseInt(event.oldExpiry.toString()))
+    const newExpiration = dayjs(parseInt(event.newExpiry.toString()))
+    const registrationDurationInDays = newExpiration.diff(oldExpiration, 'day')
+    const registrationDurationInYears = Math.round(registrationDurationInDays / 365)
+
+    const newReceivedFee = new ReceivedFee({
+      id: eventId,
+      tld,
+      name,
+      from: caller,
+      eventType: 'renewal',
+      receivedAt: timestamp,
+      receivedAmount,
+      receivedAmountEUR,
+      registrationDurationInYears,
+      blockHash,
+    })
+    await store.insert(newReceivedFee)
+    logger.debug('Added ReceivedFees:', newReceivedFee)
   }
 }
 
