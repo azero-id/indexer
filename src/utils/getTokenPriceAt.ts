@@ -1,9 +1,10 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
 import dayjs from 'dayjs'
+import prefetchedData from '../../azero-token-prices-prefetched.json'
 
 // Price cache
-const fetchedPricesCache: Record<string, number> = {}
+const fetchedPricesCache: Record<string, number> = prefetchedData
 
 // Axios client
 const coingeckoClient = axios.create({ baseURL: 'https://api.coingecko.com' })
@@ -22,7 +23,7 @@ export const getTokenPriceAt = async (timestamp: Date, id = 'aleph-zero', curren
   }
 
   // Fetch price
-  const days = dayjs().diff(timestamp, 'day') + 10
+  const days = dayjs().diff(timestamp, 'day') + 5
   const query = `/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`
   const { data } = await coingeckoClient.get(query)
   const prices = data?.prices || []
