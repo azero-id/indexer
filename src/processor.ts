@@ -14,6 +14,7 @@ import { processReceivedFees } from './processors/processReceivedFees'
 import { processReferrals } from './processors/processReferrals'
 import { processReservations } from './processors/processReservations'
 import { logger } from './utils/logger'
+import { ss58Encode } from './utils/ss58Encode'
 
 export type EventWithMeta<T> = {
   event: T
@@ -21,6 +22,8 @@ export type EventWithMeta<T> = {
   timestamp: Date
   fee: bigint
   blockHash: string
+  value?: bigint
+  caller?: string
 }
 export type EventProcessorFn<T> = (
   store: Store,
@@ -58,11 +61,13 @@ const main = async () => {
     .addContractsContractEmitted({
       contractAddress: [registryDeployment.addressHex, giveawayDeployment.addressHex],
       extrinsic: true,
+      call: true,
     })
     .setFields({
       block: { timestamp: true },
       extrinsic: { fee: true, hash: true },
       event: { args: true, name: true },
+      call: { args: true, name: true, success: true, origin: true },
     })
 
   // Helper types
@@ -81,12 +86,27 @@ const main = async () => {
         if (event.name !== 'Contracts.ContractEmitted' || event.args.contract !== contractAddress)
           continue
 
+        // Find matching call and extract value & caller
+        const call = block.calls.find(
+          (c) =>
+            c.success &&
+            c.name === 'Contracts.call' &&
+            c.args.dest.value === event.args.contract &&
+            c.extrinsicIndex === event.extrinsicIndex,
+        )
+        const value = call?.args.value ? BigInt(call.args.value) : undefined
+        const caller = call?.origin?.value?.value
+          ? ss58Encode(call?.origin?.value?.value)
+          : undefined
+
         events.push({
           event: decodeEvent(event.args.data),
           id: event.id,
           timestamp: new Date((block.header as any).timestamp),
           fee: (event.extrinsic as any)?.fee || 0n,
           blockHash: block.header.hash,
+          value,
+          caller,
         })
       }
     }
