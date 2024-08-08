@@ -1,4 +1,5 @@
 import {
+  Call,
   DataHandlerContext,
   SubstrateBatchProcessor,
   SubstrateBatchProcessorFields,
@@ -22,6 +23,7 @@ export type EventWithMeta<T> = {
   timestamp: Date
   fee: bigint
   blockHash: string
+  call?: Call
   value?: bigint
   caller?: string
 }
@@ -99,6 +101,7 @@ const main = async () => {
           timestamp: new Date((block.header as any).timestamp),
           fee: (event.extrinsic as any)?.fee || 0n,
           blockHash: block.header.hash,
+          call,
           value,
           caller,
         })

@@ -139,7 +139,7 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
   registryDeployment,
 ) => {
   const tld = registryDeployment.tld
-  for (const { event, id: eventId, value, caller, timestamp, blockHash } of renewalEvents) {
+  for (const { event, id: eventId, call, value, caller, timestamp, blockHash } of renewalEvents) {
     logger.debug('Event_Renew:', event)
     const name = event.name
     const id = `${name}.${tld}`
@@ -157,14 +157,21 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
     }
 
     // Store ReceivedFee
-    if (!value || !caller) continue
+    if (!value || !caller || !call) continue
+
+    // Check how many further renewals are included in the call
+    const renewalEventsPerCall = renewalEvents.filter((e) => {
+      return e.call?.id === call.id
+    }).length
+    if (!renewalEventsPerCall) continue
 
     // Determine received amount in EUR
+    const receivedAmount = BigInt(bnToBn(value).div(new BN(renewalEventsPerCall)).toString())
     const azeroPriceInEur =
       registryDeployment.chain === 'alephzero' ? (await getTokenPriceAt(timestamp)) || 0 : 0
     const precision = 5
     const receivedAmountEUR =
-      bnToBn(value)
+      bnToBn(receivedAmount)
         .div(new BN(10 ** 12))
         .mul(new BN(azeroPriceInEur * 10 ** precision))
         .toNumber() /
@@ -183,7 +190,7 @@ const processRenewals: EventProcessorFn<aznsRegistry.Event_Renew> = async (
       from: caller,
       eventType: 'renewal',
       receivedAt: timestamp,
-      receivedAmount: value,
+      receivedAmount,
       receivedAmountEUR,
       registrationDurationInYears,
       blockHash,
