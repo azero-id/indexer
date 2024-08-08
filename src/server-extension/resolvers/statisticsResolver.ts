@@ -1,5 +1,6 @@
+import dayjs from 'dayjs'
 import { Query, Resolver } from 'type-graphql'
-import { type EntityManager } from 'typeorm'
+import { LessThan, MoreThan, type EntityManager } from 'typeorm'
 import { Domain, Owner, Reservation } from '../../model/generated'
 
 @Resolver()
@@ -10,6 +11,20 @@ export class StatisticsResolver {
   async totalDomains() {
     const manager = await this.tx()
     return await manager.getRepository(Domain).count()
+  }
+
+  @Query(() => Number)
+  async totalDomainsActive() {
+    const manager = await this.tx()
+    return await manager.getRepository(Domain).countBy({ expiresAt: MoreThan(new Date()) })
+  }
+
+  @Query(() => Number)
+  async totalDomainsEpiringInTheNextTwoMonths() {
+    const manager = await this.tx()
+    return await manager
+      .getRepository(Domain)
+      .countBy({ expiresAt: LessThan(dayjs().add(2, 'month').toDate()) })
   }
 
   @Query(() => Number)
