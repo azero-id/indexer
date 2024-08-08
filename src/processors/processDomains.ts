@@ -118,7 +118,12 @@ const processRegistrations: EventProcessorFn<aznsRegistry.Event_Register> = asyn
 
     // Handle event
     if (existingDomain) {
-      existingDomain.expiresAt = new Date(parseInt(event.expirationTimestamp.toString()))
+      const gracePeriodTimestamp = dayjs(1727740800000) // 1st October 2024
+      const expirationTimestamp = dayjs(parseInt(event.expirationTimestamp.toString()))
+      const expiresAt = expirationTimestamp.isAfter(gracePeriodTimestamp)
+        ? expirationTimestamp
+        : gracePeriodTimestamp
+      existingDomain.expiresAt = expiresAt.toDate()
       await store.save(existingDomain)
       logger.debug('Updated Domain Expiry on Registration:', existingDomain)
     }
